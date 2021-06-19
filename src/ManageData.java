@@ -39,6 +39,7 @@ public class ManageData extends javax.swing.JFrame {
         rbPriaMhs.setSelected(true);
         updateTabelDosen();
         updateTabelMahasiswa();
+        updateTabelKelas();
     }
     
     private void clearMahasiswa(){
@@ -58,6 +59,13 @@ public class ManageData extends javax.swing.JFrame {
         tfAlamatOrtu.setText("");
         cbDosenPembimbing.setSelectedIndex(0);
         tabelMahasiswa.clearSelection();
+    }
+    private void clearKelas(){
+        tfidkelas.setText("");
+        tfnamakelas.setText("");
+        tfpertemuan.setText("");
+        tfwaktu.setText("");
+        cbruang.setSelectedIndex(-1);
     }
     
     private int getNumberDosen(){
@@ -176,7 +184,33 @@ public class ManageData extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
+private void updateTabelKelas(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Id Kelas");
+        model.addColumn("Kelas");
+        model.addColumn("Pertemuan");
+        model.addColumn("Waktu");
+        model.addColumn("Ruang");
+        
+        tabelKelas.setModel(model);
+        
+        sql = "SELECT * FROM kelas WHERE id_kelas != '000'";
+        try{
+            rs = stm.executeQuery(sql);
+            while(rs.next()){
+                Object[] data = new Object[5];
+                data[0] = rs.getString("ID_KELAS");
+                data[1] = rs.getString("KELAS");
+                data[2] = rs.getString("PERTEMUAN");
+                data[3] = rs.getString("WAKTU");
+                data[4] = rs.getString("RUANG");  
+                model.addRow(data);
+                tabelKelas.setModel(model);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
     private void clearDosen(){
         tfNip.setText("");
         tfNidn.setText("");
@@ -276,21 +310,22 @@ public class ManageData extends javax.swing.JFrame {
         manageKelas = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfidkelas = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tfnamakelas = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tfpertemuan = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        tfwaktu = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbruang = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tabelKelas = new javax.swing.JTable();
+        btinputkelas = new javax.swing.JButton();
+        btupdatekelas = new javax.swing.JButton();
+        btdeletekelas = new javax.swing.JButton();
+        btclearkelas = new javax.swing.JButton();
+        jLabel41 = new javax.swing.JLabel();
         manageMatkul = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
@@ -312,8 +347,8 @@ public class ManageData extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuItemDosen = new javax.swing.JMenuItem();
+        MenuItemKelas = new javax.swing.JMenuItem();
         menuKeluar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -769,13 +804,19 @@ public class ManageData extends javax.swing.JFrame {
 
         jLabel32.setText("Pertemuan");
 
+        tfpertemuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfpertemuanActionPerformed(evt);
+            }
+        });
+
         jLabel33.setText("Waktu");
 
         jLabel34.setText("Ruang");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbruang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A.1.1", "A.2.3", "A.3.3", "B.1.1", "B.2.2", "B.3.3", "C.1.1", "C.2.2", "C.3.3", "D.1.1", "D.2.2", "D.3.3", " " }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelKelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -786,15 +827,42 @@ public class ManageData extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable1);
+        tabelKelas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelKelasMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tabelKelas);
 
-        jButton1.setText("Input");
+        btinputkelas.setText("Input");
+        btinputkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btinputkelasActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Update");
+        btupdatekelas.setText("Update");
+        btupdatekelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btupdatekelasActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Delete");
+        btdeletekelas.setText("Delete");
+        btdeletekelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btdeletekelasActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Clear");
+        btclearkelas.setText("Clear");
+        btclearkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btclearkelasActionPerformed(evt);
+            }
+        });
+
+        jLabel41.setText("Format Penulisan Waktu = YYYY-MM-DD HH:MM:SS");
 
         javax.swing.GroupLayout manageKelasLayout = new javax.swing.GroupLayout(manageKelas);
         manageKelas.setLayout(manageKelasLayout);
@@ -807,39 +875,41 @@ public class ManageData extends javax.swing.JFrame {
                         .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(manageKelasLayout.createSequentialGroup()
                                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jLabel33)
-                                    .addComponent(jLabel34))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBox1, 0, 500, Short.MAX_VALUE)))
-                            .addGroup(manageKelasLayout.createSequentialGroup()
-                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel30)
                                     .addComponent(jLabel31))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tfidkelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfnamakelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(manageKelasLayout.createSequentialGroup()
+                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel32)
+                                    .addComponent(jLabel33)
+                                    .addComponent(jLabel34))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel41)
+                                    .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(tfwaktu, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(tfpertemuan, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(cbruang, 0, 500, Short.MAX_VALUE)))))
                         .addGap(41, 41, 41))
-                    .addGroup(manageKelasLayout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(manageKelasLayout.createSequentialGroup()
                         .addComponent(jScrollPane3)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4)
+                        .addComponent(btclearkelas)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(btdeletekelas)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btupdatekelas)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addContainerGap())))
+                        .addComponent(btinputkelas)
+                        .addContainerGap())
+                    .addGroup(manageKelasLayout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         manageKelasLayout.setVerticalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -849,35 +919,37 @@ public class ManageData extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfidkelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel31)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfnamakelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfpertemuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel33)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfwaktu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel41)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel34)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addComponent(cbruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btinputkelas)
+                    .addComponent(btupdatekelas)
+                    .addComponent(btdeletekelas)
+                    .addComponent(btclearkelas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(126, 126, 126))
         );
 
-        parentPanel.add(manageKelas, "card4");
+        parentPanel.add(manageKelas, "manageKelas");
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel35.setText("Manage Mata Kuliah");
@@ -1022,16 +1094,21 @@ public class ManageData extends javax.swing.JFrame {
         });
         jMenu1.add(menuItemMahasiswa);
 
-        jMenuItem2.setText("Manage Dosen");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuItemDosen.setText("Manage Dosen");
+        menuItemDosen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuItemDosenActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(menuItemDosen);
 
-        jMenuItem1.setText("Manage Kelas");
-        jMenu1.add(jMenuItem1);
+        MenuItemKelas.setText("Manage Kelas");
+        MenuItemKelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemKelasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(MenuItemKelas);
 
         jMenuBar1.add(jMenu1);
 
@@ -1223,11 +1300,11 @@ public class ManageData extends javax.swing.JFrame {
         cl.show(parentPanel, "manageMahasiswa");
     }//GEN-LAST:event_menuItemMahasiswaActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuItemDosenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDosenActionPerformed
         // TODO add your handling code here:
         CardLayout cl= (CardLayout) parentPanel.getLayout();
         cl.show(parentPanel, "manageDosen");
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuItemDosenActionPerformed
 
     private void btnInputMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputMahasiswaActionPerformed
         // TODO add your handling code here:
@@ -1386,6 +1463,122 @@ public class ManageData extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
 
+    private void btinputkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btinputkelasActionPerformed
+        // TODO add your handling code here:
+        String idkelas = tfidkelas.getText();
+        String namakelas = tfnamakelas.getText();
+        String pertemuan = tfpertemuan.getText();
+        String waktu = tfwaktu.getText();
+        String ruang = cbruang.getSelectedItem().toString();
+        if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan)){
+           try {
+                stm.executeUpdate("INSERT INTO kelas VALUES('"+idkelas+"', '"+namakelas+"', '"+pertemuan+"', "
+                    + "'"+waktu+"', '"+ruang+"')");
+                JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
+                clearKelas();
+                updateTabelKelas();
+            }
+           catch (SQLException err) {
+                JOptionPane.showMessageDialog(null, err);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Semua data harus diisi terlebih dahulu!");
+        }
+    }//GEN-LAST:event_btinputkelasActionPerformed
+    
+    private void tfpertemuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfpertemuanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfpertemuanActionPerformed
+
+    private void btupdatekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btupdatekelasActionPerformed
+        // TODO add your handling code here:
+        String idkelas = tfidkelas.getText();
+        String namakelas = tfnamakelas.getText();
+        String pertemuan = tfpertemuan.getText();
+        String waktu = tfwaktu.getText();
+        String ruang = cbruang.getSelectedItem().toString();
+        if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan)){
+           try {
+                stm.executeUpdate("UPDATE kelas SET `ID_KELAS`='"+idkelas+"',`KELAS`='"+namakelas+"',`PERTEMUAN`='"+pertemuan+"',`WAKTU`='"+waktu+"',`RUANG`='"+ruang+"' WHERE ID_KELAS = '"+idkelas+"'");
+                JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
+                clearKelas();
+                updateTabelKelas();
+            }
+           catch (SQLException err) {
+                JOptionPane.showMessageDialog(null, err);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Semua data harus diisi terlebih dahulu!");
+        }
+    }//GEN-LAST:event_btupdatekelasActionPerformed
+
+    private void MenuItemKelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemKelasActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl= (CardLayout) parentPanel.getLayout();
+        cl.show(parentPanel, "manageKelas");
+    }//GEN-LAST:event_MenuItemKelasActionPerformed
+
+    private void btdeletekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdeletekelasActionPerformed
+        // TODO add your handling code here:
+        String idkelas = tfidkelas.getText();
+        if(!"".equals(idkelas)){
+            sql = "DELETE FROM KELAS WHERE ID_KELAS = '"+idkelas+"'";
+            try{
+                stm.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
+                clearKelas();
+                updateTabelKelas();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Kolom ID Kelas harus diisi!");
+        }
+        
+    }//GEN-LAST:event_btdeletekelasActionPerformed
+
+    private void btclearkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearkelasActionPerformed
+        // TODO add your handling code here:
+        clearKelas();
+    }//GEN-LAST:event_btclearkelasActionPerformed
+
+    private void tabelKelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelKelasMouseClicked
+        // TODO add your handling code here:
+        int row = tabelKelas.getSelectedRow();
+        tfidkelas.setText(tabelKelas.getValueAt(row, 0).toString());
+        tfnamakelas.setText(tabelKelas.getValueAt(row, 1).toString());
+        tfpertemuan.setText(tabelKelas.getValueAt(row, 2).toString());
+        tfwaktu.setText(tabelKelas.getValueAt(row, 3).toString());
+        if(tabelKelas.getValueAt(row, 4).equals("A.1.1")){
+            cbruang.setSelectedIndex(0);
+        }else if(tabelKelas.getValueAt(row, 4).equals("A.2.2")){
+            cbruang.setSelectedIndex(1);
+        }else if(tabelKelas.getValueAt(row, 4).equals("A.3.3")){
+            cbruang.setSelectedIndex(2);
+        }else if(tabelKelas.getValueAt(row, 4).equals("B.1.1")){
+            cbruang.setSelectedIndex(3);
+        }else if(tabelKelas.getValueAt(row, 4).equals("B.2.2")){
+            cbruang.setSelectedIndex(4);
+        }else if(tabelKelas.getValueAt(row, 4).equals("B.3.3")){
+            cbruang.setSelectedIndex(5);
+        }else if(tabelKelas.getValueAt(row, 4).equals("C.1.1")){
+            cbruang.setSelectedIndex(6);
+        }else if(tabelKelas.getValueAt(row, 4).equals("C.2.2")){
+            cbruang.setSelectedIndex(7);
+        }else if(tabelKelas.getValueAt(row, 4).equals("C.3.3")){
+            cbruang.setSelectedIndex(8);
+        }else if(tabelKelas.getValueAt(row, 4).equals("D.1.1")){
+            cbruang.setSelectedIndex(9);
+        }else if(tabelKelas.getValueAt(row, 4).equals("D.2.2")){
+            cbruang.setSelectedIndex(10);
+        }else if(tabelKelas.getValueAt(row, 4).equals("D.3.3")){
+            cbruang.setSelectedIndex(11);
+        }
+       
+    }//GEN-LAST:event_tabelKelasMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1422,6 +1615,10 @@ public class ManageData extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuItemKelas;
+    private javax.swing.JButton btclearkelas;
+    private javax.swing.JButton btdeletekelas;
+    private javax.swing.JButton btinputkelas;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnClearMhs;
     private javax.swing.JButton btnDelete;
@@ -1430,6 +1627,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JButton btnInputMahasiswa;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdateMhs;
+    private javax.swing.JButton btupdatekelas;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbAgama;
@@ -1438,15 +1636,11 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbProdi;
     private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JComboBox<String> cbStatusKepegawaian;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> cbruang;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
@@ -1484,6 +1678,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1491,18 +1686,11 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField8;
@@ -1510,6 +1698,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JPanel manageKelas;
     private javax.swing.JPanel manageMahasiswa;
     private javax.swing.JPanel manageMatkul;
+    private javax.swing.JMenuItem menuItemDosen;
     private javax.swing.JMenuItem menuItemMahasiswa;
     private javax.swing.JMenu menuKeluar;
     private javax.swing.JPanel parentPanel;
@@ -1518,6 +1707,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbWanita;
     private javax.swing.JRadioButton rbWanitaMhs;
     private javax.swing.JTable tabelDosen;
+    private javax.swing.JTable tabelKelas;
     private javax.swing.JTable tabelMahasiswa;
     private javax.swing.JTextField tfAlamatDosen;
     private javax.swing.JTextField tfAlamatMhs;
@@ -1536,6 +1726,10 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JTextField tfNrp;
     private javax.swing.JTextField tfTeleponDosen;
     private javax.swing.JTextField tfTelpOrtu;
+    private javax.swing.JTextField tfidkelas;
+    private javax.swing.JTextField tfnamakelas;
+    private javax.swing.JTextField tfpertemuan;
+    private javax.swing.JTextField tfwaktu;
     private javax.swing.JTextField ttlDosen;
     // End of variables declaration//GEN-END:variables
 }
