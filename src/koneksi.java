@@ -15,7 +15,7 @@ public class koneksi {
         try{
             String dbUrl = "jdbc:mysql://localhost/mahasiswa_sakti";
             String username = "root";
-            String password = "12345";
+            String password = "";
             con = DriverManager.getConnection(dbUrl, username, password);
             stm = con.createStatement();
         }catch(Exception e){
