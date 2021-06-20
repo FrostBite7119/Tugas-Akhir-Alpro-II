@@ -459,6 +459,8 @@ String sql;
        String cari = txtCari.getText();
        try{
            String sql = "Select * from mahasiswa WHERE NRP =";
+           stm = conn.prepareStatement(sql);
+           rs = stm.executeQuery(cari);
        }catch (Exception e){
            JOptionPane.showMessageDialog(null, e.getMessage());
        }
