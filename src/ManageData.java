@@ -525,6 +525,7 @@ private void updateTabelKelas(){
         tbAmbilMk = new javax.swing.JTable();
         btnInputAmbilMk = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -721,7 +722,7 @@ private void updateTabelKelas(){
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
                                         .addComponent(tfAlamatOrtu)
-                                        .addComponent(cbDosenPembimbing, 0, 153, Short.MAX_VALUE))))
+                                        .addComponent(cbDosenPembimbing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -1351,7 +1352,14 @@ private void updateTabelKelas(){
             }
         });
 
-        jButton2.setText("Update");
+        jButton2.setText("Delete");
+
+        jButton1.setText("Clear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout manageAmbilMkLayout = new javax.swing.GroupLayout(manageAmbilMk);
         manageAmbilMk.setLayout(manageAmbilMkLayout);
@@ -1377,6 +1385,8 @@ private void updateTabelKelas(){
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageAmbilMkLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnInputAmbilMk)))
@@ -1402,7 +1412,8 @@ private void updateTabelKelas(){
                 .addGap(26, 26, 26)
                 .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInputAmbilMk)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addContainerGap())
@@ -2044,6 +2055,10 @@ private void updateTabelKelas(){
         }
     }//GEN-LAST:event_btnInputAmbilMkActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2110,6 +2125,7 @@ private void updateTabelKelas(){
     private javax.swing.JComboBox<String> cbidkelas;
     private javax.swing.JComboBox<String> cbnipdosen;
     private javax.swing.JComboBox<String> cbruang;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
