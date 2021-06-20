@@ -1,8 +1,16 @@
 
 import java.awt.CardLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /*
@@ -16,10 +24,10 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class LihatData extends javax.swing.JFrame {
-public Connection conn;
-public ResultSet rs;
-public Statement stm;
-String sql;
+    public Connection conn;
+    public ResultSet rs;
+    public Statement stm;
+    String sql;
     /**
      * Creates new form LihatData
      */
@@ -29,7 +37,6 @@ String sql;
         DB.config();
         conn = DB.con;
         stm = DB.stm;
-        
     }
 
     /**
@@ -45,24 +52,24 @@ String sql;
         panelMahasiswa = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtCari = new javax.swing.JTextField();
+        tfCari = new javax.swing.JTextField();
         btnTampil = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        lbl_image = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        tfNrp = new javax.swing.JLabel();
+        tfNama = new javax.swing.JLabel();
+        tfProdi = new javax.swing.JLabel();
+        tfStatus = new javax.swing.JLabel();
+        tfJk = new javax.swing.JLabel();
+        tfAgama = new javax.swing.JLabel();
+        tfAlamat = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -71,15 +78,15 @@ String sql;
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        tfPembimbing = new javax.swing.JLabel();
+        tfEmail = new javax.swing.JLabel();
+        tfNoHp = new javax.swing.JLabel();
+        tfNamaAyah = new javax.swing.JLabel();
+        tfNoKtpAyah = new javax.swing.JLabel();
+        tfIbu = new javax.swing.JLabel();
+        tfOrtu = new javax.swing.JLabel();
+        tfAlamatOrtu = new javax.swing.JLabel();
+        btnClear = new javax.swing.JButton();
         panelJadwal = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -114,17 +121,17 @@ String sql;
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel6.setText("Foto Diri");
+        lbl_image.setText("Foto Diri");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lbl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+            .addComponent(lbl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
         );
 
         jLabel8.setText("Nama");
@@ -139,19 +146,19 @@ String sql;
 
         jLabel13.setText("Alamat");
 
-        jLabel14.setText("Data");
+        tfNrp.setText("Data");
 
-        jLabel15.setText("Data");
+        tfNama.setText("Data");
 
-        jLabel16.setText("Data");
+        tfProdi.setText("Data");
 
-        jLabel17.setText("Data");
+        tfStatus.setText("Data");
 
-        jLabel18.setText("Data");
+        tfJk.setText("Data");
 
-        jLabel19.setText("Data");
+        tfAgama.setText("Data");
 
-        jLabel20.setText("Data");
+        tfAlamat.setText("Data");
 
         jLabel21.setText("Email");
 
@@ -169,23 +176,28 @@ String sql;
 
         jLabel28.setText("Pembimbing");
 
-        jLabel29.setText("Data");
+        tfPembimbing.setText("Data");
 
-        jLabel30.setText("Data");
+        tfEmail.setText("Data");
 
-        jLabel31.setText("Data");
+        tfNoHp.setText("Data");
 
-        jLabel32.setText("Data");
+        tfNamaAyah.setText("Data");
 
-        jLabel33.setText("Data");
+        tfNoKtpAyah.setText("Data");
 
-        jLabel34.setText("Data");
+        tfIbu.setText("Data");
 
-        jLabel35.setText("Data");
+        tfOrtu.setText("Data");
 
-        jLabel36.setText("Data");
+        tfAlamatOrtu.setText("Data");
 
-        jButton3.setText("Clear");
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMahasiswaLayout = new javax.swing.GroupLayout(panelMahasiswa);
         panelMahasiswa.setLayout(panelMahasiswaLayout);
@@ -198,49 +210,48 @@ String sql;
                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelMahasiswaLayout.createSequentialGroup()
-                                .addGap(33, 33, 33)
+                                .addGap(22, 22, 22)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addGap(75, 75, 75)
-                                        .addComponent(jLabel14))
+                                        .addComponent(tfNrp))
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addGap(68, 68, 68)
-                                        .addComponent(jLabel15))
+                                        .addComponent(tfNama))
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel9)
                                         .addGap(71, 71, 71)
-                                        .addComponent(jLabel16))
+                                        .addComponent(tfProdi))
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel10)
                                         .addGap(31, 31, 31)
-                                        .addComponent(jLabel17))
+                                        .addComponent(tfStatus))
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addGap(32, 32, 32)
-                                        .addComponent(jLabel18))
+                                        .addComponent(tfJk))
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel12)
                                         .addGap(62, 62, 62)
-                                        .addComponent(jLabel19))
+                                        .addComponent(tfAgama))
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel13)
                                         .addGap(62, 62, 62)
-                                        .addComponent(jLabel20))
+                                        .addComponent(tfAlamat))
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel28)
                                         .addGap(39, 39, 39)
-                                        .addComponent(jLabel29))))
+                                        .addComponent(tfPembimbing))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelMahasiswaLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnTampil)
                             .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21)
@@ -250,19 +261,22 @@ String sql;
                                     .addComponent(jLabel25)
                                     .addComponent(jLabel26)
                                     .addComponent(jLabel27))
-                                .addGap(28, 28, 28)
-                                .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel36)
-                                    .addComponent(jLabel35)
-                                    .addComponent(jLabel34)
-                                    .addComponent(jLabel33)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jLabel31)
-                                    .addComponent(jLabel30))))))
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMahasiswaLayout.createSequentialGroup()
+                                .addComponent(btnTampil)
+                                .addGap(41, 41, 41)))
+                        .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfAlamatOrtu)
+                            .addComponent(tfOrtu)
+                            .addComponent(tfIbu)
+                            .addComponent(tfNoKtpAyah)
+                            .addComponent(tfNamaAyah)
+                            .addComponent(tfNoHp)
+                            .addComponent(tfEmail))))
                 .addContainerGap(144, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMahasiswaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(btnClear)
                 .addGap(45, 45, 45))
         );
         panelMahasiswaLayout.setVerticalGroup(
@@ -273,7 +287,7 @@ String sql;
                 .addGap(18, 18, 18)
                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTampil))
                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
@@ -283,51 +297,51 @@ String sql;
                         .addGap(39, 39, 39)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel14)
+                            .addComponent(tfNrp)
                             .addComponent(jLabel21)
-                            .addComponent(jLabel30))
+                            .addComponent(tfEmail))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel15)
+                            .addComponent(tfNama)
                             .addComponent(jLabel22)
-                            .addComponent(jLabel31))
+                            .addComponent(tfNoHp))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel16)
+                            .addComponent(tfProdi)
                             .addComponent(jLabel23)
-                            .addComponent(jLabel32))
+                            .addComponent(tfNamaAyah))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel17)
+                            .addComponent(tfStatus)
                             .addComponent(jLabel24)
-                            .addComponent(jLabel33))
+                            .addComponent(tfNoKtpAyah))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel18)
+                            .addComponent(tfJk)
                             .addComponent(jLabel25)
-                            .addComponent(jLabel34))
+                            .addComponent(tfIbu))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel19)
+                            .addComponent(tfAgama)
                             .addComponent(jLabel26)
-                            .addComponent(jLabel35))
+                            .addComponent(tfOrtu))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel20)
+                            .addComponent(tfAlamat)
                             .addComponent(jLabel27)
-                            .addComponent(jLabel36))))
+                            .addComponent(tfAlamatOrtu))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
-                    .addComponent(jLabel29))
+                    .addComponent(tfPembimbing))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(btnClear)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
@@ -453,19 +467,60 @@ String sql;
 
     private void btnTampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilActionPerformed
         // TODO add your handling code here:
-        tampil();
+        String nrp = tfCari.getText();
+        if(!"".equals(nrp)){
+            try{
+                rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN WHERE NRP = '"+nrp+"'");
+                rs.next();
+                tfNrp.setText(rs.getString("NRP"));
+                tfNama.setText(rs.getString("NAMA_MAHASISWA"));
+                tfProdi.setText(rs.getString("PRODI"));
+                tfStatus.setText(rs.getString("STATUS_MASUK"));
+                tfJk.setText(rs.getString("JENIS_KELAMIN"));
+                tfAgama.setText(rs.getString("AGAMA"));
+                tfAlamat.setText(rs.getString("ALAMAT"));
+                tfPembimbing.setText(rs.getString("NAMA_DOSEN"));
+                tfEmail.setText(rs.getString("EMAIL"));
+                tfNoHp.setText(rs.getString("NO_HP"));
+                tfNamaAyah.setText(rs.getString("NAMA_AYAH"));
+                tfNoKtpAyah.setText(rs.getString("NOMOR_KTP_AYAH"));
+                tfIbu.setText(rs.getString("NAMA_IBU"));
+                tfOrtu.setText(rs.getString("TELEPON_ORANG_TUA"));
+                tfAlamatOrtu.setText(rs.getString("ALAMAT_ORANG_TUA"));
+                BufferedImage img = ImageIO.read(new File(rs.getString("link_foto")));
+                Image resizedImage = img.getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon icon = new ImageIcon(resizedImage);
+                lbl_image.setText("");
+                lbl_image.setIcon(icon);
+            }catch(SQLException | IOException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Kolom harus diisi");
+        }
     }//GEN-LAST:event_btnTampilActionPerformed
-    private void tampil(){
-       String cari = txtCari.getText();
-       try{
-           String sql = "Select * from mahasiswa WHERE NRP =";
-           stm = conn.prepareStatement(sql);
-           rs = stm.executeQuery(cari);
-       }catch (Exception e){
-           JOptionPane.showMessageDialog(null, e.getMessage());
-       }
-       tampil();
-    }
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        tfNrp.setText("");
+        tfNama.setText("");
+        tfProdi.setText("");
+        tfStatus.setText("");
+        tfJk.setText("");
+        tfAgama.setText("");
+        tfAlamat.setText("");
+        tfPembimbing.setText("");
+        tfEmail.setText("");
+        tfNoHp.setText("");
+        tfNamaAyah.setText("");
+        tfNoKtpAyah.setText("");
+        tfIbu.setText("");
+        tfOrtu.setText("");
+        tfAlamatOrtu.setText("");
+        lbl_image.setIcon(null);
+        lbl_image.setText("Foto Diri");
+    }//GEN-LAST:event_btnClearActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -502,22 +557,15 @@ String sql;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnTampil;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -526,18 +574,9 @@ String sql;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -548,11 +587,27 @@ String sql;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbl_image;
     private javax.swing.JMenuItem menuJadwal;
     private javax.swing.JMenu menuKeluar;
     private javax.swing.JPanel panelJadwal;
     private javax.swing.JPanel panelMahasiswa;
     private javax.swing.JPanel parentPanel;
-    private javax.swing.JTextField txtCari;
+    private javax.swing.JLabel tfAgama;
+    private javax.swing.JLabel tfAlamat;
+    private javax.swing.JLabel tfAlamatOrtu;
+    private javax.swing.JTextField tfCari;
+    private javax.swing.JLabel tfEmail;
+    private javax.swing.JLabel tfIbu;
+    private javax.swing.JLabel tfJk;
+    private javax.swing.JLabel tfNama;
+    private javax.swing.JLabel tfNamaAyah;
+    private javax.swing.JLabel tfNoHp;
+    private javax.swing.JLabel tfNoKtpAyah;
+    private javax.swing.JLabel tfNrp;
+    private javax.swing.JLabel tfOrtu;
+    private javax.swing.JLabel tfPembimbing;
+    private javax.swing.JLabel tfProdi;
+    private javax.swing.JLabel tfStatus;
     // End of variables declaration//GEN-END:variables
 }
