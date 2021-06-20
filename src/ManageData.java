@@ -408,8 +408,9 @@ private void updateTabelKelas(){
         btnUpdateMhs = new javax.swing.JButton();
         btnDeleteMhs = new javax.swing.JButton();
         btnClearMhs = new javax.swing.JButton();
-        lbl_image = new javax.swing.JLabel();
         btnPilihGambar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lbl_image = new javax.swing.JLabel();
         manageDosen = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -581,14 +582,27 @@ private void updateTabelKelas(){
             }
         });
 
-        lbl_image.setText("Foto");
-
         btnPilihGambar.setText("Pilih Gambar");
         btnPilihGambar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPilihGambarActionPerformed(evt);
             }
         });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lbl_image.setText("Foto");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_image, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout manageMahasiswaLayout = new javax.swing.GroupLayout(manageMahasiswa);
         manageMahasiswa.setLayout(manageMahasiswaLayout);
@@ -671,9 +685,9 @@ private void updateTabelKelas(){
                                 .addComponent(btnInputMahasiswa)))))
                 .addContainerGap())
             .addGroup(manageMahasiswaLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(48, 48, 48)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
                 .addComponent(btnPilihGambar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -733,13 +747,16 @@ private void updateTabelKelas(){
                     .addComponent(btnUpdateMhs)
                     .addComponent(btnDeleteMhs)
                     .addComponent(btnClearMhs))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(btnPilihGambar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(manageMahasiswaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                        .addComponent(btnPilihGambar)
+                        .addGap(70, 70, 70))
+                    .addGroup(manageMahasiswaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(10, 10, 10))
         );
 
         parentPanel.add(manageMahasiswa, "manageMahasiswa");
@@ -944,7 +961,7 @@ private void updateTabelKelas(){
                     .addComponent(btnInput))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         parentPanel.add(manageDosen, "manageDosen");
@@ -1038,32 +1055,34 @@ private void updateTabelKelas(){
                             .addGroup(manageKelasLayout.createSequentialGroup()
                                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel32)
-                                    .addComponent(jLabel33)
-                                    .addComponent(jLabel34))
+                                    .addComponent(jLabel33))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel41)
-                                    .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tfwaktu, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(tfpertemuan, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(cbruang, 0, 500, Short.MAX_VALUE)))))
+                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfwaktu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                    .addComponent(tfpertemuan, javax.swing.GroupLayout.Alignment.TRAILING))))
                         .addGap(41, 41, 41))
                     .addGroup(manageKelasLayout.createSequentialGroup()
                         .addComponent(jScrollPane3)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btclearkelas)
-                        .addGap(18, 18, 18)
-                        .addComponent(btdeletekelas)
-                        .addGap(18, 18, 18)
-                        .addComponent(btupdatekelas)
-                        .addGap(18, 18, 18)
-                        .addComponent(btinputkelas)
-                        .addContainerGap())
                     .addGroup(manageKelasLayout.createSequentialGroup()
                         .addComponent(jLabel29)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
+                .addComponent(jLabel34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel41)
+                    .addComponent(cbruang, 0, 520, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btclearkelas)
+                .addGap(18, 18, 18)
+                .addComponent(btdeletekelas)
+                .addGap(18, 18, 18)
+                .addComponent(btupdatekelas)
+                .addGap(18, 18, 18)
+                .addComponent(btinputkelas))
         );
         manageKelasLayout.setVerticalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1086,7 +1105,7 @@ private void updateTabelKelas(){
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel33)
                     .addComponent(tfwaktu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel41)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1098,9 +1117,9 @@ private void updateTabelKelas(){
                     .addComponent(btupdatekelas)
                     .addComponent(btdeletekelas)
                     .addComponent(btclearkelas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(123, 123, 123))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         parentPanel.add(manageKelas, "manageKelas");
@@ -1241,15 +1260,15 @@ private void updateTabelKelas(){
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
                     .addComponent(tfnamamatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btinputmatkul)
                     .addComponent(btupdatematkul)
                     .addComponent(btdeletematkul)
                     .addComponent(btclearmatkul))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         parentPanel.add(manageMatkul, "manageMatkul");
@@ -1655,6 +1674,7 @@ private void updateTabelKelas(){
             BufferedImage img = ImageIO.read(new File(dataFoto[row]));
             Image resizedImage = img.getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(resizedImage);
+            lbl_image.setText("");
             lbl_image.setIcon(icon);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -1791,6 +1811,7 @@ private void updateTabelKelas(){
             BufferedImage img = ImageIO.read(new File(asalFile));
             Image resizedImage = img.getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(resizedImage);
+            lbl_image.setText("");
             lbl_image.setIcon(icon);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -1963,6 +1984,7 @@ private void updateTabelKelas(){
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
