@@ -56,6 +56,12 @@ public class ManageData extends javax.swing.JFrame {
         updateTabelMatkul();
     }
     
+    private void refreshData(){
+        updateTabelDosen();
+        updateTabelMahasiswa();
+        updateTabelKelas();
+        updateTabelMatkul();
+    }
     private void clearMahasiswa(){
         tfNrp.setText("");
         tfNamaMhs.setText("");
@@ -82,7 +88,7 @@ public class ManageData extends javax.swing.JFrame {
         tfnamakelas.setText("");
         tfpertemuan.setText("");
         tfwaktu.setText("");
-        cbruang.setSelectedIndex(-1);
+        cbruang.setSelectedIndex(0);
         tabelKelas.clearSelection();
     }
     
@@ -162,6 +168,7 @@ public class ManageData extends javax.swing.JFrame {
                 data[12] = rs.getString("TELEPON_ORANG_TUA");
                 data[13] = rs.getString("ALAMAT_ORANG_TUA");
                 data[14] = rs.getString("NAMA_DOSEN");
+                
                 model.addRow(data);
                 tabelMahasiswa.setModel(model);
             }
@@ -205,19 +212,18 @@ public class ManageData extends javax.swing.JFrame {
     private void updateTabelMatkul(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Kode Mata Kuliah");
-        model.addColumn("NIP Dosen");
+        model.addColumn("Dosen Pengampu");
         model.addColumn("ID Kelas");
         model.addColumn("Periode");
         model.addColumn("Nama Mata Kuliah");
         tabelMatkul.setModel(model);
         
         try{
-            rs = stm.executeQuery("SELECT * FROM matakuliah INNER JOIN dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN");
-            rs = stm.executeQuery("SELECT * FROM matakuliah INNER JOIN Kelas ON matakuliah.ID_KELAS = kelas.ID_KELAS");
+            rs = stm.executeQuery("SELECT * FROM matakuliah INNER JOIN dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN INNER JOIN kelas ON matakuliah.ID_KELAS = kelas.ID_KELAS");
             while(rs.next()){
                 Object[] data = new Object[5];
                 data[0] = rs.getString("KODE_MATA_KULIAH");
-                data[1] = rs.getString("NIP_DOSEN");
+                data[1] = rs.getString("NAMA_DOSEN");
                 data[2] = rs.getString("ID_KELAS");
                 data[3] = rs.getString("PERIODE");
                 data[4] = rs.getString("NAMA_MATA_KULIAH");
@@ -236,8 +242,8 @@ public class ManageData extends javax.swing.JFrame {
                 }
                 rs.beforeFirst();
                 while(rs.next()){
-                    String nipDosen = rs.getString("NIP_DOSEN");
-                    cbnipdosen.addItem(nipDosen);
+                    String namaDosen = rs.getString("NAMA_DOSEN");
+                    cbnipdosen.addItem(namaDosen);
                 }
                 rs.close();
             }catch(SQLException e){
@@ -245,7 +251,7 @@ public class ManageData extends javax.swing.JFrame {
             }
             try{
                 int row = getNumberKelas();
-                rs = stm.executeQuery("SELECT * FROM kelas WHERE ID_KELAS != 000");
+                rs = stm.executeQuery("SELECT * FROM kelas");
                 dataKelas = new String[row];
                 for(int i = 0; i < row; i++){
                     rs.next();
@@ -960,8 +966,8 @@ private void updateTabelKelas(){
                     .addComponent(btnUpdate)
                     .addComponent(btnInput))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         parentPanel.add(manageDosen, "manageDosen");
@@ -1082,7 +1088,8 @@ private void updateTabelKelas(){
                 .addGap(18, 18, 18)
                 .addComponent(btupdatekelas)
                 .addGap(18, 18, 18)
-                .addComponent(btinputkelas))
+                .addComponent(btinputkelas)
+                .addContainerGap())
         );
         manageKelasLayout.setVerticalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1208,7 +1215,16 @@ private void updateTabelKelas(){
                                             .addComponent(tfnamamatkul)))
                                     .addGroup(manageMatkulLayout.createSequentialGroup()
                                         .addGap(11, 11, 11)
-                                        .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btclearmatkul)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btdeletematkul)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btupdatematkul)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btinputmatkul))))
                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
@@ -1223,16 +1239,6 @@ private void updateTabelKelas(){
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(manageMatkulLayout.createSequentialGroup()
                         .addComponent(jScrollPane4)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btclearmatkul)
-                        .addGap(18, 18, 18)
-                        .addComponent(btdeletematkul)
-                        .addGap(18, 18, 18)
-                        .addComponent(btupdatematkul)
-                        .addGap(18, 18, 18)
-                        .addComponent(btinputmatkul)
                         .addContainerGap())))
         );
         manageMatkulLayout.setVerticalGroup(
@@ -1434,6 +1440,7 @@ private void updateTabelKelas(){
         if(!"".equals(nipDosen)){
             
             try{
+                stm.executeUpdate("UPDATE matkul SET NIP_DOSEN = '000' WHERE NIP_DOSEN = '"+nipDosen+"'");
                 stm.executeUpdate("UPDATE mahasiswa SET NIP_DOSEN = '000' WHERE NIP_DOSEN = '"+nipDosen+"'");
                 stm.executeUpdate("DELETE FROM dosen WHERE NIP_DOSEN = '"+nipDosen+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
@@ -1746,6 +1753,7 @@ private void updateTabelKelas(){
         // TODO add your handling code here:
         String idkelas = tfidkelas.getText();
         if(!"".equals(idkelas)){
+            sql = "UPDATE matakuliah SET ID_KELAS = '000' WHERE ID_KELAS = '"+idkelas+"'";
             sql = "DELETE FROM KELAS WHERE ID_KELAS = '"+idkelas+"'";
             try{
                 stm.executeUpdate(sql);
@@ -1827,8 +1835,10 @@ private void updateTabelKelas(){
     private void btinputmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btinputmatkulActionPerformed
         // TODO add your handling code here:
         String kdmatkul = tfkdmatkul.getText();
-        String nipdosen = cbnipdosen.getSelectedItem().toString();
-        String idkelas = cbidkelas.getSelectedItem().toString();
+        int indexDosen = cbnipdosen.getSelectedIndex();
+        String nipdosen = dataDosen[indexDosen];
+        int indexKelas = cbidkelas.getSelectedIndex();
+        String idkelas = dataKelas[indexKelas];
         String periode = tfperiode.getText();
         String namamatkul = tfnamamatkul.getText();
         if(!"".equals(kdmatkul) & !"".equals(nipdosen) & !"".equals(nipdosen) & !"".equals(idkelas) & !"".equals(periode) & !"".equals(namamatkul))
@@ -1838,7 +1848,7 @@ private void updateTabelKelas(){
                 stm.executeUpdate("INSERT INTO matakuliah VALUES('"+kdmatkul+"', '"+nipdosen+"', '"+idkelas+"', '"+periode+"', '"+namamatkul+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMatkul();
-                updateTabelMatkul();
+                refreshData();
             } catch (SQLException  ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
@@ -1858,10 +1868,11 @@ private void updateTabelKelas(){
         String kdmatkul = tfkdmatkul.getText();
         if(!"".equals(kdmatkul)){
             try{
+                stm.executeUpdate("UPDATE ");
                 stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
-                updateTabelMatkul();
+                refreshData();
             }catch(SQLException ex){
                 JOptionPane.showMessageDialog(null, ex);
             }

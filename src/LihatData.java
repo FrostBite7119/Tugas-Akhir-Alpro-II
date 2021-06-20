@@ -92,6 +92,11 @@ public class LihatData extends javax.swing.JFrame {
         jLabel5.setText("Cari dengan NRP");
 
         jButton2.setText("Tampil");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("NRP");
 
@@ -433,6 +438,10 @@ public class LihatData extends javax.swing.JFrame {
         CardLayout cl = (CardLayout) parentPanel.getLayout();
         cl.show(parentPanel, "panelJadwal");
     }//GEN-LAST:event_menuJadwalActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
