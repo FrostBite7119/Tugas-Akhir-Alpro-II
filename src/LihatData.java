@@ -168,7 +168,7 @@ public class LihatData extends javax.swing.JFrame {
 
         jLabel36.setText("Data");
 
-        jButton3.setText("Reset");
+        jButton3.setText("Clear");
 
         javax.swing.GroupLayout panelMahasiswaLayout = new javax.swing.GroupLayout(panelMahasiswa);
         panelMahasiswa.setLayout(panelMahasiswaLayout);
