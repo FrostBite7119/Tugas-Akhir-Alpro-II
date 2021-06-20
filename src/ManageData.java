@@ -1298,10 +1298,9 @@ private void updateTabelKelas(){
         String nipDosen = tfNip.getText();
         if(!"".equals(nipDosen)){
             
-            sql = "DELETE FROM dosen WHERE NIP_DOSEN = '"+nipDosen+"'";
             try{
                 stm.executeUpdate("UPDATE mahasiswa SET NIP_DOSEN = '000' WHERE NIP_DOSEN = '"+nipDosen+"'");
-                stm.executeUpdate(sql);
+                stm.executeUpdate("DELETE FROM dosen WHERE NIP_DOSEN = '"+nipDosen+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearDosen();
                 updateTabelDosen();
