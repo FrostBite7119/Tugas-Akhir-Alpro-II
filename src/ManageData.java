@@ -40,6 +40,7 @@ public class ManageData extends javax.swing.JFrame {
     String[] dataDosen;
     String[] dataFoto;
     String[] dataKelas;
+    String [] dataMatkul;
     String asalFile = "";
     public ManageData() {
         initComponents();
@@ -1132,6 +1133,11 @@ private void updateTabelKelas(){
         btupdatematkul.setText("Update");
 
         btdeletematkul.setText("Delete");
+        btdeletematkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btdeletematkulActionPerformed(evt);
+            }
+        });
 
         btclearmatkul.setText("Clear");
         btclearmatkul.addActionListener(new java.awt.event.ActionListener() {
@@ -1151,6 +1157,11 @@ private void updateTabelKelas(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabelMatkul.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelMatkulMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tabelMatkul);
 
         javax.swing.GroupLayout manageMatkulLayout = new javax.swing.GroupLayout(manageMatkul);
@@ -1819,6 +1830,29 @@ private void updateTabelKelas(){
         // TODO add your handling code here:
         clearMatkul();
     }//GEN-LAST:event_btclearmatkulActionPerformed
+
+    private void btdeletematkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdeletematkulActionPerformed
+        // TODO add your handling code here:
+        String kdmatkul = tfkdmatkul.getText();
+        if(!"".equals(kdmatkul)){
+            try{
+                stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
+                JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
+                clearMatkul();
+                updateTabelMatkul();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Kolom Kode Mata Kuliah harus diisi!");
+        }
+    }//GEN-LAST:event_btdeletematkulActionPerformed
+
+    private void tabelMatkulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMatkulMouseClicked
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_tabelMatkulMouseClicked
 
     /**
      * @param args the command line arguments
