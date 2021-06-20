@@ -39,6 +39,7 @@ public class ManageData extends javax.swing.JFrame {
     String sql;
     String[] dataDosen;
     String[] dataFoto;
+    String[] dataKelas;
     String asalFile = "";
     public ManageData() {
         initComponents();
@@ -51,6 +52,7 @@ public class ManageData extends javax.swing.JFrame {
         updateTabelDosen();
         updateTabelMahasiswa();
         updateTabelKelas();
+        updateTabelMatkul();
     }
     
     private void clearMahasiswa(){
@@ -99,6 +101,18 @@ public class ManageData extends javax.swing.JFrame {
         int row = 0;
         try {
             rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
+            while(rs.next()){
+                row =  rs.getInt(1);
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return row;
+    }
+    private int getNumberKelas(){
+        int row = 0;
+        try {
+            rs = stm.executeQuery("SELECT COUNT(*) FROM Kelas WHERE ID_KELAS != 000");
             while(rs.next()){
                 row =  rs.getInt(1);
             }
@@ -185,6 +199,72 @@ public class ManageData extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
+    private void updateTabelMatkul(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Kode Mata Kuliah");
+        model.addColumn("NIP Dosen");
+        model.addColumn("ID Kelas");
+        model.addColumn("Periode");
+        model.addColumn("Nama Mata Kuliah");
+        tabelMatkul.setModel(model);
+        
+        try{
+            rs = stm.executeQuery("SELECT * FROM matakuliah INNER JOIN dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN");
+            rs = stm.executeQuery("SELECT * FROM matakuliah INNER JOIN Kelas ON matakuliah.ID_KELAS = kelas.ID_KELAS");
+            while(rs.next()){
+                Object[] data = new Object[5];
+                data[0] = rs.getString("KODE_MATA_KULIAH");
+                data[1] = rs.getString("NIP_DOSEN");
+                data[2] = rs.getString("ID_KELAS");
+                data[3] = rs.getString("PERIODE");
+                data[4] = rs.getString("NAMA_MATA_KULIAH");
+                model.addRow(data);
+                tabelMatkul.setModel(model);
+            }
+            rs.close();
+            
+            try{
+                int row = getNumberDosen();
+                rs = stm.executeQuery("SELECT * FROM dosen WHERE NIP_DOSEN != 000");
+                dataDosen = new String[row];
+                for(int i = 0; i < row; i++){
+                    rs.next();
+                    dataDosen[i] = rs.getString("NIP_DOSEN");
+                }
+                rs.beforeFirst();
+                while(rs.next()){
+                    String nipDosen = rs.getString("NIP_DOSEN");
+                    cbnipdosen.addItem(nipDosen);
+                }
+                rs.close();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+            try{
+                int row = getNumberKelas();
+                rs = stm.executeQuery("SELECT * FROM kelas WHERE ID_KELAS != 000");
+                dataKelas = new String[row];
+                for(int i = 0; i < row; i++){
+                    rs.next();
+                    dataKelas[i] = rs.getString("ID_KELAS");
+                }
+                rs.beforeFirst();
+                while(rs.next()){
+                    String idKelas = rs.getString("ID_KELAS");
+                    cbidkelas.addItem(idKelas);
+                }
+                rs.close();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
     
     private void updateTabelDosen(){
         DefaultTableModel model = new DefaultTableModel();
@@ -278,37 +358,6 @@ private void updateTabelKelas(){
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         parentPanel = new javax.swing.JPanel();
-        manageDosen = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        tfNip = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        tfNidn = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        tfNamaDosen = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        tfAlamatDosen = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        tfTeleponDosen = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        rbPria = new javax.swing.JRadioButton();
-        rbWanita = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        ttlDosen = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        cbStatusKepegawaian = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
-        cbPendidikanDosen = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
-        tfJabatanAkademik = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelDosen = new javax.swing.JTable();
-        btnInput = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnClear = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        tfEmailDosen = new javax.swing.JTextField();
         manageMahasiswa = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -350,6 +399,37 @@ private void updateTabelKelas(){
         btnClearMhs = new javax.swing.JButton();
         lbl_image = new javax.swing.JLabel();
         btnPilihGambar = new javax.swing.JButton();
+        manageDosen = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        tfNip = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tfNidn = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tfNamaDosen = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        tfAlamatDosen = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        tfTeleponDosen = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        rbPria = new javax.swing.JRadioButton();
+        rbWanita = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
+        ttlDosen = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        cbStatusKepegawaian = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        cbPendidikanDosen = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        tfJabatanAkademik = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelDosen = new javax.swing.JTable();
+        btnInput = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        tfEmailDosen = new javax.swing.JTextField();
         manageKelas = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
@@ -372,236 +452,32 @@ private void updateTabelKelas(){
         manageMatkul = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        tfkdmatkul = new javax.swing.JTextField();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        tfperiode = new javax.swing.JTextField();
         jLabel40 = new javax.swing.JLabel();
+        tfnamamatkul = new javax.swing.JTextField();
+        cbnipdosen = new javax.swing.JComboBox<>();
+        cbidkelas = new javax.swing.JComboBox<>();
+        btinputmatkul = new javax.swing.JButton();
+        btupdatematkul = new javax.swing.JButton();
+        btdeletematkul = new javax.swing.JButton();
+        btclearmatkul = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jTextField6 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        tabelMatkul = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
         menuItemDosen = new javax.swing.JMenuItem();
         MenuItemKelas = new javax.swing.JMenuItem();
+        menuItemMatkul = new javax.swing.JMenuItem();
         menuKeluar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         parentPanel.setLayout(new java.awt.CardLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Manage Data Dosen");
-
-        jLabel9.setText("NIP Dosen");
-
-        jLabel2.setText("NIDN Dosen");
-
-        jLabel3.setText("Nama Dosen");
-
-        jLabel4.setText("Alamat");
-
-        jLabel5.setText("Telepon");
-
-        jLabel6.setText("Jenis Kelamin");
-
-        buttonGroup1.add(rbPria);
-        rbPria.setText("Pria");
-
-        buttonGroup1.add(rbWanita);
-        rbWanita.setText("Wanita");
-
-        jLabel7.setText("Tempat Tanggal Lahir");
-
-        jLabel8.setText("Status Kepegawaian");
-
-        cbStatusKepegawaian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Non Aktif" }));
-
-        jLabel10.setText("Pendidikan Tertinggi");
-
-        cbPendidikanDosen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SD", "SMP", "SMA", "S1", "S2", "S3" }));
-
-        jLabel11.setText("Jabatan Akademik");
-
-        tabelDosen.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tabelDosen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelDosenMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tabelDosen);
-
-        btnInput.setText("Input");
-        btnInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInputActionPerformed(evt);
-            }
-        });
-
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
-        btnDelete.setText("Delete");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
-        btnClear.setText("Clear");
-        btnClear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setText("Email");
-
-        javax.swing.GroupLayout manageDosenLayout = new javax.swing.GroupLayout(manageDosen);
-        manageDosen.setLayout(manageDosenLayout);
-        manageDosenLayout.setHorizontalGroup(
-            manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageDosenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageDosenLayout.createSequentialGroup()
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(manageDosenLayout.createSequentialGroup()
-                                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel12))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfNip)
-                                    .addComponent(tfNidn)
-                                    .addComponent(tfNamaDosen)
-                                    .addComponent(tfAlamatDosen)
-                                    .addComponent(tfTeleponDosen)
-                                    .addComponent(tfEmailDosen, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(manageDosenLayout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(cbStatusKepegawaian, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(manageDosenLayout.createSequentialGroup()
-                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel11))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cbPendidikanDosen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(tfJabatanAkademik)))
-                                .addGroup(manageDosenLayout.createSequentialGroup()
-                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel6))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(manageDosenLayout.createSequentialGroup()
-                                            .addComponent(rbPria)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(rbWanita))
-                                        .addComponent(ttlDosen, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(manageDosenLayout.createSequentialGroup()
-                                .addComponent(btnClear)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDelete)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnUpdate)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnInput)))))
-                .addContainerGap())
-        );
-        manageDosenLayout.setVerticalGroup(
-            manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageDosenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(tfNip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(rbPria)
-                    .addComponent(rbWanita))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(manageDosenLayout.createSequentialGroup()
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(tfNidn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(tfNamaDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(tfAlamatDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(tfTeleponDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(manageDosenLayout.createSequentialGroup()
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(ttlDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(cbStatusKepegawaian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(cbPendidikanDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(tfJabatanAkademik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(tfEmailDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClear)
-                    .addComponent(btnDelete)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnInput))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(168, Short.MAX_VALUE))
-        );
-
-        parentPanel.add(manageDosen, "manageDosen");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setText("Manage Data Mahasiswa");
@@ -857,6 +733,211 @@ private void updateTabelKelas(){
 
         parentPanel.add(manageMahasiswa, "manageMahasiswa");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Manage Data Dosen");
+
+        jLabel9.setText("NIP Dosen");
+
+        jLabel2.setText("NIDN Dosen");
+
+        jLabel3.setText("Nama Dosen");
+
+        jLabel4.setText("Alamat");
+
+        jLabel5.setText("Telepon");
+
+        jLabel6.setText("Jenis Kelamin");
+
+        buttonGroup1.add(rbPria);
+        rbPria.setText("Pria");
+
+        buttonGroup1.add(rbWanita);
+        rbWanita.setText("Wanita");
+
+        jLabel7.setText("Tempat Tanggal Lahir");
+
+        jLabel8.setText("Status Kepegawaian");
+
+        cbStatusKepegawaian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Non Aktif" }));
+
+        jLabel10.setText("Pendidikan Tertinggi");
+
+        cbPendidikanDosen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SD", "SMP", "SMA", "S1", "S2", "S3" }));
+
+        jLabel11.setText("Jabatan Akademik");
+
+        tabelDosen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabelDosen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelDosenMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelDosen);
+
+        btnInput.setText("Input");
+        btnInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInputActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Email");
+
+        javax.swing.GroupLayout manageDosenLayout = new javax.swing.GroupLayout(manageDosen);
+        manageDosen.setLayout(manageDosenLayout);
+        manageDosenLayout.setHorizontalGroup(
+            manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(manageDosenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageDosenLayout.createSequentialGroup()
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(manageDosenLayout.createSequentialGroup()
+                                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel12))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfNip)
+                                    .addComponent(tfNidn)
+                                    .addComponent(tfNamaDosen)
+                                    .addComponent(tfAlamatDosen)
+                                    .addComponent(tfTeleponDosen)
+                                    .addComponent(tfEmailDosen, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(manageDosenLayout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cbStatusKepegawaian, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(manageDosenLayout.createSequentialGroup()
+                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel11))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cbPendidikanDosen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(tfJabatanAkademik)))
+                                .addGroup(manageDosenLayout.createSequentialGroup()
+                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel6))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(manageDosenLayout.createSequentialGroup()
+                                            .addComponent(rbPria)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(rbWanita))
+                                        .addComponent(ttlDosen, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(manageDosenLayout.createSequentialGroup()
+                                .addComponent(btnClear)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnUpdate)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInput)))))
+                .addContainerGap())
+        );
+        manageDosenLayout.setVerticalGroup(
+            manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(manageDosenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(tfNip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(rbPria)
+                    .addComponent(rbWanita))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(manageDosenLayout.createSequentialGroup()
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(tfNidn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(tfNamaDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(tfAlamatDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(tfTeleponDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(manageDosenLayout.createSequentialGroup()
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(ttlDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cbStatusKepegawaian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(cbPendidikanDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(tfJabatanAkademik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(tfEmailDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear)
+                    .addComponent(btnDelete)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnInput))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(168, Short.MAX_VALUE))
+        );
+
+        parentPanel.add(manageDosen, "manageDosen");
+
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setText("Manage Data Kelas");
 
@@ -1026,7 +1107,24 @@ private void updateTabelKelas(){
 
         jLabel40.setText("Nama Mata Kuliah");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tfnamamatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfnamamatkulActionPerformed(evt);
+            }
+        });
+
+        cbidkelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbidkelas.setSelectedIndex(-1);
+
+        btinputmatkul.setText("Input");
+
+        btupdatematkul.setText("Update");
+
+        btdeletematkul.setText("Delete");
+
+        btclearmatkul.setText("Clear");
+
+        tabelMatkul.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -1037,25 +1135,7 @@ private void updateTabelKelas(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable2);
-
-        jButton5.setText("Input");
-
-        jButton6.setText("Update");
-
-        jButton7.setText("Delete");
-
-        jButton8.setText("Clear");
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jScrollPane4.setViewportView(tabelMatkul);
 
         javax.swing.GroupLayout manageMatkulLayout = new javax.swing.GroupLayout(manageMatkul);
         manageMatkul.setLayout(manageMatkulLayout);
@@ -1077,19 +1157,19 @@ private void updateTabelKelas(){
                                         .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                                 .addGap(0, 1, Short.MAX_VALUE)
-                                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jTextField6)))
+                                                .addComponent(tfperiode, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(tfnamamatkul)))
                                     .addGroup(manageMatkulLayout.createSequentialGroup()
                                         .addGap(11, 11, 11)
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
                                     .addComponent(jLabel37))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(tfkdmatkul, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                    .addComponent(cbnipdosen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(41, 41, 41))
                     .addGroup(manageMatkulLayout.createSequentialGroup()
                         .addComponent(jLabel35)
@@ -1099,13 +1179,13 @@ private void updateTabelKelas(){
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton8)
+                        .addComponent(btclearmatkul)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton7)
+                        .addComponent(btdeletematkul)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6)
+                        .addComponent(btupdatematkul)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)
+                        .addComponent(btinputmatkul)
                         .addContainerGap())))
         );
         manageMatkulLayout.setVerticalGroup(
@@ -1116,35 +1196,35 @@ private void updateTabelKelas(){
                 .addGap(18, 18, 18)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel36)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfkdmatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel37)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbnipdosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbidkelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel39)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfperiode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfnamamatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8))
+                    .addComponent(btinputmatkul)
+                    .addComponent(btupdatematkul)
+                    .addComponent(btdeletematkul)
+                    .addComponent(btclearmatkul))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(126, 126, 126))
         );
 
-        parentPanel.add(manageMatkul, "card5");
+        parentPanel.add(manageMatkul, "manageMatkul");
 
         jMenu1.setText("Menu");
 
@@ -1171,6 +1251,14 @@ private void updateTabelKelas(){
             }
         });
         jMenu1.add(MenuItemKelas);
+
+        menuItemMatkul.setText("Manage Matkul");
+        menuItemMatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemMatkulActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItemMatkul);
 
         jMenuBar1.add(jMenu1);
 
@@ -1545,9 +1633,9 @@ private void updateTabelKelas(){
         }
     }//GEN-LAST:event_tabelMahasiswaMouseClicked
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void tfnamamatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfnamamatkulActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_tfnamamatkulActionPerformed
 
     private void btinputkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btinputkelasActionPerformed
         // TODO add your handling code here:
@@ -1681,6 +1769,12 @@ private void updateTabelKelas(){
         }
     }//GEN-LAST:event_btnPilihGambarActionPerformed
 
+    private void menuItemMatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemMatkulActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl= (CardLayout) parentPanel.getLayout();
+        cl.show(parentPanel, "manageMatkul");
+    }//GEN-LAST:event_menuItemMatkulActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1719,8 +1813,11 @@ private void updateTabelKelas(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuItemKelas;
     private javax.swing.JButton btclearkelas;
+    private javax.swing.JButton btclearmatkul;
     private javax.swing.JButton btdeletekelas;
+    private javax.swing.JButton btdeletematkul;
     private javax.swing.JButton btinputkelas;
+    private javax.swing.JButton btinputmatkul;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnClearMhs;
     private javax.swing.JButton btnDelete;
@@ -1731,6 +1828,7 @@ private void updateTabelKelas(){
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdateMhs;
     private javax.swing.JButton btupdatekelas;
+    private javax.swing.JButton btupdatematkul;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbAgama;
@@ -1739,13 +1837,9 @@ private void updateTabelKelas(){
     private javax.swing.JComboBox<String> cbProdi;
     private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JComboBox<String> cbStatusKepegawaian;
+    private javax.swing.JComboBox<String> cbidkelas;
+    private javax.swing.JComboBox<String> cbnipdosen;
     private javax.swing.JComboBox<String> cbruang;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1793,10 +1887,6 @@ private void updateTabelKelas(){
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lbl_image;
     private javax.swing.JPanel manageDosen;
     private javax.swing.JPanel manageKelas;
@@ -1804,6 +1894,7 @@ private void updateTabelKelas(){
     private javax.swing.JPanel manageMatkul;
     private javax.swing.JMenuItem menuItemDosen;
     private javax.swing.JMenuItem menuItemMahasiswa;
+    private javax.swing.JMenuItem menuItemMatkul;
     private javax.swing.JMenu menuKeluar;
     private javax.swing.JPanel parentPanel;
     private javax.swing.JRadioButton rbPria;
@@ -1813,6 +1904,7 @@ private void updateTabelKelas(){
     private javax.swing.JTable tabelDosen;
     private javax.swing.JTable tabelKelas;
     private javax.swing.JTable tabelMahasiswa;
+    private javax.swing.JTable tabelMatkul;
     private javax.swing.JTextField tfAlamatDosen;
     private javax.swing.JTextField tfAlamatMhs;
     private javax.swing.JTextField tfAlamatOrtu;
@@ -1831,7 +1923,10 @@ private void updateTabelKelas(){
     private javax.swing.JTextField tfTeleponDosen;
     private javax.swing.JTextField tfTelpOrtu;
     private javax.swing.JTextField tfidkelas;
+    private javax.swing.JTextField tfkdmatkul;
     private javax.swing.JTextField tfnamakelas;
+    private javax.swing.JTextField tfnamamatkul;
+    private javax.swing.JTextField tfperiode;
     private javax.swing.JTextField tfpertemuan;
     private javax.swing.JTextField tfwaktu;
     private javax.swing.JTextField ttlDosen;
