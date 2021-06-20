@@ -1438,13 +1438,21 @@ private void updateTabelKelas(){
         String alamatOrtu = tfAlamatOrtu.getText();
         int dosPem = cbDosenPembimbing.getSelectedIndex();
         String nipDospem = dataDosen[dosPem];
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(nipDospem)){
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(nipDospem) & !"".equals(asalFile)){
             try {
+                int index = asalFile.lastIndexOf('.');
+                String jenisFile = asalFile.substring(index + 1);
+                String linkFile = "C:\\Tugas\\agfdaf\\Semester 2\\Algoritma dan Pemrograman II\\Tugas\\14_pertemuan\\TugasAkhir\\src\\gambar\\"+nrp+"."+jenisFile;
+                rs = stm.executeQuery("SELECT * FROM mahasiswa WHERE NRP = '"+nrp+"'");
+                rs.next();
+                Files.delete(Paths.get(rs.getString("link_foto")));
+                String link = linkFile.replace("\\", "\\\\");
                 stm.executeUpdate("UPDATE `mahasiswa` SET `NRP`='"+nrp+"',`NIP_DOSEN`='"+nipDospem+"',`NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"' WHERE NRP = '"+nrp+"'");
+                Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
                 clearMahasiswa();
                 updateTabelMahasiswa();
-            } catch (SQLException ex) {
+            } catch (SQLException | IOException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
         }else{
@@ -1526,6 +1534,15 @@ private void updateTabelKelas(){
             if(tabelMahasiswa.getValueAt(row, 14).toString().equals(cbDosenPembimbing.getItemAt(i))){
                 cbDosenPembimbing.setSelectedIndex(i);
             }
+        }
+
+        try {
+            BufferedImage img = ImageIO.read(new File(dataFoto[row]));
+            Image resizedImage = img.getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(resizedImage);
+            lbl_image.setIcon(icon);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_tabelMahasiswaMouseClicked
 
