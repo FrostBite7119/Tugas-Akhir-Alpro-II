@@ -355,6 +355,7 @@ private void updateTabelKelas(){
         cbnipdosen.setSelectedIndex(-1);
         cbidkelas.setSelectedIndex(-1);
         tabelMatkul.clearSelection();
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
