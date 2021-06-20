@@ -497,8 +497,6 @@ private void updateTabelKelas(){
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -1322,10 +1320,6 @@ private void updateTabelKelas(){
 
         jButton2.setText("Update");
 
-        jButton3.setText("Delete");
-
-        jButton4.setText("Clear");
-
         javax.swing.GroupLayout manageAmbilMkLayout = new javax.swing.GroupLayout(manageAmbilMk);
         manageAmbilMk.setLayout(manageAmbilMkLayout);
         manageAmbilMkLayout.setHorizontalGroup(
@@ -1350,10 +1344,6 @@ private void updateTabelKelas(){
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageAmbilMkLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)))
@@ -1379,9 +1369,7 @@ private void updateTabelKelas(){
                 .addGap(26, 26, 26)
                 .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addContainerGap())
@@ -2078,8 +2066,6 @@ private void updateTabelKelas(){
     private javax.swing.JComboBox<String> cbruang;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
