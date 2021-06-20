@@ -1315,6 +1315,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Input"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btinputmatkulActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btupdatematkul">
               <Properties>
@@ -1330,6 +1333,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Clear"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btclearmatkulActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane4">
               <AuxValues>

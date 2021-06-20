@@ -82,6 +82,7 @@ public class ManageData extends javax.swing.JFrame {
         tfpertemuan.setText("");
         tfwaktu.setText("");
         cbruang.setSelectedIndex(-1);
+        tabelKelas.clearSelection();
     }
     
     private int getNumberDosen(){
@@ -345,6 +346,14 @@ private void updateTabelKelas(){
         cbPendidikanDosen.setSelectedIndex(0);
         tfJabatanAkademik.setText("");
         tabelDosen.clearSelection();
+    }
+    private void clearMatkul(){
+        tfkdmatkul.setText("");
+        tfperiode.setText("");
+        tfnamamatkul.setText("");
+        cbnipdosen.setSelectedIndex(-1);
+        cbidkelas.setSelectedIndex(-1);
+        tabelMatkul.clearSelection();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1114,12 +1123,22 @@ private void updateTabelKelas(){
         });
 
         btinputmatkul.setText("Input");
+        btinputmatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btinputmatkulActionPerformed(evt);
+            }
+        });
 
         btupdatematkul.setText("Update");
 
         btdeletematkul.setText("Delete");
 
         btclearmatkul.setText("Clear");
+        btclearmatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btclearmatkulActionPerformed(evt);
+            }
+        });
 
         tabelMatkul.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1771,6 +1790,35 @@ private void updateTabelKelas(){
         CardLayout cl= (CardLayout) parentPanel.getLayout();
         cl.show(parentPanel, "manageMatkul");
     }//GEN-LAST:event_menuItemMatkulActionPerformed
+
+    private void btinputmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btinputmatkulActionPerformed
+        // TODO add your handling code here:
+        String kdmatkul = tfkdmatkul.getText();
+        String nipdosen = cbnipdosen.getSelectedItem().toString();
+        String idkelas = cbidkelas.getSelectedItem().toString();
+        String periode = tfperiode.getText();
+        String namamatkul = tfnamamatkul.getText();
+        if(!"".equals(kdmatkul) & !"".equals(nipdosen) & !"".equals(nipdosen) & !"".equals(idkelas) & !"".equals(periode) & !"".equals(namamatkul))
+        {
+            try {
+                
+                stm.executeUpdate("INSERT INTO matakuliah VALUES('"+kdmatkul+"', '"+nipdosen+"', '"+idkelas+"', '"+periode+"', '"+namamatkul+"')");
+                JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
+                clearMatkul();
+                updateTabelMatkul();
+            } catch (SQLException  ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Semua data harus diisi terlebih dahulu!");
+        }
+    }//GEN-LAST:event_btinputmatkulActionPerformed
+
+    private void btclearmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearmatkulActionPerformed
+        // TODO add your handling code here:
+        clearMatkul();
+    }//GEN-LAST:event_btclearmatkulActionPerformed
 
     /**
      * @param args the command line arguments
