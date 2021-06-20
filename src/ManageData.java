@@ -1,11 +1,20 @@
 
 import java.awt.CardLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,6 +38,8 @@ public class ManageData extends javax.swing.JFrame {
     ResultSet rs;
     String sql;
     String[] dataDosen;
+    String[] dataFoto;
+    String asalFile = "";
     public ManageData() {
         initComponents();
         koneksi DB = new koneksi();
@@ -59,6 +70,9 @@ public class ManageData extends javax.swing.JFrame {
         tfAlamatOrtu.setText("");
         cbDosenPembimbing.setSelectedIndex(0);
         tabelMahasiswa.clearSelection();
+        asalFile = "";
+        lbl_image.setIcon(null);
+        lbl_image.setText("Foto");
     }
     private void clearKelas(){
         tfidkelas.setText("");
@@ -71,7 +85,20 @@ public class ManageData extends javax.swing.JFrame {
     private int getNumberDosen(){
         int row = 0;
         try {
-            rs = stm.executeQuery("SELECT COUNT(*) FROM dosen WHERE NIP != 000");
+            rs = stm.executeQuery("SELECT COUNT(*) FROM dosen WHERE NIP_DOSEN != 000");
+            while(rs.next()){
+                row =  rs.getInt(1);
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return row;
+    }
+    
+    private int getNumberMahasiswa(){
+        int row = 0;
+        try {
+            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
             while(rs.next()){
                 row =  rs.getInt(1);
             }
@@ -100,9 +127,8 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Dosen Pembimbing");
         tabelMahasiswa.setModel(model);
         
-        sql = "SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN";
         try{
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
             while(rs.next()){
                 Object[] data = new Object[15];
                 data[0] = rs.getString("NRP");
@@ -123,6 +149,7 @@ public class ManageData extends javax.swing.JFrame {
                 model.addRow(data);
                 tabelMahasiswa.setModel(model);
             }
+            rs.close();
             
             try{
                 int row = getNumberDosen();
@@ -136,6 +163,20 @@ public class ManageData extends javax.swing.JFrame {
                 while(rs.next()){
                     String namaDosen = rs.getString("NAMA_DOSEN");
                     cbDosenPembimbing.addItem(namaDosen);
+                }
+                rs.close();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+            
+            try{
+                int row = getNumberMahasiswa();
+                rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
+                dataFoto = new String[row];
+                int i = 0;
+                while(rs.next()){
+                    dataFoto[i] = rs.getString("link_foto");
+                    i++;
                 }
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
@@ -307,6 +348,8 @@ private void updateTabelKelas(){
         btnUpdateMhs = new javax.swing.JButton();
         btnDeleteMhs = new javax.swing.JButton();
         btnClearMhs = new javax.swing.JButton();
+        lbl_image = new javax.swing.JLabel();
+        btnPilihGambar = new javax.swing.JButton();
         manageKelas = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
@@ -555,7 +598,7 @@ private void updateTabelKelas(){
                     .addComponent(btnInput))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         parentPanel.add(manageDosen, "manageDosen");
@@ -651,6 +694,15 @@ private void updateTabelKelas(){
             }
         });
 
+        lbl_image.setText("Foto");
+
+        btnPilihGambar.setText("Pilih Gambar");
+        btnPilihGambar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPilihGambarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout manageMahasiswaLayout = new javax.swing.GroupLayout(manageMahasiswa);
         manageMahasiswa.setLayout(manageMahasiswaLayout);
         manageMahasiswaLayout.setHorizontalGroup(
@@ -693,7 +745,7 @@ private void updateTabelKelas(){
                                         .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(tfNamaMhs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(cbProdi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(18, 69, Short.MAX_VALUE)
+                        .addGap(28, 73, Short.MAX_VALUE)
                         .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(manageMahasiswaLayout.createSequentialGroup()
@@ -724,13 +776,19 @@ private void updateTabelKelas(){
                                         .addComponent(cbDosenPembimbing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(10, 10, 10)
                                 .addComponent(btnDeleteMhs)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnUpdateMhs)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnInputMahasiswa)))))
                 .addContainerGap())
+            .addGroup(manageMahasiswaLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(lbl_image, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnPilihGambar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         manageMahasiswaLayout.setVerticalGroup(
             manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -788,8 +846,12 @@ private void updateTabelKelas(){
                     .addComponent(btnUpdateMhs)
                     .addComponent(btnDeleteMhs)
                     .addComponent(btnClearMhs))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(btnPilihGambar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -946,7 +1008,7 @@ private void updateTabelKelas(){
                     .addComponent(btclearkelas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addGap(123, 123, 123))
         );
 
         parentPanel.add(manageKelas, "manageKelas");
@@ -1071,7 +1133,7 @@ private void updateTabelKelas(){
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton6)
@@ -1329,13 +1391,18 @@ private void updateTabelKelas(){
         String alamatOrtu = tfAlamatOrtu.getText();
         int dosPem = cbDosenPembimbing.getSelectedIndex();
         String nipDospem = dataDosen[dosPem];
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(nipDospem)){
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(nipDospem) & !"".equals(asalFile)){
             try {
-                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nipDospem+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"')");
+                int index = asalFile.lastIndexOf('.');
+                String jenisFile = asalFile.substring(index + 1);
+                String linkFile = "C:\\Tugas\\agfdaf\\Semester 2\\Algoritma dan Pemrograman II\\Tugas\\14_pertemuan\\TugasAkhir\\src\\gambar\\"+nrp+"."+jenisFile;
+                Files.copy(Paths.get(asalFile), Paths.get(linkFile));
+                String link = linkFile.replace("\\", "\\\\");
+                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nipDospem+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+link+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();
                 updateTabelMahasiswa();
-            } catch (SQLException ex) {
+            } catch (SQLException | IOException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
         }else{
@@ -1389,13 +1456,16 @@ private void updateTabelKelas(){
         // TODO add your handling code here:
         String nrp = tfNrp.getText();
         if(!"".equals(nrp)){
-            sql = "DELETE FROM mahasiswa WHERE NRP = '"+nrp+"'";
             try{
-                stm.executeUpdate(sql);
+                rs = stm.executeQuery("SELECT link_foto FROM mahasiswa WHERE NRP = '"+nrp+"'");
+                rs.next();
+                String fileFoto = rs.getString("link_foto");
+                stm.executeUpdate("DELETE FROM mahasiswa WHERE NRP = '"+nrp+"'");
+                Files.delete(Paths.get(fileFoto));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMahasiswa();
                 updateTabelMahasiswa();
-            }catch(SQLException e){
+            }catch(SQLException | IOException e){
                 JOptionPane.showMessageDialog(null, e);
             }
         }else{
@@ -1579,6 +1649,22 @@ private void updateTabelKelas(){
        
     }//GEN-LAST:event_tabelKelasMouseClicked
 
+    private void btnPilihGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPilihGambarActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        asalFile = f.getAbsolutePath();
+        try {
+            BufferedImage img = ImageIO.read(new File(asalFile));
+            Image resizedImage = img.getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(resizedImage);
+            lbl_image.setIcon(icon);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_btnPilihGambarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1625,6 +1711,7 @@ private void updateTabelKelas(){
     private javax.swing.JButton btnDeleteMhs;
     private javax.swing.JButton btnInput;
     private javax.swing.JButton btnInputMahasiswa;
+    private javax.swing.JButton btnPilihGambar;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdateMhs;
     private javax.swing.JButton btupdatekelas;
@@ -1694,6 +1781,7 @@ private void updateTabelKelas(){
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JLabel lbl_image;
     private javax.swing.JPanel manageDosen;
     private javax.swing.JPanel manageKelas;
     private javax.swing.JPanel manageMahasiswa;
