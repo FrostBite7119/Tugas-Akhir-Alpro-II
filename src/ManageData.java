@@ -1113,9 +1113,6 @@ private void updateTabelKelas(){
             }
         });
 
-        cbidkelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cbidkelas.setSelectedIndex(-1);
-
         btinputmatkul.setText("Input");
 
         btupdatematkul.setText("Update");
