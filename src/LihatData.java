@@ -110,7 +110,7 @@ public class LihatData extends javax.swing.JFrame {
 
         jLabel5.setText("Cari dengan NRP");
 
-        btnTampil.setText("Tampil");
+        btnTampil.setText("Lihat");
         btnTampil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTampilActionPerformed(evt);
