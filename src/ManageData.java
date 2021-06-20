@@ -520,12 +520,12 @@ private void updateTabelKelas(){
         jLabel44 = new javax.swing.JLabel();
         tfMatkulAmbilMk = new javax.swing.JTextField();
         jLabel45 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tfKodeAmbilMk = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbAmbilMk = new javax.swing.JTable();
         btnInputAmbilMk = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnDeleteAmbilMk = new javax.swing.JButton();
+        btnClearAmbilMk = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -722,7 +722,7 @@ private void updateTabelKelas(){
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
                                         .addComponent(tfAlamatOrtu)
-                                        .addComponent(cbDosenPembimbing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(cbDosenPembimbing, 0, 153, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -1178,6 +1178,12 @@ private void updateTabelKelas(){
 
         jLabel36.setText("Kode Mata Kuliah");
 
+        tfkdmatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfkdmatkulActionPerformed(evt);
+            }
+        });
+
         jLabel37.setText("NIP Dosen");
 
         jLabel38.setText("ID Kelas");
@@ -1330,7 +1336,7 @@ private void updateTabelKelas(){
 
         jLabel45.setText("Kode Ambil MK");
 
-        jTextField3.setEditable(false);
+        tfKodeAmbilMk.setEditable(false);
 
         tbAmbilMk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1352,12 +1358,17 @@ private void updateTabelKelas(){
             }
         });
 
-        jButton2.setText("Delete");
-
-        jButton1.setText("Clear");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteAmbilMk.setText("Delete");
+        btnDeleteAmbilMk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDeleteAmbilMkActionPerformed(evt);
+            }
+        });
+
+        btnClearAmbilMk.setText("Clear");
+        btnClearAmbilMk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearAmbilMkActionPerformed(evt);
             }
         });
 
@@ -1381,13 +1392,13 @@ private void updateTabelKelas(){
                                 .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfNrpAmbilMk)
                                     .addComponent(tfMatkulAmbilMk, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tfKodeAmbilMk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageAmbilMkLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnClearAmbilMk)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btnDeleteAmbilMk)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnInputAmbilMk)))
                 .addContainerGap())
@@ -1408,12 +1419,12 @@ private void updateTabelKelas(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel45)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfKodeAmbilMk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInputAmbilMk)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(btnDeleteAmbilMk)
+                    .addComponent(btnClearAmbilMk))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addContainerGap())
@@ -2055,9 +2066,32 @@ private void updateTabelKelas(){
         }
     }//GEN-LAST:event_btnInputAmbilMkActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnClearAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAmbilMkActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        clearMatkul();
+    }//GEN-LAST:event_btnClearAmbilMkActionPerformed
+
+    private void tfkdmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfkdmatkulActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfkdmatkulActionPerformed
+
+    private void btnDeleteAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAmbilMkActionPerformed
+        // TODO add your handling code here:
+        String nrp = tfNrpAmbilMk.getText();
+        if(!"".equals(nrp)){
+            try{
+                stm.executeUpdate("UPDATE");
+                stm.executeUpdate("delete from mengambil WHERE NRP ='"+nrp+"'");
+                JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
+                clearMatkul();
+                refreshData();
+            }catch(SQLException ex){
+               JOptionPane.showMessageDialog(null, ex); 
+            }
+        }else{
+          JOptionPane.showMessageDialog(null, "Kolom NRP harus di isi!");  
+        }
+    }//GEN-LAST:event_btnDeleteAmbilMkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2103,8 +2137,10 @@ private void updateTabelKelas(){
     private javax.swing.JButton btinputkelas;
     private javax.swing.JButton btinputmatkul;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnClearAmbilMk;
     private javax.swing.JButton btnClearMhs;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteAmbilMk;
     private javax.swing.JButton btnDeleteMhs;
     private javax.swing.JButton btnInput;
     private javax.swing.JButton btnInputAmbilMk;
@@ -2125,8 +2161,6 @@ private void updateTabelKelas(){
     private javax.swing.JComboBox<String> cbidkelas;
     private javax.swing.JComboBox<String> cbnipdosen;
     private javax.swing.JComboBox<String> cbruang;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2180,7 +2214,6 @@ private void updateTabelKelas(){
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lbl_image;
     private javax.swing.JPanel manageAmbilMk;
     private javax.swing.JPanel manageDosen;
@@ -2208,6 +2241,7 @@ private void updateTabelKelas(){
     private javax.swing.JTextField tfEmailDosen;
     private javax.swing.JTextField tfEmailMhs;
     private javax.swing.JTextField tfJabatanAkademik;
+    private javax.swing.JTextField tfKodeAmbilMk;
     private javax.swing.JTextField tfKtpAyah;
     private javax.swing.JTextField tfMatkulAmbilMk;
     private javax.swing.JTextField tfNamaAyah;
