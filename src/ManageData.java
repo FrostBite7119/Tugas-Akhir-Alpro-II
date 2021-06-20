@@ -721,7 +721,7 @@ private void updateTabelKelas(){
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
                                         .addComponent(tfAlamatOrtu)
-                                        .addComponent(cbDosenPembimbing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(cbDosenPembimbing, 0, 153, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -1116,10 +1116,10 @@ private void updateTabelKelas(){
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
                 .addComponent(jLabel34)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel41)
-                    .addComponent(cbruang, 0, 520, Short.MAX_VALUE))
+                    .addComponent(cbruang, 0, 537, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -1351,7 +1351,7 @@ private void updateTabelKelas(){
             }
         });
 
-        jButton2.setText("Delete");
+        jButton2.setText("Update");
 
         javax.swing.GroupLayout manageAmbilMkLayout = new javax.swing.GroupLayout(manageAmbilMk);
         manageAmbilMk.setLayout(manageAmbilMkLayout);
@@ -1360,7 +1360,7 @@ private void updateTabelKelas(){
             .addGroup(manageAmbilMkLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
                     .addGroup(manageAmbilMkLayout.createSequentialGroup()
                         .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel42)
@@ -1404,7 +1404,7 @@ private void updateTabelKelas(){
                     .addComponent(btnInputAmbilMk)
                     .addComponent(jButton2))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
