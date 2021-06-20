@@ -1,5 +1,9 @@
 
 import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,12 +16,20 @@ import java.awt.CardLayout;
  * @author User
  */
 public class LihatData extends javax.swing.JFrame {
-
+public Connection conn;
+public ResultSet rs;
+public Statement stm;
+String sql;
     /**
      * Creates new form LihatData
      */
     public LihatData() {
         initComponents();
+        koneksi DB = new koneksi();
+        DB.config();
+        conn = DB.con;
+        stm = DB.stm;
+        
     }
 
     /**
@@ -33,8 +45,8 @@ public class LihatData extends javax.swing.JFrame {
         panelMahasiswa = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        txtCari = new javax.swing.JTextField();
+        btnTampil = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -91,10 +103,10 @@ public class LihatData extends javax.swing.JFrame {
 
         jLabel5.setText("Cari dengan NRP");
 
-        jButton2.setText("Tampil");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnTampil.setText("Tampil");
+        btnTampil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnTampilActionPerformed(evt);
             }
         });
 
@@ -225,10 +237,10 @@ public class LihatData extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelMahasiswaLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
+                            .addComponent(btnTampil)
                             .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21)
@@ -261,8 +273,8 @@ public class LihatData extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTampil))
                 .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -439,10 +451,19 @@ public class LihatData extends javax.swing.JFrame {
         cl.show(parentPanel, "panelJadwal");
     }//GEN-LAST:event_menuJadwalActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnTampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+        tampil();
+    }//GEN-LAST:event_btnTampilActionPerformed
+    private void tampil(){
+       String cari = txtCari.getText();
+       try{
+           String sql = "Select * from mahasiswa WHERE NRP =";
+       }catch (Exception e){
+           JOptionPane.showMessageDialog(null, e.getMessage());
+       }
+       tampil();
+    }
     /**
      * @param args the command line arguments
      */
@@ -479,8 +500,8 @@ public class LihatData extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTampil;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -525,11 +546,11 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JMenuItem menuJadwal;
     private javax.swing.JMenu menuKeluar;
     private javax.swing.JPanel panelJadwal;
     private javax.swing.JPanel panelMahasiswa;
     private javax.swing.JPanel parentPanel;
+    private javax.swing.JTextField txtCari;
     // End of variables declaration//GEN-END:variables
 }
