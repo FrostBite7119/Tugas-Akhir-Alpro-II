@@ -196,7 +196,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="tfTelpOrtu" max="32767" attributes="0"/>
                                               <Component id="tfAlamatOrtu" max="32767" attributes="0"/>
-                                              <Component id="cbDosenPembimbing" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="cbDosenPembimbing" alignment="0" pref="153" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -1303,6 +1303,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfkdmatkul">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfkdmatkulActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel37">
               <Properties>
@@ -1433,7 +1436,7 @@
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="tfNrpAmbilMk" max="32767" attributes="0"/>
                                           <Component id="tfMatkulAmbilMk" pref="300" max="32767" attributes="0"/>
-                                          <Component id="jTextField3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="tfKodeAmbilMk" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -1441,9 +1444,9 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnClearAmbilMk" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDeleteAmbilMk" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnInputAmbilMk" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -1470,13 +1473,13 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel45" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfKodeAmbilMk" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnInputAmbilMk" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDeleteAmbilMk" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnClearAmbilMk" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane5" pref="425" max="32767" attributes="0"/>
@@ -1513,7 +1516,7 @@
                 <Property name="text" type="java.lang.String" value="Kode Ambil MK"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField3">
+            <Component class="javax.swing.JTextField" name="tfKodeAmbilMk">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
@@ -1547,17 +1550,20 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInputAmbilMkActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnDeleteAmbilMk">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Delete"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteAmbilMkActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnClearAmbilMk">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Clear"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearAmbilMkActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
