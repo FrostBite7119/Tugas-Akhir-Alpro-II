@@ -196,7 +196,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="tfTelpOrtu" max="32767" attributes="0"/>
                                               <Component id="tfAlamatOrtu" max="32767" attributes="0"/>
-                                              <Component id="cbDosenPembimbing" alignment="0" pref="153" max="32767" attributes="0"/>
+                                              <Component id="cbDosenPembimbing" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>

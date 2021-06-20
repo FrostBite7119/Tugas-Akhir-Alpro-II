@@ -2080,7 +2080,6 @@ private void updateTabelKelas(){
         String nrp = tfNrpAmbilMk.getText();
         if(!"".equals(nrp)){
             try{
-                stm.executeUpdate("UPDATE");
                 stm.executeUpdate("delete from mengambil WHERE NRP ='"+nrp+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
