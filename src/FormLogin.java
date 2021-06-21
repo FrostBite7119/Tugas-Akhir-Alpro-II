@@ -130,7 +130,7 @@ public class FormLogin extends javax.swing.JFrame {
                 if(tfuname.getText().equals(rs.getString("username"))
                 && tfpw.getText().equals(rs.getString("password"))) {
                 MainMenu menu = new MainMenu();
-                menu.show();
+                menu.setVisible(true);
                 this.dispose();
                 }
             }
@@ -141,7 +141,7 @@ public class FormLogin extends javax.swing.JFrame {
                 tfpw.setText("");
             }
         }
-        catch (Exception e){
+        catch (SQLException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btloginActionPerformed
