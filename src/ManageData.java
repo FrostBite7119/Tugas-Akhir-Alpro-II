@@ -2113,7 +2113,7 @@ public class ManageData extends javax.swing.JFrame {
                 stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                 clearMatkul();
-                refreshData();            
+                //refreshData();            
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
