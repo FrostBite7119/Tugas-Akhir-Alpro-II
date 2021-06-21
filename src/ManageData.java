@@ -252,12 +252,22 @@ public class ManageData extends javax.swing.JFrame {
                     rs.next();
                     dataDosen[i] = rs.getString("NIP_DOSEN");   
                 }
-                rs.beforeFirst();
-                while(rs.next()){
-                    String namaDosen = rs.getString("NAMA_DOSEN");
-                    cbnipdosen.addItem(namaDosen);
-                }
                 rs.close();
+                
+                rs = stm.executeQuery("SELECT * FROM dosen");
+                dataDosen = new String[row];
+                for(int i = 0; i < row; i++){
+                    rs.next();
+                    String namaDosen = rs.getString("NAMA_DOSEN");
+                    cbnipdosen.addItem(namaDosen);   
+                }
+                
+//                rs.beforeFirst();
+//                while(rs.next()){
+//                    String namaDosen = rs.getString("NAMA_DOSEN");
+//                    cbnipdosen.addItem(namaDosen);
+//                }
+//                rs.close();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -2113,7 +2123,7 @@ public class ManageData extends javax.swing.JFrame {
                 stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                 clearMatkul();
-                //refreshData();            
+                refreshData();            
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
