@@ -110,7 +110,7 @@ public class ManageData extends javax.swing.JFrame {
         tfNamaIbu.setText("");
         tfTelpOrtu.setText("");
         tfAlamatOrtu.setText("");
-        cbDosenPembimbing.setSelectedIndex(0);
+        //cbDosenPembimbing.setSelectedIndex(0);
         tabelMahasiswa.clearSelection();
         asalFile = "";
         lbl_image.setIcon(null);
@@ -179,13 +179,13 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("NAMA Ibu");
         model.addColumn("Telepon Orang Tua");
         model.addColumn("Alamat Orang Tua");
-        model.addColumn("Dosen Pembimbing");
         tabelMahasiswa.setModel(model);
         
         try{
-            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
+            //rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
+            rs = stm.executeQuery("SELECT * FROM mahasiswa");
             while(rs.next()){
-                Object[] data = new Object[15];
+                Object[] data = new Object[14];
                 data[0] = rs.getString("NRP");
                 data[1] = rs.getString("NAMA_MAHASISWA");
                 data[2] = rs.getString("PRODI");
@@ -200,30 +200,11 @@ public class ManageData extends javax.swing.JFrame {
                 data[11] = rs.getString("NAMA_IBU");
                 data[12] = rs.getString("TELEPON_ORANG_TUA");
                 data[13] = rs.getString("ALAMAT_ORANG_TUA");
-                data[14] = rs.getString("NAMA_DOSEN");
                 
                 model.addRow(data);
                 tabelMahasiswa.setModel(model);
             }
             rs.close();
-            
-            try{
-                int row = getNumberDosen();
-                rs = stm.executeQuery("SELECT * FROM dosen WHERE NIP_DOSEN != 000");
-                dataDosen = new String[row];
-                for(int i = 0; i < row; i++){
-                    rs.next();
-                    dataDosen[i] = rs.getString("NIP_DOSEN");
-                }
-                rs.beforeFirst();
-                while(rs.next()){
-                    String namaDosen = rs.getString("NAMA_DOSEN");
-                    cbDosenPembimbing.addItem(namaDosen);
-                }
-                rs.close();
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, e);
-            }
             
             try{
                 int row = getNumberMahasiswa();
@@ -441,8 +422,6 @@ private void updateTabelKelas(){
         tfTelpOrtu = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         tfAlamatOrtu = new javax.swing.JTextField();
-        jLabel28 = new javax.swing.JLabel();
-        cbDosenPembimbing = new javax.swing.JComboBox<>();
         btnInputMahasiswa = new javax.swing.JButton();
         btnUpdateMhs = new javax.swing.JButton();
         btnDeleteMhs = new javax.swing.JButton();
@@ -605,8 +584,6 @@ private void updateTabelKelas(){
 
         jLabel27.setText("Alamat Orang Tua");
 
-        jLabel28.setText("Dosen Pembimbing");
-
         btnInputMahasiswa.setText("Input");
         btnInputMahasiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -699,7 +676,7 @@ private void updateTabelKelas(){
                                         .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(tfNamaMhs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(cbProdi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(28, 73, Short.MAX_VALUE)
+                        .addGap(28, 110, Short.MAX_VALUE)
                         .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(manageMahasiswaLayout.createSequentialGroup()
@@ -721,13 +698,11 @@ private void updateTabelKelas(){
                                 .addGroup(manageMahasiswaLayout.createSequentialGroup()
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel26)
-                                        .addComponent(jLabel27)
-                                        .addComponent(jLabel28))
+                                        .addComponent(jLabel27))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
-                                        .addComponent(tfAlamatOrtu)
-                                        .addComponent(cbDosenPembimbing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(tfAlamatOrtu))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -789,9 +764,7 @@ private void updateTabelKelas(){
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(tfAlamatMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel28)
-                    .addComponent(cbDosenPembimbing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfAlamatMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
@@ -802,7 +775,7 @@ private void updateTabelKelas(){
                     .addComponent(btnClearMhs))
                 .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(manageMahasiswaLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                         .addComponent(btnPilihGambar)
                         .addGap(70, 70, 70))
                     .addGroup(manageMahasiswaLayout.createSequentialGroup()
@@ -1707,16 +1680,16 @@ private void updateTabelKelas(){
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
-        int dosPem = cbDosenPembimbing.getSelectedIndex();
-        String nipDospem = dataDosen[dosPem];
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(nipDospem) & !"".equals(asalFile)){
+        //int dosPem = cbDosenPembimbing.getSelectedIndex();
+        //String nipDospem = dataDosen[dosPem];
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
                 String linkFile = "C:\\Tugas\\agfdaf\\Semester 2\\Algoritma dan Pemrograman II\\Tugas\\14_pertemuan\\TugasAkhir\\src\\gambar\\"+nrp+"."+jenisFile;
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nipDospem+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+link+"')");
+                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+link+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();
                 refreshData();
@@ -1754,9 +1727,9 @@ private void updateTabelKelas(){
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
-        int dosPem = cbDosenPembimbing.getSelectedIndex();
-        String nipDospem = dataDosen[dosPem];
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(nipDospem) & !"".equals(asalFile)){
+        //int dosPem = cbDosenPembimbing.getSelectedIndex();
+        //String nipDospem = dataDosen[dosPem];
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu)  & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
@@ -1765,7 +1738,7 @@ private void updateTabelKelas(){
                 rs.next();
                 Files.delete(Paths.get(rs.getString("link_foto")));
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("UPDATE `mahasiswa` SET `NRP`='"+nrp+"',`NIP_DOSEN`='"+nipDospem+"',`NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
+                stm.executeUpdate("UPDATE `mahasiswa` SET `NRP`='"+nrp+"', `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
                 clearMahasiswa();
@@ -1849,11 +1822,11 @@ private void updateTabelKelas(){
         tfNamaIbu.setText(tabelMahasiswa.getValueAt(row, 11).toString());
         tfTelpOrtu.setText(tabelMahasiswa.getValueAt(row, 12).toString());
         tfAlamatOrtu.setText(tabelMahasiswa.getValueAt(row, 13).toString());
-        for(int i = 0; i < dataDosen.length; i++){
-            if(tabelMahasiswa.getValueAt(row, 14).toString().equals(cbDosenPembimbing.getItemAt(i))){
-                cbDosenPembimbing.setSelectedIndex(i);
-            }
-        }
+//        for(int i = 0; i < dataDosen.length; i++){
+//            if(tabelMahasiswa.getValueAt(row, 14).toString().equals(cbDosenPembimbing.getItemAt(i))){
+//                cbDosenPembimbing.setSelectedIndex(i);
+//            }
+//        }
 
         try {
             BufferedImage img = ImageIO.read(new File(dataFoto[row]));
@@ -2226,7 +2199,6 @@ private void updateTabelKelas(){
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbAgama;
-    private javax.swing.JComboBox<String> cbDosenPembimbing;
     private javax.swing.JComboBox<String> cbPendidikanDosen;
     private javax.swing.JComboBox<String> cbProdi;
     private javax.swing.JComboBox<String> cbStatus;
@@ -2254,7 +2226,6 @@ private void updateTabelKelas(){
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;

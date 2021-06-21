@@ -111,8 +111,6 @@ public class LihatData extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        tfPembimbing = new javax.swing.JLabel();
         tfEmail = new javax.swing.JLabel();
         tfNoHp = new javax.swing.JLabel();
         tfNamaAyah = new javax.swing.JLabel();
@@ -210,10 +208,6 @@ public class LihatData extends javax.swing.JFrame {
 
         jLabel27.setText("Alamat Orang Tua");
 
-        jLabel28.setText("Pembimbing");
-
-        tfPembimbing.setText("Data");
-
         tfEmail.setText("Data");
 
         tfNoHp.setText("Data");
@@ -277,11 +271,7 @@ public class LihatData extends javax.swing.JFrame {
                                     .addGroup(panelMahasiswaLayout.createSequentialGroup()
                                         .addComponent(jLabel13)
                                         .addGap(62, 62, 62)
-                                        .addComponent(tfAlamat))
-                                    .addGroup(panelMahasiswaLayout.createSequentialGroup()
-                                        .addComponent(jLabel28)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(tfPembimbing))))
+                                        .addComponent(tfAlamat))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelMahasiswaLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -372,11 +362,7 @@ public class LihatData extends javax.swing.JFrame {
                             .addComponent(tfAlamat)
                             .addComponent(jLabel27)
                             .addComponent(tfAlamatOrtu))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
-                    .addComponent(tfPembimbing))
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
                 .addComponent(btnClear)
                 .addContainerGap(369, Short.MAX_VALUE))
         );
@@ -523,7 +509,7 @@ public class LihatData extends javax.swing.JFrame {
         String nrp = tfnrpmhs.getText();
         if(!"".equals(nrp)){
             try{
-                rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN WHERE NRP = '"+nrp+"'");
+                rs = stm.executeQuery("SELECT * FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 tfNrp.setText(rs.getString("NRP"));
                 tfNama.setText(rs.getString("NAMA_MAHASISWA"));
@@ -532,7 +518,6 @@ public class LihatData extends javax.swing.JFrame {
                 tfJk.setText(rs.getString("JENIS_KELAMIN"));
                 tfAgama.setText(rs.getString("AGAMA"));
                 tfAlamat.setText(rs.getString("ALAMAT"));
-                tfPembimbing.setText(rs.getString("NAMA_DOSEN"));
                 tfEmail.setText(rs.getString("EMAIL"));
                 tfNoHp.setText(rs.getString("NO_HP"));
                 tfNamaAyah.setText(rs.getString("NAMA_AYAH"));
@@ -562,7 +547,6 @@ public class LihatData extends javax.swing.JFrame {
         tfJk.setText("");
         tfAgama.setText("");
         tfAlamat.setText("");
-        tfPembimbing.setText("");
         tfEmail.setText("");
         tfNoHp.setText("");
         tfNamaAyah.setText("");
@@ -651,7 +635,6 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -685,7 +668,6 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JLabel tfNoKtpAyah;
     private javax.swing.JLabel tfNrp;
     private javax.swing.JLabel tfOrtu;
-    private javax.swing.JLabel tfPembimbing;
     private javax.swing.JLabel tfProdi;
     private javax.swing.JLabel tfStatus;
     private javax.swing.JTextField tfnrpmhs;
