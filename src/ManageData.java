@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -1721,7 +1719,7 @@ private void updateTabelKelas(){
                 stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nipDospem+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+link+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();
-                updateTabelMahasiswa();
+                refreshData();
             } catch (SQLException | IOException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
