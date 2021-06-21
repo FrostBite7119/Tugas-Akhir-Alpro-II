@@ -8,10 +8,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -37,6 +40,37 @@ public class LihatData extends javax.swing.JFrame {
         DB.config();
         conn = DB.con;
         stm = DB.stm;
+        updatetabeljadwalmhs();
+        
+    }
+    private void updatetabeljadwalmhs(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Kode Kelas");
+        model.addColumn("Nama Mata Kuliah");
+        model.addColumn("Kelas");
+        model.addColumn("Waktu");
+        model.addColumn("Pengajar");
+        tabeljadwal.setModel(model);
+        
+        try{
+            String nrp = tfnrpmhs.getText();
+            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN mengambil ON mengambil.NRP = mahasiswa.NRP\n" +
+                "JOIN matakuliah ON matakuliah.kode_mata_kuliah = mengambil.kode_mata_kuliah\n" +
+                "JOIN kelas ON kelas.id_kelas = matakuliah.id_kelas\n" +
+                "JOIN dosen ON dosen.NIP_Dosen = mahasiswa.NIP_Dosen WHERE NRP = '"+nrp+"'");
+            while(rs.next()){
+                Object[] data = new Object[5];
+                data[0] = rs.getString("ID_KELAS");
+                data[1] = rs.getString("NAMA_MATA_KULIAH");
+                data[2] = rs.getString("KELAS   ");
+                data[3] = rs.getString("WAKTU");
+                data[4] = rs.getString("NAMA_DOSEN");
+                model.addRow(data);
+                tabeljadwal.setModel(model);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -90,11 +124,13 @@ public class LihatData extends javax.swing.JFrame {
         panelJadwal = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfnrpmhs = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
+        jadwalnrpmhs = new javax.swing.JLabel();
+        jadwalnamamhs = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabeljadwal = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -342,7 +378,7 @@ public class LihatData extends javax.swing.JFrame {
                     .addComponent(tfPembimbing))
                 .addGap(18, 18, 18)
                 .addComponent(btnClear)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(369, Short.MAX_VALUE))
         );
 
         parentPanel.add(panelMahasiswa, "card3");
@@ -359,20 +395,24 @@ public class LihatData extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel3.setText("Menampilkan Jadwal:");
+
+        jadwalnrpmhs.setText("NRP");
+
+        jadwalnamamhs.setText("Nama Mahasiswa");
+
+        tabeljadwal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Kode Kelas", "Nama Mata Kuliah", "Kelas", "Waktu", "Ruang", "Pengajar"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel3.setText("Menampilkan Jadwal:");
+        jScrollPane1.setViewportView(tabeljadwal);
 
         javax.swing.GroupLayout panelJadwalLayout = new javax.swing.GroupLayout(panelJadwal);
         panelJadwal.setLayout(panelJadwalLayout);
@@ -388,10 +428,15 @@ public class LihatData extends javax.swing.JFrame {
                             .addGroup(panelJadwalLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfnrpmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1))
-                            .addComponent(jLabel3))
+                            .addGroup(panelJadwalLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jadwalnrpmhs)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jadwalnamamhs)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -403,13 +448,16 @@ public class LihatData extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfnrpmhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(40, 40, 40)
-                .addComponent(jLabel3)
+                .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jadwalnrpmhs)
+                    .addComponent(jadwalnamamhs))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         parentPanel.add(panelJadwal, "panelJadwal");
@@ -472,7 +520,7 @@ public class LihatData extends javax.swing.JFrame {
 
     private void btnTampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilActionPerformed
         // TODO add your handling code here:
-        String nrp = tfCari.getText();
+        String nrp = tfnrpmhs.getText();
         if(!"".equals(nrp)){
             try{
                 rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN WHERE NRP = '"+nrp+"'");
@@ -528,6 +576,27 @@ public class LihatData extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String nrp = tfnrpmhs.getText();
+        if (!"".equals(nrp)){
+        try {
+            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN mengambil ON mengambil.NRP = mahasiswa.NRP\n" +
+                "JOIN matakuliah ON matakuliah.kode_mata_kuliah = mengambil.kode_mata_kuliah\n" +
+                "JOIN kelas ON kelas.id_kelas = matakuliah.id_kelas\n" +
+                "JOIN dosen ON dosen.NIP_Dosen = mahasiswa.NIP_Dosen WHERE NRP = '"+nrp+"'");
+            rs.next();
+            updatetabeljadwalmhs();
+            
+            }
+            
+            
+           catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Kolom harus diisi");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -594,14 +663,15 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jadwalnamamhs;
+    private javax.swing.JLabel jadwalnrpmhs;
     private javax.swing.JLabel lbl_image;
     private javax.swing.JMenuItem menuJadwal;
     private javax.swing.JMenu menuKeluar;
     private javax.swing.JPanel panelJadwal;
     private javax.swing.JPanel panelMahasiswa;
     private javax.swing.JPanel parentPanel;
+    private javax.swing.JTable tabeljadwal;
     private javax.swing.JLabel tfAgama;
     private javax.swing.JLabel tfAlamat;
     private javax.swing.JLabel tfAlamatOrtu;
@@ -618,5 +688,6 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JLabel tfPembimbing;
     private javax.swing.JLabel tfProdi;
     private javax.swing.JLabel tfStatus;
+    private javax.swing.JTextField tfnrpmhs;
     // End of variables declaration//GEN-END:variables
 }
