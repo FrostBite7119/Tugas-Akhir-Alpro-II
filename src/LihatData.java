@@ -9,16 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -620,18 +616,23 @@ public class LihatData extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         if(!"".equals(tfnrpmhs.getText())){
-            String jrxmlFile = "src/jadwal.jrxml";
-            HashMap param = new HashMap();
-            param.put("nrp", tfnrpmhs.getText());
-            try {
-                JasperReport jspR = JasperCompileManager.compileReport(jrxmlFile);
-                JasperPrint JPrint = JasperFillManager.fillReport(jspR, param, conn);
-                JasperViewer.viewReport(JPrint, false);
-                //JasperExportManager.exportReportToPdfFile(JPrint, "src/jadwal.pdf");
-                JOptionPane.showMessageDialog(null, "File PDF berhasil dibuat");
-            } catch (JRException e) {
+            try{
+                rs = stm.executeQuery("SELECT * FROM mengambil WHERE nrp = '"+tfnrpmhs.getText()+"'");
+                if(rs.next()){
+                    String jrxmlFile = "src/jadwal.jrxml";
+                    HashMap param = new HashMap();
+                    param.put("nrp", tfnrpmhs.getText());
+                    JasperReport jspR = JasperCompileManager.compileReport(jrxmlFile);
+                    JasperPrint JPrint = JasperFillManager.fillReport(jspR, param, conn);
+                    JasperViewer.viewReport(JPrint, false);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Data yang ingin dicetak tidak tersedia!");
+                }
+            }catch(SQLException | JRException e){
                 JOptionPane.showMessageDialog(null, e);
             }
+            
+            
         }else{
             JOptionPane.showMessageDialog(null, "Kolom harus diisi!");
         }
