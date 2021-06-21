@@ -2039,6 +2039,7 @@ private void updateTabelKelas(){
     private void btclearmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearmatkulActionPerformed
         // TODO add your handling code here:
         clearMatkul();
+        
     }//GEN-LAST:event_btclearmatkulActionPerformed
 
     private void btdeletematkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdeletematkulActionPerformed
