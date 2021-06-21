@@ -261,9 +261,10 @@ public class ManageData extends javax.swing.JFrame {
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
+            
             try{
                 int row = getNumberKelas();
-                rs = stm.executeQuery("SELECT * FROM kelas");
+                rs = stm.executeQuery("SELECT * FROM KELAS");
                 dataKelas = new String[row];
                 for(int i = 0; i < row; i++){
                     rs.next();
@@ -325,7 +326,7 @@ public class ManageData extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-private void updateTabelKelas(){
+    private void updateTabelKelas(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Id Kelas");
         model.addColumn("Kelas");
@@ -1274,7 +1275,7 @@ private void updateTabelKelas(){
 
         jLabel37.setText("Nama Dosen");
 
-        jLabel38.setText("Kelas");
+        jLabel38.setText("Nama Kelas");
 
         jLabel39.setText("Periode");
 
