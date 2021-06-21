@@ -137,8 +137,6 @@ public class FormLogin extends javax.swing.JFrame {
             else {
                 JOptionPane.showMessageDialog(null, "Maaf, kombinasi" +
                 " Username dan Password anda salah");
-                tfuname.setText("");
-                tfpw.setText("");
             }
         }
         catch (SQLException e){
