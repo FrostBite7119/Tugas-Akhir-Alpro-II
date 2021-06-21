@@ -252,8 +252,6 @@ public class ManageData extends javax.swing.JFrame {
                     rs.next();
                     dataDosen[i] = rs.getString("NIP_DOSEN");   
                 }
-                rs.close();
-                
                 rs.beforeFirst();
                 while(rs.next()){
                     String namaDosen = rs.getString("NAMA_DOSEN");
