@@ -254,20 +254,12 @@ public class ManageData extends javax.swing.JFrame {
                 }
                 rs.close();
                 
-                rs = stm.executeQuery("SELECT * FROM dosen");
-                dataDosen = new String[row];
-                for(int i = 0; i < row; i++){
-                    rs.next();
+                rs.beforeFirst();
+                while(rs.next()){
                     String namaDosen = rs.getString("NAMA_DOSEN");
-                    cbnipdosen.addItem(namaDosen);   
+                    cbnipdosen.addItem(namaDosen);
                 }
-                
-//                rs.beforeFirst();
-//                while(rs.next()){
-//                    String namaDosen = rs.getString("NAMA_DOSEN");
-//                    cbnipdosen.addItem(namaDosen);
-//                }
-//                rs.close();
+                rs.close();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
