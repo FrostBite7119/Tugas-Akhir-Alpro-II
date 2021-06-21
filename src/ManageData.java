@@ -152,7 +152,7 @@ public class ManageData extends javax.swing.JFrame {
     private int getNumberKelas(){
         int row = 0;
         try {
-            rs = stm.executeQuery("SELECT COUNT(*) FROM Kelas WHERE ID_KELAS != 000");
+            rs = stm.executeQuery("SELECT COUNT(*) FROM Kelas WHERE ID_KELAS");
             while(rs.next()){
                 row =  rs.getInt(1);
             }
@@ -271,7 +271,7 @@ public class ManageData extends javax.swing.JFrame {
                 }
                 rs.beforeFirst();
                 while(rs.next()){
-                    String idKelas = rs.getString("ID_KELAS");
+                    String idKelas = rs.getString("NAMA_KELAS");
                     cbidkelas.addItem(idKelas);
                 }
                 rs.close();
