@@ -1732,8 +1732,6 @@ private void updateTabelKelas(){
                 rs.next();
                 String fileLama = rs.getString("link_foto").replace("\\", "\\\\");
                 String link = linkFile.replace("\\", "\\\\");
-                JOptionPane.showMessageDialog(null, fileLama);
-                JOptionPane.showMessageDialog(null, link);
                 stm.executeUpdate("UPDATE `mahasiswa` SET `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
                 if(!fileLama.equals(link)){
                     Files.delete(Paths.get(fileLama));
@@ -1795,9 +1793,9 @@ private void updateTabelKelas(){
         }
         
         if(tabelMahasiswa.getValueAt(row, 4).equals("Pria")){
-            rbPria.setSelected(true);
+            rbPriaMhs.setSelected(true);
         }else if (tabelMahasiswa.getValueAt(row, 4).equals("Wanita")){
-            rbWanita.setSelected(true);
+            rbWanitaMhs.setSelected(true);
         }
         
         if(tabelMahasiswa.getValueAt(row, 5).equals("Islam")){
