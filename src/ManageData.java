@@ -127,7 +127,7 @@ public class ManageData extends javax.swing.JFrame {
     private int getNumberDosen(){
         int row = 0;
         try {
-            rs = stm.executeQuery("SELECT COUNT(*) FROM dosen WHERE NIP_DOSEN != 000");
+            rs = stm.executeQuery("SELECT COUNT(*) FROM dosen");
             while(rs.next()){
                 row =  rs.getInt(1);
             }

@@ -51,26 +51,6 @@ public class LihatData extends javax.swing.JFrame {
         model.addColumn("Waktu");
         model.addColumn("Pengajar");
         tabeljadwal.setModel(model);
-        
-        try{
-            String nrp = tfnrpmhs.getText();
-            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN mengambil ON mengambil.NRP = mahasiswa.NRP\n" +
-                "JOIN matakuliah ON matakuliah.kode_mata_kuliah = mengambil.kode_mata_kuliah\n" +
-                "JOIN kelas ON kelas.id_kelas = matakuliah.id_kelas\n" +
-                "JOIN dosen ON dosen.NIP_Dosen = mahasiswa.NIP_Dosen WHERE NRP = '"+nrp+"'");
-            while(rs.next()){
-                Object[] data = new Object[5];
-                data[0] = rs.getString("ID_KELAS");
-                data[1] = rs.getString("NAMA_MATA_KULIAH");
-                data[2] = rs.getString("KELAS   ");
-                data[3] = rs.getString("WAKTU");
-                data[4] = rs.getString("NAMA_DOSEN");
-                model.addRow(data);
-                tabeljadwal.setModel(model);
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e);
-        }
     }
 
     /**
@@ -364,7 +344,7 @@ public class LihatData extends javax.swing.JFrame {
                             .addComponent(tfAlamatOrtu))))
                 .addGap(43, 43, 43)
                 .addComponent(btnClear)
-                .addContainerGap(369, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         parentPanel.add(panelMahasiswa, "card3");
@@ -442,7 +422,7 @@ public class LihatData extends javax.swing.JFrame {
                     .addComponent(jadwalnrpmhs)
                     .addComponent(jadwalnamamhs))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -485,7 +465,7 @@ public class LihatData extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(parentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(parentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
         );
 
         pack();
@@ -563,20 +543,27 @@ public class LihatData extends javax.swing.JFrame {
         String nrp = tfnrpmhs.getText();
         if (!"".equals(nrp)){
         try {
-            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN mengambil ON mengambil.NRP = mahasiswa.NRP\n" +
-                "JOIN matakuliah ON matakuliah.kode_mata_kuliah = mengambil.kode_mata_kuliah\n" +
-                "JOIN kelas ON kelas.id_kelas = matakuliah.id_kelas\n" +
-                "JOIN dosen ON dosen.NIP_Dosen = mahasiswa.NIP_Dosen WHERE NRP = '"+nrp+"'");
-            rs.next();
-            updatetabeljadwalmhs();
+            rs = stm.executeQuery("SELECT * FROM mengambil INNER JOIN mahasiswa ON "
+                    + "mengambil.NRP = mahasiswa.NRP INNER JOIN matakuliah ON "
+                    + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN "
+                    + "dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN WHERE mengambil.NRP = "
+                    + "'"+nrp+"'");
             
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Kode Matakuliah");
+            model.addColumn("Nama Mata Kuliah");
+            model.addColumn("Kelas");
+            model.addColumn("Waktu");
+            model.addColumn("Pengajar");
+            tabeljadwal.setModel(model);
+            
+            while(rs.next()){
+                
             }
-            
-            
+            }
            catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
-        
         }
         else{
             JOptionPane.showMessageDialog(null, "Kolom harus diisi");
