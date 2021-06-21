@@ -57,6 +57,13 @@ public class ManageData extends javax.swing.JFrame {
         updateTabelAmbilMk();
     }
     
+    private void clearAmbilMk(){
+        tfNrpAmbilMk.setText("");
+        tfMatkulAmbilMk.setText("");
+        tfKodeAmbilMk.setText("");
+        tbAmbilMk.clearSelection();
+    }
+    
     private void updateTabelAmbilMk(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Kode Ambil MK");
@@ -722,7 +729,7 @@ private void updateTabelKelas(){
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
                                         .addComponent(tfAlamatOrtu)
-                                        .addComponent(cbDosenPembimbing, 0, 153, Short.MAX_VALUE))))
+                                        .addComponent(cbDosenPembimbing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -1349,6 +1356,11 @@ private void updateTabelKelas(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbAmbilMk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAmbilMkMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tbAmbilMk);
 
         btnInputAmbilMk.setText("Input");
@@ -2059,8 +2071,19 @@ private void updateTabelKelas(){
         String nrp = tfNrpAmbilMk.getText();
         String kode_matkul = tfMatkulAmbilMk.getText();
         if(!"".equals(nrp) & !"".equals(kode_matkul)){
-            sql = "INSERT INTO mengambil(NRP, KODE_MATA_KULIAH) VALUES('"+nrp+"', '"+kode_matkul+"')";
-            JOptionPane.showMessageDialog(null, "Data berhasil di-input");
+            try{
+                rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+nrp+"' AND KODE_MATA_KULIAH = '"+kode_matkul+"'");
+                if(rs.next()){
+                    JOptionPane.showMessageDialog(null, "Data sudah pernah diinput!");
+                }else{
+                    stm.executeUpdate("INSERT INTO mengambil(NRP, KODE_MATA_KULIAH) VALUES('"+nrp+"', '"+kode_matkul+"')");
+                    JOptionPane.showMessageDialog(null, "Data berhasil di-input");
+                    clearAmbilMk();
+                    refreshData();
+                }
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Data harus diisi terlebih dahulu!");
         }
@@ -2068,7 +2091,7 @@ private void updateTabelKelas(){
 
     private void btnClearAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAmbilMkActionPerformed
         // TODO add your handling code here:
-        clearMatkul();
+        clearAmbilMk();
     }//GEN-LAST:event_btnClearAmbilMkActionPerformed
 
     private void tfkdmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfkdmatkulActionPerformed
@@ -2082,7 +2105,7 @@ private void updateTabelKelas(){
             try{
                 stm.executeUpdate("delete from mengambil WHERE NRP ='"+nrp+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
-                clearMatkul();
+                clearAmbilMk();
                 refreshData();
             }catch(SQLException ex){
                JOptionPane.showMessageDialog(null, ex); 
@@ -2091,6 +2114,14 @@ private void updateTabelKelas(){
           JOptionPane.showMessageDialog(null, "Kolom NRP harus di isi!");  
         }
     }//GEN-LAST:event_btnDeleteAmbilMkActionPerformed
+
+    private void tbAmbilMkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAmbilMkMouseClicked
+        // TODO add your handling code here:
+        int row = tbAmbilMk.getSelectedRow();
+        tfNrpAmbilMk.setText(tbAmbilMk.getValueAt(row, 1).toString());
+        tfMatkulAmbilMk.setText(tbAmbilMk.getValueAt(row, 3).toString());
+        tfKodeAmbilMk.setText(tbAmbilMk.getValueAt(row, 0).toString());
+    }//GEN-LAST:event_tbAmbilMkMouseClicked
 
     /**
      * @param args the command line arguments
