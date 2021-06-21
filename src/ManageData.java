@@ -267,6 +267,7 @@ public class ManageData extends javax.swing.JFrame {
                 for(int i = 0; i < row; i++){
                     rs.next();
                     dataDosen[i] = rs.getString("NIP_DOSEN");
+                    
                 }
                 rs.beforeFirst();
                 while(rs.next()){
@@ -722,7 +723,7 @@ private void updateTabelKelas(){
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
                                         .addComponent(tfAlamatOrtu)
-                                        .addComponent(cbDosenPembimbing, 0, 153, Short.MAX_VALUE))))
+                                        .addComponent(cbDosenPembimbing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -1206,6 +1207,11 @@ private void updateTabelKelas(){
         });
 
         btupdatematkul.setText("Update");
+        btupdatematkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btupdatematkulActionPerformed(evt);
+            }
+        });
 
         btdeletematkul.setText("Delete");
         btdeletematkul.addActionListener(new java.awt.event.ActionListener() {
@@ -2029,7 +2035,6 @@ private void updateTabelKelas(){
         String kdmatkul = tfkdmatkul.getText();
         if(!"".equals(kdmatkul)){
             try{
-                stm.executeUpdate("UPDATE ");
                 stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
@@ -2044,6 +2049,19 @@ private void updateTabelKelas(){
 
     private void tabelMatkulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMatkulMouseClicked
         // TODO add your handling code here:
+        int row = tabelMatkul.getSelectedRow();
+        tfkdmatkul.setText(tabelMatkul.getValueAt(row, 0).toString());
+        for(int i = 0; i < dataMatkul.length; i++){
+            if(tabelMatkul.getValueAt(row, 1).toString().equals(cbnipdosen.getItemAt(i))){
+                cbnipdosen.setSelectedIndex(i);
+            }
+            if(tabelMatkul.getValueAt(row, 2).toString().equals(cbidkelas.getItemAt(i))){
+                cbidkelas.setSelectedIndex(i);
+            }
+        }
+        tfperiode.setText(tabelMatkul.getValueAt(row, 3).toString());
+        tfnamamatkul.setText(tabelMatkul.getValueAt(row, 4).toString());
+        
         
         
     }//GEN-LAST:event_tabelMatkulMouseClicked
@@ -2091,6 +2109,11 @@ private void updateTabelKelas(){
           JOptionPane.showMessageDialog(null, "Kolom NRP harus di isi!");  
         }
     }//GEN-LAST:event_btnDeleteAmbilMkActionPerformed
+
+    private void btupdatematkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btupdatematkulActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btupdatematkulActionPerformed
 
     /**
      * @param args the command line arguments
