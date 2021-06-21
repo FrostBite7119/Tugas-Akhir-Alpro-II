@@ -2028,7 +2028,7 @@ private void updateTabelKelas(){
         // TODO add your handling code here:
         int row = tabelMatkul.getSelectedRow();
         tfkdmatkul.setText(tabelMatkul.getValueAt(row, 0).toString());
-        for(int i = 0; i < dataMatkul.length; i++){
+        for(int i = 0; i < dataDosen.length; i++){
             if(tabelMatkul.getValueAt(row, 1).toString().equals(cbnipdosen.getItemAt(i))){
                 cbnipdosen.setSelectedIndex(i);
             }
