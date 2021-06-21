@@ -1525,8 +1525,7 @@ private void updateTabelKelas(){
                 if(status == 1){
                     JOptionPane.showMessageDialog(null, "Data berhasil diinputkan");
                     clearDosen();
-                    updateTabelDosen();
-                    updateTabelMahasiswa();
+                    refreshData();
                 }else{
                     JOptionPane.showMessageDialog(null, "Data tidak berhasil diinputkan");
                 }
@@ -1592,8 +1591,7 @@ private void updateTabelKelas(){
                 stm.executeUpdate("DELETE FROM dosen WHERE NIP_DOSEN = '"+nipDosen+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearDosen();
-                updateTabelDosen();
-                updateTabelMahasiswa();
+                refreshData();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -1621,7 +1619,7 @@ private void updateTabelKelas(){
         
         if(!"".equals(nipDosen) & !"".equals(nidnDosen) & !"".equals(namaDosen) & !"".equals(alamatDosen) & !"".equals(teleponDosen) 
                 & !"".equals(emailDosen) & !"".equals(jkDosen) & !"".equals(ttl) & !"".equals(statusKep) & !"".equals(pendidikanDosen) & !"".equals(jabatanAkademik)){
-            sql = "UPDATE dosen SET `NIP_DOSEN`='"+nipDosen+"',`NIDN_DOSEN`='"+nidnDosen+"',"
+            sql = "UPDATE dosen SET `NIDN_DOSEN`='"+nidnDosen+"',"
                     + "`NAMA_DOSEN`='"+namaDosen+"', ALAMAT='"+alamatDosen+"',`TELEPON`='"+teleponDosen+"',"
                     + "`EMAIL`='"+emailDosen+"',`JENIS_KELAMIN`='"+jkDosen+"',`"
                     + "TEMPAT_TANGGAL_LAHIR`='"+ttl+"',`STATUS_KEPEGAWAIAN`='"+statusKep+"',`"
@@ -1632,7 +1630,7 @@ private void updateTabelKelas(){
                 if(status == 1){
                     JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                     clearDosen();
-                    updateTabelDosen();
+                    refreshData();
                 }else{
                     JOptionPane.showMessageDialog(null, "Data tidak berhasil di-update");
                 }
