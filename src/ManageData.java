@@ -1063,6 +1063,16 @@ private void updateTabelKelas(){
         manageKelas.setLayout(manageKelasLayout);
         manageKelasLayout.setHorizontalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btclearkelas)
+                .addGap(18, 18, 18)
+                .addComponent(btdeletekelas)
+                .addGap(18, 18, 18)
+                .addComponent(btupdatekelas)
+                .addGap(18, 18, 18)
+                .addComponent(btinputkelas)
+                .addContainerGap())
             .addGroup(manageKelasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1090,24 +1100,15 @@ private void updateTabelKelas(){
                         .addContainerGap())
                     .addGroup(manageKelasLayout.createSequentialGroup()
                         .addComponent(jLabel29)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
-                .addComponent(jLabel34)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel41)
-                    .addComponent(cbruang, 0, 537, Short.MAX_VALUE))
-                .addGap(31, 31, 31))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btclearkelas)
-                .addGap(18, 18, 18)
-                .addComponent(btdeletekelas)
-                .addGap(18, 18, 18)
-                .addComponent(btupdatekelas)
-                .addGap(18, 18, 18)
-                .addComponent(btinputkelas)
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
+                        .addComponent(jLabel34)
+                        .addGap(75, 75, 75)
+                        .addComponent(cbruang, 0, 537, Short.MAX_VALUE)
+                        .addGap(31, 31, 31))
+                    .addGroup(manageKelasLayout.createSequentialGroup()
+                        .addComponent(jLabel41)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         manageKelasLayout.setVerticalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1143,7 +1144,7 @@ private void updateTabelKelas(){
                     .addComponent(btdeletekelas)
                     .addComponent(btclearkelas))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1843,7 +1844,7 @@ private void updateTabelKelas(){
                     + "'"+waktu+"', '"+ruang+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearKelas();
-                updateTabelKelas();
+                refreshData();
             }
            catch (SQLException err) {
                 JOptionPane.showMessageDialog(null, err);
@@ -1867,10 +1868,10 @@ private void updateTabelKelas(){
         String ruang = cbruang.getSelectedItem().toString();
         if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan)){
            try {
-                stm.executeUpdate("UPDATE kelas SET `ID_KELAS`='"+idkelas+"',`KELAS`='"+namakelas+"',`PERTEMUAN`='"+pertemuan+"',`WAKTU`='"+waktu+"',`RUANG`='"+ruang+"' WHERE ID_KELAS = '"+idkelas+"'");
+                stm.executeUpdate("UPDATE kelas SET `KELAS`='"+namakelas+"',`PERTEMUAN`='"+pertemuan+"',`WAKTU`='"+waktu+"',`RUANG`='"+ruang+"' WHERE ID_KELAS = '"+idkelas+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
                 clearKelas();
-                updateTabelKelas();
+                refreshData();
             }
            catch (SQLException err) {
                 JOptionPane.showMessageDialog(null, err);
@@ -1897,7 +1898,7 @@ private void updateTabelKelas(){
                 stm.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearKelas();
-                updateTabelKelas();
+                refreshData();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
