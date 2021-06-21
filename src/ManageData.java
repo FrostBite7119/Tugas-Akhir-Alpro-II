@@ -1589,7 +1589,7 @@ private void updateTabelKelas(){
         if(!"".equals(nipDosen)){
             
             try{
-                stm.executeUpdate("UPDATE matkul SET NIP_DOSEN = '000' WHERE NIP_DOSEN = '"+nipDosen+"'");
+                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '000' WHERE NIP_DOSEN = '"+nipDosen+"'");
                 stm.executeUpdate("DELETE FROM dosen WHERE NIP_DOSEN = '"+nipDosen+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearDosen();
