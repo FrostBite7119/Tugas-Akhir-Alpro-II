@@ -271,7 +271,7 @@ public class ManageData extends javax.swing.JFrame {
                 }
                 rs.beforeFirst();
                 while(rs.next()){
-                    String idKelas = rs.getString("NAMA_KELAS");
+                    String idKelas = rs.getString("KELAS");
                     cbidkelas.addItem(idKelas);
                 }
                 rs.close();
