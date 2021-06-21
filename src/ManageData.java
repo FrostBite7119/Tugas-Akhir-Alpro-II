@@ -1782,11 +1782,12 @@ private void updateTabelKelas(){
                 rs = stm.executeQuery("SELECT link_foto FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 String fileFoto = rs.getString("link_foto");
+                stm.executeQuery("DELETE FROM mengambil WHERE NRP = '"+nrp+"'");
                 stm.executeUpdate("DELETE FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 Files.delete(Paths.get(fileFoto));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMahasiswa();
-                updateTabelMahasiswa();
+                refreshData();
             }catch(SQLException | IOException e){
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -2041,7 +2042,7 @@ private void updateTabelKelas(){
         String kdmatkul = tfkdmatkul.getText();
         if(!"".equals(kdmatkul)){
             try{
-                stm.executeUpdate("UPDATE ");
+                stm.executeUpdate("DELETE FROM mengambil WHERE KODE_MATA_KULIAH = '"+kdmatkul+"' ");
                 stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
