@@ -273,8 +273,7 @@ public class ManageData extends javax.swing.JFrame {
                 dataDosen = new String[row];
                 for(int i = 0; i < row; i++){
                     rs.next();
-                    dataDosen[i] = rs.getString("NIP_DOSEN");
-                    
+                    dataDosen[i] = rs.getString("NIP_DOSEN");   
                 }
                 rs.beforeFirst();
                 while(rs.next()){
@@ -503,6 +502,19 @@ private void updateTabelKelas(){
         btdeletekelas = new javax.swing.JButton();
         btclearkelas = new javax.swing.JButton();
         jLabel41 = new javax.swing.JLabel();
+        manageAmbilMk = new javax.swing.JPanel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        tfNrpAmbilMk = new javax.swing.JTextField();
+        jLabel44 = new javax.swing.JLabel();
+        tfMatkulAmbilMk = new javax.swing.JTextField();
+        jLabel45 = new javax.swing.JLabel();
+        tfKodeAmbilMk = new javax.swing.JTextField();
+        btnInputAmbilMk = new javax.swing.JButton();
+        btnDeleteAmbilMk = new javax.swing.JButton();
+        btnClearAmbilMk = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblAmbilMk = new javax.swing.JTable();
         manageMatkul = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
@@ -521,19 +533,6 @@ private void updateTabelKelas(){
         btclearmatkul = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tabelMatkul = new javax.swing.JTable();
-        manageAmbilMk = new javax.swing.JPanel();
-        jLabel42 = new javax.swing.JLabel();
-        jLabel43 = new javax.swing.JLabel();
-        tfNrpAmbilMk = new javax.swing.JTextField();
-        jLabel44 = new javax.swing.JLabel();
-        tfMatkulAmbilMk = new javax.swing.JTextField();
-        jLabel45 = new javax.swing.JLabel();
-        tfKodeAmbilMk = new javax.swing.JTextField();
-        btnInputAmbilMk = new javax.swing.JButton();
-        btnDeleteAmbilMk = new javax.swing.JButton();
-        btnClearAmbilMk = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tblAmbilMk = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -1181,163 +1180,6 @@ private void updateTabelKelas(){
 
         parentPanel.add(manageKelas, "manageKelas");
 
-        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel35.setText("Manage Mata Kuliah");
-
-        jLabel36.setText("Kode Mata Kuliah");
-
-        tfkdmatkul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfkdmatkulActionPerformed(evt);
-            }
-        });
-
-        jLabel37.setText("NIP Dosen");
-
-        jLabel38.setText("ID Kelas");
-
-        jLabel39.setText("Periode");
-
-        jLabel40.setText("Nama Mata Kuliah");
-
-        tfnamamatkul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfnamamatkulActionPerformed(evt);
-            }
-        });
-
-        btinputmatkul.setText("Input");
-        btinputmatkul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btinputmatkulActionPerformed(evt);
-            }
-        });
-
-        btupdatematkul.setText("Update");
-        btupdatematkul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btupdatematkulActionPerformed(evt);
-            }
-        });
-
-        btdeletematkul.setText("Delete");
-        btdeletematkul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btdeletematkulActionPerformed(evt);
-            }
-        });
-
-        btclearmatkul.setText("Clear");
-        btclearmatkul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btclearmatkulActionPerformed(evt);
-            }
-        });
-
-        tabelMatkul.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tabelMatkul.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelMatkulMouseClicked(evt);
-            }
-        });
-        jScrollPane4.setViewportView(tabelMatkul);
-
-        javax.swing.GroupLayout manageMatkulLayout = new javax.swing.GroupLayout(manageMatkul);
-        manageMatkul.setLayout(manageMatkulLayout);
-        manageMatkulLayout.setHorizontalGroup(
-            manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageMatkulLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(manageMatkulLayout.createSequentialGroup()
-                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel38)
-                                    .addComponent(jLabel39)
-                                    .addComponent(jLabel40))
-                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                                        .addGap(48, 48, 48)
-                                        .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                                                .addComponent(btclearmatkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btdeletematkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btupdatematkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btinputmatkul))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))))
-                            .addGroup(manageMatkulLayout.createSequentialGroup()
-                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel36)
-                                    .addComponent(jLabel37))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfkdmatkul, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                                    .addComponent(cbnipdosen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(41, 41, 41))
-                    .addGroup(manageMatkulLayout.createSequentialGroup()
-                        .addComponent(jLabel35)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(manageMatkulLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
-        manageMatkulLayout.setVerticalGroup(
-            manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageMatkulLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel35)
-                .addGap(18, 18, 18)
-                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel36)
-                    .addComponent(tfkdmatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel37)
-                    .addComponent(cbnipdosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel38)
-                    .addComponent(cbidkelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel39)
-                    .addComponent(tfperiode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel40)
-                    .addComponent(tfnamamatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btinputmatkul)
-                    .addComponent(btupdatematkul)
-                    .addComponent(btdeletematkul)
-                    .addComponent(btclearmatkul))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        parentPanel.add(manageMatkul, "manageMatkul");
-
         jLabel42.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel42.setText("Manage Ambil Kuliah");
 
@@ -1447,6 +1289,166 @@ private void updateTabelKelas(){
         );
 
         parentPanel.add(manageAmbilMk, "manageAmbilMk");
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel35.setText("Manage Mata Kuliah");
+
+        jLabel36.setText("Kode Mata Kuliah");
+
+        tfkdmatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfkdmatkulActionPerformed(evt);
+            }
+        });
+
+        jLabel37.setText("NIP Dosen");
+
+        jLabel38.setText("ID Kelas");
+
+        jLabel39.setText("Periode");
+
+        jLabel40.setText("Nama Mata Kuliah");
+
+        tfnamamatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfnamamatkulActionPerformed(evt);
+            }
+        });
+
+        btinputmatkul.setText("Input");
+        btinputmatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btinputmatkulActionPerformed(evt);
+            }
+        });
+
+        btupdatematkul.setText("Update");
+        btupdatematkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btupdatematkulActionPerformed(evt);
+            }
+        });
+
+        btdeletematkul.setText("Delete");
+        btdeletematkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btdeletematkulActionPerformed(evt);
+            }
+        });
+
+        btclearmatkul.setText("Clear");
+        btclearmatkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btclearmatkulActionPerformed(evt);
+            }
+        });
+
+        tabelMatkul.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabelMatkul.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelMatkulMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tabelMatkulMouseEntered(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tabelMatkul);
+
+        javax.swing.GroupLayout manageMatkulLayout = new javax.swing.GroupLayout(manageMatkul);
+        manageMatkul.setLayout(manageMatkulLayout);
+        manageMatkulLayout.setHorizontalGroup(
+            manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(manageMatkulLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(manageMatkulLayout.createSequentialGroup()
+                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel38)
+                                    .addComponent(jLabel39)
+                                    .addComponent(jLabel40))
+                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                        .addGap(48, 48, 48)
+                                        .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                                .addComponent(btclearmatkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btdeletematkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btupdatematkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btinputmatkul))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))))
+                            .addGroup(manageMatkulLayout.createSequentialGroup()
+                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel36)
+                                    .addComponent(jLabel37))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfkdmatkul, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                    .addComponent(cbnipdosen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(41, 41, 41))
+                    .addGroup(manageMatkulLayout.createSequentialGroup()
+                        .addComponent(jLabel35)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(manageMatkulLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        manageMatkulLayout.setVerticalGroup(
+            manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(manageMatkulLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel35)
+                .addGap(18, 18, 18)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel36)
+                    .addComponent(tfkdmatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(cbnipdosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel38)
+                    .addComponent(cbidkelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(tfperiode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(tfnamamatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btinputmatkul)
+                    .addComponent(btupdatematkul)
+                    .addComponent(btdeletematkul)
+                    .addComponent(btclearmatkul))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        parentPanel.add(manageMatkul, "manageMatkul");
 
         jMenu1.setText("Menu");
 
@@ -1765,7 +1767,7 @@ private void updateTabelKelas(){
                 rs.next();
                 Files.delete(Paths.get(rs.getString("link_foto")));
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("UPDATE `mahasiswa` SET `NRP`='"+nrp+"',`NIP_DOSEN`='"+nipDospem+"',`NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"' WHERE NRP = '"+nrp+"'");
+                stm.executeUpdate("UPDATE `mahasiswa` SET `NRP`='"+nrp+"',`NIP_DOSEN`='"+nipDospem+"',`NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
                 clearMahasiswa();
@@ -1786,7 +1788,7 @@ private void updateTabelKelas(){
                 rs = stm.executeQuery("SELECT link_foto FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 String fileFoto = rs.getString("link_foto");
-                stm.executeQuery("DELETE FROM mengambil WHERE NRP = '"+nrp+"'");
+                stm.executeUpdate("DELETE FROM mengambil WHERE NRP = '"+nrp+"'");
                 stm.executeUpdate("DELETE FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 Files.delete(Paths.get(fileFoto));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
@@ -2039,7 +2041,6 @@ private void updateTabelKelas(){
     private void btclearmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btclearmatkulActionPerformed
         // TODO add your handling code here:
         clearMatkul();
-        
     }//GEN-LAST:event_btclearmatkulActionPerformed
 
     private void btdeletematkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btdeletematkulActionPerformed
@@ -2067,15 +2068,13 @@ private void updateTabelKelas(){
             if(tabelMatkul.getValueAt(row, 1).toString().equals(cbnipdosen.getItemAt(i))){
                 cbnipdosen.setSelectedIndex(i);
             }
+        }
+        for(int i = 0; i < dataKelas.length; i++){
             if(tabelMatkul.getValueAt(row, 2).toString().equals(cbidkelas.getItemAt(i))){
                 cbidkelas.setSelectedIndex(i);
             }
         }
-        for(int i = 0; i < dataDosen.length; i++){
-            if(tabelMahasiswa.getValueAt(row, 14).toString().equals(cbDosenPembimbing.getItemAt(i))){
-                cbDosenPembimbing.setSelectedIndex(i);
-            }
-        }
+        
         tfperiode.setText(tabelMatkul.getValueAt(row, 3).toString());
         tfnamamatkul.setText(tabelMatkul.getValueAt(row, 4).toString());
     }//GEN-LAST:event_tabelMatkulMouseClicked
@@ -2137,6 +2136,23 @@ private void updateTabelKelas(){
 
     private void btupdatematkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btupdatematkulActionPerformed
         // TODO add your handling code here:
+        String kodeMk = tfkdmatkul.getText();
+        int nipDos = cbnipdosen.getSelectedIndex();
+        String nipDosen = dataDosen[nipDos];
+        int idKelas = cbidkelas.getSelectedIndex();
+        String idKls = dataKelas[idKelas]; 
+        String periode = tfperiode.getText();
+        String namamatkul = tfnamamatkul.getText();
+        if(!"".equals(kodeMk) && !"".equals(nipDosen) && !"".equals(periode) && !"".equals(namamatkul) && !"".equals(idKls)){
+            try{
+                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"'");
+                JOptionPane.showMessageDialog(null, "Data berhasil di-update");
+                clearMatkul();
+                refreshData();            
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
         
     }//GEN-LAST:event_btupdatematkulActionPerformed
 
@@ -2147,6 +2163,10 @@ private void updateTabelKelas(){
         tfMatkulAmbilMk.setText(tblAmbilMk.getValueAt(row, 3).toString());
         tfKodeAmbilMk.setText(tblAmbilMk.getValueAt(row, 0).toString());
     }//GEN-LAST:event_tblAmbilMkMouseClicked
+
+    private void tabelMatkulMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMatkulMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelMatkulMouseEntered
 
     /**
      * @param args the command line arguments
