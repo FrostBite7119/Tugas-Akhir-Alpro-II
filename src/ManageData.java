@@ -1213,6 +1213,11 @@ private void updateTabelKelas(){
         });
 
         btupdatematkul.setText("Update");
+        btupdatematkul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btupdatematkulActionPerformed(evt);
+            }
+        });
 
         btdeletematkul.setText("Delete");
         btdeletematkul.addActionListener(new java.awt.event.ActionListener() {
@@ -1261,25 +1266,23 @@ private void updateTabelKelas(){
                                     .addComponent(jLabel39)
                                     .addComponent(jLabel40))
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(manageMatkulLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(manageMatkulLayout.createSequentialGroup()
-                                                .addGap(0, 1, Short.MAX_VALUE)
-                                                .addComponent(tfperiode, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(tfnamamatkul)))
-                                    .addGroup(manageMatkulLayout.createSequentialGroup()
-                                        .addGap(11, 11, 11)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                        .addGap(48, 48, 48)
                                         .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btclearmatkul)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btdeletematkul)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btupdatematkul)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btinputmatkul))))
+                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                                .addComponent(btclearmatkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btdeletematkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btupdatematkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btinputmatkul))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))))
                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
@@ -1293,7 +1296,7 @@ private void updateTabelKelas(){
                         .addComponent(jLabel35)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(manageMatkulLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         manageMatkulLayout.setVerticalGroup(
@@ -1328,7 +1331,7 @@ private void updateTabelKelas(){
                     .addComponent(btdeletematkul)
                     .addComponent(btclearmatkul))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2123,6 +2126,10 @@ private void updateTabelKelas(){
         tfMatkulAmbilMk.setText(tbAmbilMk.getValueAt(row, 3).toString());
         tfKodeAmbilMk.setText(tbAmbilMk.getValueAt(row, 0).toString());
     }//GEN-LAST:event_tbAmbilMkMouseClicked
+
+    private void btupdatematkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btupdatematkulActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btupdatematkulActionPerformed
 
     /**
      * @param args the command line arguments
