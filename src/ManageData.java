@@ -110,7 +110,6 @@ public class ManageData extends javax.swing.JFrame {
         tfNamaIbu.setText("");
         tfTelpOrtu.setText("");
         tfAlamatOrtu.setText("");
-        //cbDosenPembimbing.setSelectedIndex(0);
         tabelMahasiswa.clearSelection();
         asalFile = "";
         lbl_image.setIcon(null);
@@ -141,7 +140,7 @@ public class ManageData extends javax.swing.JFrame {
     private int getNumberMahasiswa(){
         int row = 0;
         try {
-            rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
+            rs = stm.executeQuery("SELECT COUNT(*) FROM mahasiswa");
             while(rs.next()){
                 row =  rs.getInt(1);
             }
@@ -182,7 +181,6 @@ public class ManageData extends javax.swing.JFrame {
         tabelMahasiswa.setModel(model);
         
         try{
-            //rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
             rs = stm.executeQuery("SELECT * FROM mahasiswa");
             while(rs.next()){
                 Object[] data = new Object[14];
@@ -208,7 +206,7 @@ public class ManageData extends javax.swing.JFrame {
             
             try{
                 int row = getNumberMahasiswa();
-                rs = stm.executeQuery("SELECT * FROM mahasiswa INNER JOIN dosen ON mahasiswa.NIP_DOSEN = dosen.NIP_DOSEN");
+                rs = stm.executeQuery("SELECT * FROM mahasiswa");
                 dataFoto = new String[row];
                 int i = 0;
                 while(rs.next()){
@@ -1679,8 +1677,7 @@ private void updateTabelKelas(){
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
-        //int dosPem = cbDosenPembimbing.getSelectedIndex();
-        //String nipDospem = dataDosen[dosPem];
+
         if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
@@ -1726,8 +1723,6 @@ private void updateTabelKelas(){
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
-        //int dosPem = cbDosenPembimbing.getSelectedIndex();
-        //String nipDospem = dataDosen[dosPem];
         if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu)  & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
@@ -1737,11 +1732,11 @@ private void updateTabelKelas(){
                 rs.next();
                 Files.delete(Paths.get(rs.getString("link_foto")));
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("UPDATE `mahasiswa` SET `NRP`='"+nrp+"', `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
+                stm.executeUpdate("UPDATE `mahasiswa` SET `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
                 clearMahasiswa();
-                updateTabelMahasiswa();
+                refreshData();
             } catch (SQLException | IOException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
@@ -1821,11 +1816,6 @@ private void updateTabelKelas(){
         tfNamaIbu.setText(tabelMahasiswa.getValueAt(row, 11).toString());
         tfTelpOrtu.setText(tabelMahasiswa.getValueAt(row, 12).toString());
         tfAlamatOrtu.setText(tabelMahasiswa.getValueAt(row, 13).toString());
-//        for(int i = 0; i < dataDosen.length; i++){
-//            if(tabelMahasiswa.getValueAt(row, 14).toString().equals(cbDosenPembimbing.getItemAt(i))){
-//                cbDosenPembimbing.setSelectedIndex(i);
-//            }
-//        }
 
         try {
             BufferedImage img = ImageIO.read(new File(dataFoto[row]));
