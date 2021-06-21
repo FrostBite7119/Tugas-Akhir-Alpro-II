@@ -61,7 +61,7 @@ public class ManageData extends javax.swing.JFrame {
         tfNrpAmbilMk.setText("");
         tfMatkulAmbilMk.setText("");
         tfKodeAmbilMk.setText("");
-        tabelAmbilMk.clearSelection();
+        tblAmbilMk.clearSelection();
     }
     
     private void updateTabelAmbilMk(){
@@ -71,7 +71,7 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Nama Mahasiswa");
         model.addColumn("Kode Mata Kuliah");
         model.addColumn("Nama Mata Kuliah");
-        tabelAmbilMk.setModel(model);
+        tblAmbilMk.setModel(model);
         
         try{
             rs = stm.executeQuery("SELECT * FROM mengambil INNER JOIN mahasiswa ON mengambil.NRP = mahasiswa.NRP INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH");
@@ -83,7 +83,7 @@ public class ManageData extends javax.swing.JFrame {
                 data[3] = rs.getString("KODE_MATA_KULIAH");
                 data[4] = rs.getString("NAMA_MATA_KULIAH");
                 model.addRow(data);
-                tabelAmbilMk.setModel(model);
+                tblAmbilMk.setModel(model);
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
@@ -533,7 +533,7 @@ private void updateTabelKelas(){
         btnDeleteAmbilMk = new javax.swing.JButton();
         btnClearAmbilMk = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tabelAmbilMk = new javax.swing.JTable();
+        tblAmbilMk = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -1370,7 +1370,7 @@ private void updateTabelKelas(){
             }
         });
 
-        tabelAmbilMk.setModel(new javax.swing.table.DefaultTableModel(
+        tblAmbilMk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -1381,7 +1381,12 @@ private void updateTabelKelas(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(tabelAmbilMk);
+        tblAmbilMk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAmbilMkMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tblAmbilMk);
 
         javax.swing.GroupLayout manageAmbilMkLayout = new javax.swing.GroupLayout(manageAmbilMk);
         manageAmbilMk.setLayout(manageAmbilMkLayout);
@@ -1437,8 +1442,8 @@ private void updateTabelKelas(){
                     .addComponent(btnDeleteAmbilMk)
                     .addComponent(btnClearAmbilMk))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         parentPanel.add(manageAmbilMk, "manageAmbilMk");
@@ -2133,6 +2138,14 @@ private void updateTabelKelas(){
         
     }//GEN-LAST:event_btupdatematkulActionPerformed
 
+    private void tblAmbilMkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAmbilMkMouseClicked
+        // TODO add your handling code here:
+        int row = tblAmbilMk.getSelectedRow();
+        tfNrpAmbilMk.setText(tblAmbilMk.getValueAt(row, 1).toString());
+        tfMatkulAmbilMk.setText(tblAmbilMk.getValueAt(row, 3).toString());
+        tfKodeAmbilMk.setText(tblAmbilMk.getValueAt(row, 0).toString());
+    }//GEN-LAST:event_tblAmbilMkMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2270,11 +2283,11 @@ private void updateTabelKelas(){
     private javax.swing.JRadioButton rbPriaMhs;
     private javax.swing.JRadioButton rbWanita;
     private javax.swing.JRadioButton rbWanitaMhs;
-    private javax.swing.JTable tabelAmbilMk;
     private javax.swing.JTable tabelDosen;
     private javax.swing.JTable tabelKelas;
     private javax.swing.JTable tabelMahasiswa;
     private javax.swing.JTable tabelMatkul;
+    private javax.swing.JTable tblAmbilMk;
     private javax.swing.JTextField tfAlamatDosen;
     private javax.swing.JTextField tfAlamatMhs;
     private javax.swing.JTextField tfAlamatOrtu;
