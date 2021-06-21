@@ -1272,9 +1272,9 @@ private void updateTabelKelas(){
             }
         });
 
-        jLabel37.setText("NIP Dosen");
+        jLabel37.setText("Nama Dosen");
 
-        jLabel38.setText("ID Kelas");
+        jLabel38.setText("Kelas");
 
         jLabel39.setText("Periode");
 

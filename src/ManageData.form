@@ -1452,12 +1452,12 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel37">
               <Properties>
-                <Property name="text" type="java.lang.String" value="NIP Dosen"/>
+                <Property name="text" type="java.lang.String" value="Nama Dosen"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel38">
               <Properties>
-                <Property name="text" type="java.lang.String" value="ID Kelas"/>
+                <Property name="text" type="java.lang.String" value="Kelas"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel39">
