@@ -506,7 +506,7 @@ public class LihatData extends javax.swing.JFrame {
 
     private void btnTampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilActionPerformed
         // TODO add your handling code here:
-        String nrp = tfnrpmhs.getText();
+        String nrp = tfCari.getText();
         if(!"".equals(nrp)){
             try{
                 rs = stm.executeQuery("SELECT * FROM mahasiswa WHERE NRP = '"+nrp+"'");
