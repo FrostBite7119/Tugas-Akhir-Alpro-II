@@ -225,7 +225,7 @@ public class ManageData extends javax.swing.JFrame {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Kode Mata Kuliah");
         model.addColumn("Dosen Pengampu");
-        model.addColumn("ID Kelas");
+        model.addColumn("Nama Kelas");
         model.addColumn("Periode");
         model.addColumn("Nama Mata Kuliah");
         tabelMatkul.setModel(model);
@@ -236,7 +236,7 @@ public class ManageData extends javax.swing.JFrame {
                 Object[] data = new Object[5];
                 data[0] = rs.getString("KODE_MATA_KULIAH");
                 data[1] = rs.getString("NAMA_DOSEN");
-                data[2] = rs.getString("ID_KELAS");
+                data[2] = rs.getString("KELAS");
                 data[3] = rs.getString("PERIODE");
                 data[4] = rs.getString("NAMA_MATA_KULIAH");
                 model.addRow(data);
@@ -2110,7 +2110,7 @@ public class ManageData extends javax.swing.JFrame {
         String namamatkul = tfnamamatkul.getText();
         if(!"".equals(kodeMk) && !"".equals(nipDosen) && !"".equals(periode) && !"".equals(namamatkul) && !"".equals(idKls)){
             try{
-                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"'");
+                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"' WHERE KODE_MATA_KULIAH = '"+kodeMk+"'");
                 JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                 clearMatkul();
                 refreshData();            
