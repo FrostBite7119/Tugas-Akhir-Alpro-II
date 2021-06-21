@@ -2071,11 +2071,13 @@ private void updateTabelKelas(){
                 cbidkelas.setSelectedIndex(i);
             }
         }
+        for(int i = 0; i < dataDosen.length; i++){
+            if(tabelMahasiswa.getValueAt(row, 14).toString().equals(cbDosenPembimbing.getItemAt(i))){
+                cbDosenPembimbing.setSelectedIndex(i);
+            }
+        }
         tfperiode.setText(tabelMatkul.getValueAt(row, 3).toString());
         tfnamamatkul.setText(tabelMatkul.getValueAt(row, 4).toString());
-        
-        
-        
     }//GEN-LAST:event_tabelMatkulMouseClicked
 
     private void menuAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAmbilMkActionPerformed
@@ -2118,7 +2120,7 @@ private void updateTabelKelas(){
 
     private void btnDeleteAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAmbilMkActionPerformed
         // TODO add your handling code here:
-        String nrp = tfNrpAmbilMk.getText();
+        String nrp = tfKodeAmbilMk.getText();
         if(!"".equals(nrp)){
             try{
                 stm.executeUpdate("delete from mengambil WHERE NRP ='"+nrp+"'");
