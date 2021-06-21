@@ -4,9 +4,15 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="nrp" class="java.lang.String"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT matakuliah.KODE_MATA_KULIAH, matakuliah.NAMA_MATA_KULIAH, kelas.KELAS, kelas.WAKTU, dosen.NAMA_DOSEN FROM mengambil INNER JOIN mahasiswa ON mengambil.NRP = mahasiswa.NRP INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN INNER JOIN kelas ON matakuliah.ID_KELAS = kelas.ID_KELAS]]>
+	<queryString>
+		<![CDATA[SELECT mahasiswa.NRP, mahasiswa.NAMA_MAHASISWA, matakuliah.KODE_MATA_KULIAH, matakuliah.NAMA_MATA_KULIAH, kelas.KELAS, kelas.WAKTU, dosen.NAMA_DOSEN FROM mengambil INNER JOIN mahasiswa ON mengambil.NRP = mahasiswa.NRP INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN INNER JOIN kelas ON matakuliah.ID_KELAS = kelas.ID_KELAS]]>
 	</queryString>
+	<field name="NRP" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMA_MAHASISWA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="KODE_MATA_KULIAH" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -37,7 +43,33 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="336" y="0" width="158" height="20" uuid="65a9598b-e35f-42b3-afe5-20fbec20d4ee"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMA_MAHASISWA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="51548305-3f86-4bad-9b38-2eec2d051857"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRP}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="f325ffa2-9c39-447e-be77-402d6baf084c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[NRP	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="0" width="100" height="20" uuid="d5647bce-5889-41c8-a752-737cf55b3eb4"/>
+				<text><![CDATA[Nama	:]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
