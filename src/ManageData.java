@@ -775,12 +775,13 @@ private void updateTabelKelas(){
                     .addGroup(manageMahasiswaLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                         .addComponent(btnPilihGambar)
-                        .addGap(70, 70, 70))
+                        .addGap(69, 69, 69))
                     .addGroup(manageMahasiswaLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addContainerGap())
         );
 
         parentPanel.add(manageMahasiswa, "manageMahasiswa");
@@ -1729,10 +1730,13 @@ private void updateTabelKelas(){
                 String linkFile = "C:\\Tugas\\agfdaf\\Semester 2\\Algoritma dan Pemrograman II\\Tugas\\14_pertemuan\\TugasAkhir\\src\\gambar\\"+nrp+"."+jenisFile;
                 rs = stm.executeQuery("SELECT * FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
-                Files.delete(Paths.get(rs.getString("link_foto")));
+                String fileLama = rs.getString("link_foto");
                 String link = linkFile.replace("\\", "\\\\");
                 stm.executeUpdate("UPDATE `mahasiswa` SET `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
-                Files.copy(Paths.get(asalFile), Paths.get(linkFile));
+                if(!fileLama.equals(link)){
+                    Files.delete(Paths.get(fileLama));
+                    Files.copy(Paths.get(asalFile), Paths.get(linkFile));
+                }
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
                 clearMahasiswa();
                 refreshData();
@@ -1790,7 +1794,7 @@ private void updateTabelKelas(){
         
         if(tabelMahasiswa.getValueAt(row, 4).equals("Pria")){
             rbPria.setSelected(true);
-        }else{
+        }else if (tabelMahasiswa.getValueAt(row, 4).equals("Wanita")){
             rbWanita.setSelected(true);
         }
         
@@ -1818,6 +1822,7 @@ private void updateTabelKelas(){
 
         try {
             BufferedImage img = ImageIO.read(new File(dataFoto[row]));
+            asalFile = dataFoto[row];
             Image resizedImage = img.getScaledInstance(lbl_image.getWidth(), lbl_image.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(resizedImage);
             lbl_image.setText("");
