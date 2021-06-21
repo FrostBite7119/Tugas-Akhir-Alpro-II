@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -15,6 +16,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -105,10 +113,11 @@ public class LihatData extends javax.swing.JFrame {
         tfnrpmhs = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jadwalnrpmhs = new javax.swing.JLabel();
-        jadwalnamamhs = new javax.swing.JLabel();
+        tfNrpNama = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabeljadwal = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -347,7 +356,7 @@ public class LihatData extends javax.swing.JFrame {
                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        parentPanel.add(panelMahasiswa, "card3");
+        parentPanel.add(panelMahasiswa, "panelMahasiswa");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Jadwal Mahasiswa");
@@ -363,10 +372,6 @@ public class LihatData extends javax.swing.JFrame {
 
         jLabel3.setText("Menampilkan Jadwal:");
 
-        jadwalnrpmhs.setText("NRP");
-
-        jadwalnamamhs.setText("Nama Mahasiswa");
-
         tabeljadwal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -380,6 +385,20 @@ public class LihatData extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabeljadwal);
 
+        jButton2.setText("Clear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Cetak");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelJadwalLayout = new javax.swing.GroupLayout(panelJadwal);
         panelJadwal.setLayout(panelJadwalLayout);
         panelJadwalLayout.setHorizontalGroup(
@@ -387,24 +406,29 @@ public class LihatData extends javax.swing.JFrame {
             .addGroup(panelJadwalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                     .addGroup(panelJadwalLayout.createSequentialGroup()
                         .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                             .addGroup(panelJadwalLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(tfnrpmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
-                            .addGroup(panelJadwalLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jadwalnrpmhs)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jadwalnamamhs)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(panelJadwalLayout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfnrpmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton1)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(panelJadwalLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfNrpNama)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)
+                        .addGap(33, 33, 33))))
         );
         panelJadwalLayout.setVerticalGroup(
             panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,14 +440,15 @@ public class LihatData extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(tfnrpmhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(40, 40, 40)
+                .addGap(36, 36, 36)
                 .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jadwalnrpmhs)
-                    .addComponent(jadwalnamamhs))
+                    .addComponent(tfNrpNama)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         parentPanel.add(panelJadwal, "panelJadwal");
@@ -431,6 +456,11 @@ public class LihatData extends javax.swing.JFrame {
         jMenu1.setText("Menu");
 
         jMenuItem1.setText("Mahasiswa");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         menuJadwal.setText("Jadwal");
@@ -465,7 +495,7 @@ public class LihatData extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(parentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+            .addComponent(parentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -543,11 +573,15 @@ public class LihatData extends javax.swing.JFrame {
         String nrp = tfnrpmhs.getText();
         if (!"".equals(nrp)){
         try {
-            rs = stm.executeQuery("SELECT * FROM mengambil INNER JOIN mahasiswa ON "
-                    + "mengambil.NRP = mahasiswa.NRP INNER JOIN matakuliah ON "
-                    + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN "
-                    + "dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN WHERE mengambil.NRP = "
-                    + "'"+nrp+"'");
+            rs = stm.executeQuery("SELECT * FROM mahasiswa WHERE nrp = '"+nrp+"'");
+            rs.next();
+            tfNrpNama.setText(rs.getString("NRP")+" - "+rs.getString("NAMA_MAHASISWA"));
+            rs = stm.executeQuery("SELECT matakuliah.KODE_MATA_KULIAH, matakuliah.NAMA_MATA_KULIAH, "
+                    + "kelas.KELAS, kelas.WAKTU, dosen.NAMA_DOSEN FROM mengambil INNER JOIN mahasiswa "
+                    + "ON mengambil.NRP = mahasiswa.NRP INNER JOIN matakuliah ON "
+                    + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN dosen ON "
+                    + "matakuliah.NIP_DOSEN = dosen.NIP_DOSEN INNER JOIN kelas ON "
+                    + "matakuliah.ID_KELAS = kelas.ID_KELAS WHERE mengambil.NRP = '"+nrp+"'");
             
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Kode Matakuliah");
@@ -558,10 +592,16 @@ public class LihatData extends javax.swing.JFrame {
             tabeljadwal.setModel(model);
             
             while(rs.next()){
-                
+                Object[] data = new Object[5];
+                data[0] = rs.getString("KODE_MATA_KULIAH");
+                data[1] = rs.getString("NAMA_MATA_KULIAH");
+                data[2] = rs.getString("KELAS");
+                data[3] = rs.getString("WAKTU");
+                data[4] = rs.getString("NAMA_DOSEN");
+                model.addRow(data);
+                tabeljadwal.setModel(model);
             }
-            }
-           catch (SQLException ex) {
+            }catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
         }
@@ -569,6 +609,39 @@ public class LihatData extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Kolom harus diisi");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        tfNrpNama.setText("");
+        tfnrpmhs.setText("");
+        updatetabeljadwalmhs();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(!"".equals(tfnrpmhs.getText())){
+            String jrxmlFile = "src/jadwal.jrxml";
+            HashMap param = new HashMap();
+            param.put("nrp", tfnrpmhs.getText());
+            try {
+                JasperReport jspR = JasperCompileManager.compileReport(jrxmlFile);
+                JasperPrint JPrint = JasperFillManager.fillReport(jspR, param, conn);
+                JasperViewer.viewReport(JPrint, false);
+                //JasperExportManager.exportReportToPdfFile(JPrint, "src/jadwal.pdf");
+                JOptionPane.showMessageDialog(null, "File PDF berhasil dibuat");
+            } catch (JRException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Kolom harus diisi!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) parentPanel.getLayout();
+        cl.show(parentPanel, "panelMahasiswa");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -609,6 +682,8 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnTampil;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -633,8 +708,6 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel jadwalnamamhs;
-    private javax.swing.JLabel jadwalnrpmhs;
     private javax.swing.JLabel lbl_image;
     private javax.swing.JMenuItem menuJadwal;
     private javax.swing.JMenu menuKeluar;
@@ -654,6 +727,7 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JLabel tfNoHp;
     private javax.swing.JLabel tfNoKtpAyah;
     private javax.swing.JLabel tfNrp;
+    private javax.swing.JLabel tfNrpNama;
     private javax.swing.JLabel tfOrtu;
     private javax.swing.JLabel tfProdi;
     private javax.swing.JLabel tfStatus;
