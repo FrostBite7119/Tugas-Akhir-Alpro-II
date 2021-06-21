@@ -246,7 +246,7 @@ public class ManageData extends javax.swing.JFrame {
             
             try{
                 int row = getNumberDosen();
-                rs = stm.executeQuery("SELECT * FROM dosen WHERE NIP_DOSEN != 000");
+                rs = stm.executeQuery("SELECT * FROM dosen WHERE NIP_DOSEN");
                 dataDosen = new String[row];
                 for(int i = 0; i < row; i++){
                     rs.next();
@@ -370,8 +370,8 @@ private void updateTabelKelas(){
         tfkdmatkul.setText("");
         tfperiode.setText("");
         tfnamamatkul.setText("");
-        cbnipdosen.setSelectedIndex(-1);
-        cbidkelas.setSelectedIndex(-1);
+        cbnipdosen.setSelectedIndex(0);
+        cbidkelas.setSelectedIndex(0);
         tabelMatkul.clearSelection();
        
     }
@@ -1983,7 +1983,6 @@ private void updateTabelKelas(){
         if(!"".equals(kdmatkul) & !"".equals(nipdosen) & !"".equals(nipdosen) & !"".equals(idkelas) & !"".equals(periode) & !"".equals(namamatkul))
         {
             try {
-                
                 stm.executeUpdate("INSERT INTO matakuliah VALUES('"+kdmatkul+"', '"+nipdosen+"', '"+idkelas+"', '"+periode+"', '"+namamatkul+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMatkul();
@@ -2008,6 +2007,7 @@ private void updateTabelKelas(){
         if(!"".equals(kdmatkul)){
             try{
                 stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
+                stm.executeUpdate("DELETE FROM mengambil WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
                 refreshData();
@@ -2052,7 +2052,7 @@ private void updateTabelKelas(){
             try{
                 rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+nrp+"' AND KODE_MATA_KULIAH = '"+kode_matkul+"'");
                 if(rs.next()){
-                    JOptionPane.showMessageDialog(null, "Data sudah pernah diinput!");
+                    JOptionPane.showMessageDialog(null, "Mahasiswa sudah mengambil matkul tersebut!");
                 }else{
                     stm.executeUpdate("INSERT INTO mengambil(NRP, KODE_MATA_KULIAH) VALUES('"+nrp+"', '"+kode_matkul+"')");
                     JOptionPane.showMessageDialog(null, "Data berhasil di-input");
@@ -2078,10 +2078,10 @@ private void updateTabelKelas(){
 
     private void btnDeleteAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAmbilMkActionPerformed
         // TODO add your handling code here:
-        String nrp = tfKodeAmbilMk.getText();
-        if(!"".equals(nrp)){
+        String ambilMk = tfKodeAmbilMk.getText();
+        if(!"".equals(ambilMk)){
             try{
-                stm.executeUpdate("delete from mengambil WHERE NRP ='"+nrp+"'");
+                stm.executeUpdate("delete from mengambil WHERE NRP ='"+ambilMk+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearAmbilMk();
                 refreshData();
@@ -2089,7 +2089,7 @@ private void updateTabelKelas(){
                JOptionPane.showMessageDialog(null, ex); 
             }
         }else{
-          JOptionPane.showMessageDialog(null, "Kolom NRP harus di isi!");  
+          JOptionPane.showMessageDialog(null, "Kolom Kode Ambil MK kosong silahkan klik data pada tabel untuk mengisinya!");  
         }
     }//GEN-LAST:event_btnDeleteAmbilMkActionPerformed
 
