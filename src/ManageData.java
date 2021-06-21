@@ -57,6 +57,13 @@ public class ManageData extends javax.swing.JFrame {
         updateTabelAmbilMk();
     }
     
+    private void clearAmbilMk(){
+        tfNrpAmbilMk.setText("");
+        tfMatkulAmbilMk.setText("");
+        tfKodeAmbilMk.setText("");
+        tbAmbilMk.clearSelection();
+    }
+    
     private void updateTabelAmbilMk(){
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Kode Ambil MK");
@@ -1260,25 +1267,23 @@ private void updateTabelKelas(){
                                     .addComponent(jLabel39)
                                     .addComponent(jLabel40))
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(manageMatkulLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(manageMatkulLayout.createSequentialGroup()
-                                                .addGap(0, 1, Short.MAX_VALUE)
-                                                .addComponent(tfperiode, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(tfnamamatkul)))
-                                    .addGroup(manageMatkulLayout.createSequentialGroup()
-                                        .addGap(11, 11, 11)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                        .addGap(48, 48, 48)
                                         .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btclearmatkul)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btdeletematkul)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btupdatematkul)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btinputmatkul))))
+                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                                .addComponent(btclearmatkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btdeletematkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btupdatematkul)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btinputmatkul))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))))
                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
@@ -1292,7 +1297,7 @@ private void updateTabelKelas(){
                         .addComponent(jLabel35)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(manageMatkulLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         manageMatkulLayout.setVerticalGroup(
@@ -1327,7 +1332,7 @@ private void updateTabelKelas(){
                     .addComponent(btdeletematkul)
                     .addComponent(btclearmatkul))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1355,6 +1360,11 @@ private void updateTabelKelas(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbAmbilMk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAmbilMkMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tbAmbilMk);
 
         btnInputAmbilMk.setText("Input");
@@ -1776,11 +1786,12 @@ private void updateTabelKelas(){
                 rs = stm.executeQuery("SELECT link_foto FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 String fileFoto = rs.getString("link_foto");
+                stm.executeQuery("DELETE FROM mengambil WHERE NRP = '"+nrp+"'");
                 stm.executeUpdate("DELETE FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 Files.delete(Paths.get(fileFoto));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMahasiswa();
-                updateTabelMahasiswa();
+                refreshData();
             }catch(SQLException | IOException e){
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -2077,8 +2088,19 @@ private void updateTabelKelas(){
         String nrp = tfNrpAmbilMk.getText();
         String kode_matkul = tfMatkulAmbilMk.getText();
         if(!"".equals(nrp) & !"".equals(kode_matkul)){
-            sql = "INSERT INTO mengambil(NRP, KODE_MATA_KULIAH) VALUES('"+nrp+"', '"+kode_matkul+"')";
-            JOptionPane.showMessageDialog(null, "Data berhasil di-input");
+            try{
+                rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+nrp+"' AND KODE_MATA_KULIAH = '"+kode_matkul+"'");
+                if(rs.next()){
+                    JOptionPane.showMessageDialog(null, "Data sudah pernah diinput!");
+                }else{
+                    stm.executeUpdate("INSERT INTO mengambil(NRP, KODE_MATA_KULIAH) VALUES('"+nrp+"', '"+kode_matkul+"')");
+                    JOptionPane.showMessageDialog(null, "Data berhasil di-input");
+                    clearAmbilMk();
+                    refreshData();
+                }
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Data harus diisi terlebih dahulu!");
         }
@@ -2086,7 +2108,7 @@ private void updateTabelKelas(){
 
     private void btnClearAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearAmbilMkActionPerformed
         // TODO add your handling code here:
-        clearMatkul();
+        clearAmbilMk();
     }//GEN-LAST:event_btnClearAmbilMkActionPerformed
 
     private void tfkdmatkulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfkdmatkulActionPerformed
@@ -2100,7 +2122,7 @@ private void updateTabelKelas(){
             try{
                 stm.executeUpdate("delete from mengambil WHERE NRP ='"+nrp+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
-                clearMatkul();
+                clearAmbilMk();
                 refreshData();
             }catch(SQLException ex){
                JOptionPane.showMessageDialog(null, ex); 
