@@ -2087,7 +2087,7 @@ public class ManageData extends javax.swing.JFrame {
         String ambilMk = tfKodeAmbilMk.getText();
         if(!"".equals(ambilMk)){
             try{
-                stm.executeUpdate("delete from mengambil WHERE NRP ='"+ambilMk+"'");
+                stm.executeUpdate("delete from mengambil WHERE id_ambil_matkul ='"+ambilMk+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearAmbilMk();
                 refreshData();
