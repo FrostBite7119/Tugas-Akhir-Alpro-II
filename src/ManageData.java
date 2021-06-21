@@ -152,7 +152,7 @@ public class ManageData extends javax.swing.JFrame {
     private int getNumberKelas(){
         int row = 0;
         try {
-            rs = stm.executeQuery("SELECT COUNT(*) FROM Kelas WHERE ID_KELAS");
+            rs = stm.executeQuery("SELECT COUNT(*) FROM KELAS");
             while(rs.next()){
                 row =  rs.getInt(1);
             }
@@ -246,7 +246,7 @@ public class ManageData extends javax.swing.JFrame {
             
             try{
                 int row = getNumberDosen();
-                rs = stm.executeQuery("SELECT * FROM dosen WHERE NIP_DOSEN");
+                rs = stm.executeQuery("SELECT * FROM dosen");
                 dataDosen = new String[row];
                 for(int i = 0; i < row; i++){
                     rs.next();
