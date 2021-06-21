@@ -61,7 +61,7 @@ public class ManageData extends javax.swing.JFrame {
         tfNrpAmbilMk.setText("");
         tfMatkulAmbilMk.setText("");
         tfKodeAmbilMk.setText("");
-        tbAmbilMk.clearSelection();
+        tabelAmbilMk.clearSelection();
     }
     
     private void updateTabelAmbilMk(){
@@ -71,7 +71,7 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Nama Mahasiswa");
         model.addColumn("Kode Mata Kuliah");
         model.addColumn("Nama Mata Kuliah");
-        tbAmbilMk.setModel(model);
+        tabelAmbilMk.setModel(model);
         
         try{
             rs = stm.executeQuery("SELECT * FROM mengambil INNER JOIN mahasiswa ON mengambil.NRP = mahasiswa.NRP INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH");
@@ -83,7 +83,7 @@ public class ManageData extends javax.swing.JFrame {
                 data[3] = rs.getString("KODE_MATA_KULIAH");
                 data[4] = rs.getString("NAMA_MATA_KULIAH");
                 model.addRow(data);
-                tbAmbilMk.setModel(model);
+                tabelAmbilMk.setModel(model);
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
@@ -529,11 +529,11 @@ private void updateTabelKelas(){
         tfMatkulAmbilMk = new javax.swing.JTextField();
         jLabel45 = new javax.swing.JLabel();
         tfKodeAmbilMk = new javax.swing.JTextField();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tbAmbilMk = new javax.swing.JTable();
         btnInputAmbilMk = new javax.swing.JButton();
         btnDeleteAmbilMk = new javax.swing.JButton();
         btnClearAmbilMk = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tabelAmbilMk = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -1349,24 +1349,6 @@ private void updateTabelKelas(){
 
         tfKodeAmbilMk.setEditable(false);
 
-        tbAmbilMk.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tbAmbilMk.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbAmbilMkMouseClicked(evt);
-            }
-        });
-        jScrollPane5.setViewportView(tbAmbilMk);
-
         btnInputAmbilMk.setText("Input");
         btnInputAmbilMk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1388,6 +1370,19 @@ private void updateTabelKelas(){
             }
         });
 
+        tabelAmbilMk.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(tabelAmbilMk);
+
         javax.swing.GroupLayout manageAmbilMkLayout = new javax.swing.GroupLayout(manageAmbilMk);
         manageAmbilMk.setLayout(manageAmbilMkLayout);
         manageAmbilMkLayout.setHorizontalGroup(
@@ -1395,7 +1390,14 @@ private void updateTabelKelas(){
             .addGroup(manageAmbilMkLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageAmbilMkLayout.createSequentialGroup()
+                        .addGap(0, 465, Short.MAX_VALUE)
+                        .addComponent(btnClearAmbilMk)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteAmbilMk)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnInputAmbilMk))
                     .addGroup(manageAmbilMkLayout.createSequentialGroup()
                         .addGroup(manageAmbilMkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel42)
@@ -1409,14 +1411,7 @@ private void updateTabelKelas(){
                                     .addComponent(tfNrpAmbilMk)
                                     .addComponent(tfMatkulAmbilMk, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                                     .addComponent(tfKodeAmbilMk, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageAmbilMkLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnClearAmbilMk)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeleteAmbilMk)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnInputAmbilMk)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         manageAmbilMkLayout.setVerticalGroup(
@@ -1442,8 +1437,8 @@ private void updateTabelKelas(){
                     .addComponent(btnDeleteAmbilMk)
                     .addComponent(btnClearAmbilMk))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         parentPanel.add(manageAmbilMk, "manageAmbilMk");
@@ -2275,11 +2270,11 @@ private void updateTabelKelas(){
     private javax.swing.JRadioButton rbPriaMhs;
     private javax.swing.JRadioButton rbWanita;
     private javax.swing.JRadioButton rbWanitaMhs;
+    private javax.swing.JTable tabelAmbilMk;
     private javax.swing.JTable tabelDosen;
     private javax.swing.JTable tabelKelas;
     private javax.swing.JTable tabelMahasiswa;
     private javax.swing.JTable tabelMatkul;
-    private javax.swing.JTable tbAmbilMk;
     private javax.swing.JTextField tfAlamatDosen;
     private javax.swing.JTextField tfAlamatMhs;
     private javax.swing.JTextField tfAlamatOrtu;
