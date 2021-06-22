@@ -253,6 +253,7 @@ public class ManageData extends javax.swing.JFrame {
                     dataDosen[i] = rs.getString("NIP_DOSEN");   
                 }
                 rs.beforeFirst();
+                cbnipdosen.removeAllItems();
                 while(rs.next()){
                     String namaDosen = rs.getString("NAMA_DOSEN");
                     cbnipdosen.addItem(namaDosen);
@@ -271,6 +272,7 @@ public class ManageData extends javax.swing.JFrame {
                     dataKelas[i] = rs.getString("ID_KELAS");
                 }
                 rs.beforeFirst();
+                cbidkelas.removeAllItems();
                 while(rs.next()){
                     String idKelas = rs.getString("KELAS");
                     cbidkelas.addItem(idKelas);
@@ -2012,8 +2014,8 @@ public class ManageData extends javax.swing.JFrame {
         String kdmatkul = tfkdmatkul.getText();
         if(!"".equals(kdmatkul)){
             try{
-                stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 stm.executeUpdate("DELETE FROM mengambil WHERE kode_mata_kuliah = '"+kdmatkul+"'");
+                stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
                 refreshData();
