@@ -1685,10 +1685,10 @@ public class ManageData extends javax.swing.JFrame {
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
-                String linkFile = "C:\\Tugas\\agfdaf\\Semester 2\\Algoritma dan Pemrograman II\\Tugas\\14_pertemuan\\TugasAkhir\\src\\gambar\\"+nrp+"."+jenisFile;
-                Files.copy(Paths.get(asalFile), Paths.get(linkFile));
+                String linkFile = "src\\gambar\\"+nrp+"."+jenisFile;
                 String link = linkFile.replace("\\", "\\\\");
                 stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+link+"')");
+                Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();
                 refreshData();
