@@ -231,17 +231,19 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Nama Kelas");
         model.addColumn("Periode");
         model.addColumn("Nama Mata Kuliah");
+        model.addColumn("SKS");
         tabelMatkul.setModel(model);
         
         try{
             rs = stm.executeQuery("SELECT * FROM matakuliah INNER JOIN dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN INNER JOIN kelas ON matakuliah.ID_KELAS = kelas.ID_KELAS");
             while(rs.next()){
-                Object[] data = new Object[5];
+                Object[] data = new Object[6];
                 data[0] = rs.getString("KODE_MATA_KULIAH");
                 data[1] = rs.getString("NAMA_DOSEN");
                 data[2] = rs.getString("KELAS");
                 data[3] = rs.getString("PERIODE");
                 data[4] = rs.getString("NAMA_MATA_KULIAH");
+                data[5] = rs.getString("SKS");
                 model.addRow(data);
                 tabelMatkul.setModel(model);
             }
@@ -379,6 +381,7 @@ public class ManageData extends javax.swing.JFrame {
         cbnipdosen.setSelectedIndex(0);
         cbidkelas.setSelectedIndex(0);
         tabelMatkul.clearSelection();
+        tfsks.setText("");
        
     }
     /**
@@ -516,6 +519,8 @@ public class ManageData extends javax.swing.JFrame {
         btclearmatkul = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tabelMatkul = new javax.swing.JTable();
+        jLabel46 = new javax.swing.JLabel();
+        tfsks = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -1352,10 +1357,22 @@ public class ManageData extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tabelMatkul);
 
+        jLabel46.setText("SKS");
+
         javax.swing.GroupLayout manageMatkulLayout = new javax.swing.GroupLayout(manageMatkul);
         manageMatkul.setLayout(manageMatkulLayout);
         manageMatkulLayout.setHorizontalGroup(
             manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btclearmatkul)
+                .addGap(18, 18, 18)
+                .addComponent(btdeletematkul)
+                .addGap(18, 18, 18)
+                .addComponent(btupdatematkul)
+                .addGap(18, 18, 18)
+                .addComponent(btinputmatkul)
+                .addGap(41, 41, 41))
             .addGroup(manageMatkulLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1372,18 +1389,10 @@ public class ManageData extends javax.swing.JFrame {
                                         .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                                                .addComponent(btclearmatkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btdeletematkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btupdatematkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btinputmatkul))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))))
+                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                            .addComponent(tfsks)))))
                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
@@ -1397,8 +1406,11 @@ public class ManageData extends javax.swing.JFrame {
                         .addComponent(jLabel35)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(manageMatkulLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(manageMatkulLayout.createSequentialGroup()
+                        .addComponent(jLabel46)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         manageMatkulLayout.setVerticalGroup(
             manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1427,12 +1439,16 @@ public class ManageData extends javax.swing.JFrame {
                     .addComponent(tfnamamatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btinputmatkul)
-                    .addComponent(btupdatematkul)
+                    .addComponent(jLabel46)
+                    .addComponent(tfsks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btclearmatkul)
                     .addComponent(btdeletematkul)
-                    .addComponent(btclearmatkul))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                    .addComponent(btupdatematkul)
+                    .addComponent(btinputmatkul))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -2009,10 +2025,11 @@ public class ManageData extends javax.swing.JFrame {
         String idkelas = dataKelas[indexKelas];
         String periode = tfperiode.getText();
         String namamatkul = tfnamamatkul.getText();
-        if(!"".equals(kdmatkul) & !"".equals(nipdosen) & !"".equals(nipdosen) & !"".equals(idkelas) & !"".equals(periode) & !"".equals(namamatkul))
+        String sks = tfsks.getText();
+        if(!"".equals(kdmatkul) & !"".equals(nipdosen) & !"".equals(nipdosen) & !"".equals(idkelas) & !"".equals(periode) & !"".equals(namamatkul) & !"".equals(sks))
         {
             try {
-                stm.executeUpdate("INSERT INTO matakuliah VALUES('"+kdmatkul+"', '"+nipdosen+"', '"+idkelas+"', '"+periode+"', '"+namamatkul+"')");
+                stm.executeUpdate("INSERT INTO matakuliah VALUES('"+kdmatkul+"', '"+nipdosen+"', '"+idkelas+"', '"+periode+"', '"+namamatkul+"', '"+sks+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMatkul();
                 refreshData();
@@ -2065,6 +2082,7 @@ public class ManageData extends javax.swing.JFrame {
         
         tfperiode.setText(tabelMatkul.getValueAt(row, 3).toString());
         tfnamamatkul.setText(tabelMatkul.getValueAt(row, 4).toString());
+        tfsks.setText(tabelMatkul.getValueAt(row, 5).toString());
     }//GEN-LAST:event_tabelMatkulMouseClicked
 
     private void menuAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAmbilMkActionPerformed
@@ -2131,9 +2149,10 @@ public class ManageData extends javax.swing.JFrame {
         String idKls = dataKelas[idKelas]; 
         String periode = tfperiode.getText();
         String namamatkul = tfnamamatkul.getText();
-        if(!"".equals(kodeMk) && !"".equals(nipDosen) && !"".equals(periode) && !"".equals(namamatkul) && !"".equals(idKls)){
+        String sks = tfsks.getText();
+        if(!"".equals(kodeMk) && !"".equals(nipDosen) && !"".equals(periode) && !"".equals(namamatkul) && !"".equals(idKls) && !"".equals(sks)){
             try{
-                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"' WHERE KODE_MATA_KULIAH = '"+kodeMk+"'");
+                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"', SKS = '"+sks+"' WHERE KODE_MATA_KULIAH = '"+kodeMk+"'");
                 JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                 clearMatkul();
                 refreshData();            
@@ -2264,6 +2283,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2324,6 +2344,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JTextField tfnamamatkul;
     private javax.swing.JTextField tfperiode;
     private javax.swing.JTextField tfpertemuan;
+    private javax.swing.JTextField tfsks;
     private javax.swing.JTextField tfwaktu;
     private javax.swing.JTextField ttlDosen;
     // End of variables declaration//GEN-END:variables
