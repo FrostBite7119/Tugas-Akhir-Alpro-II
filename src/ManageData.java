@@ -102,6 +102,7 @@ public class ManageData extends javax.swing.JFrame {
         cbStatus.setSelectedIndex(0);
         rbPriaMhs.setSelected(true);
         cbAgama.setSelectedIndex(0);
+        cbjenjang.setSelectedIndex(0);
         tfAlamatMhs.setText("");
         tfEmailMhs.setText("");
         tfNoHpMhs.setText("");
@@ -178,12 +179,13 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("NAMA Ibu");
         model.addColumn("Telepon Orang Tua");
         model.addColumn("Alamat Orang Tua");
+        model.addColumn("Jenjang");
         tabelMahasiswa.setModel(model);
         
         try{
             rs = stm.executeQuery("SELECT * FROM mahasiswa");
             while(rs.next()){
-                Object[] data = new Object[14];
+                Object[] data = new Object[15];
                 data[0] = rs.getString("NRP");
                 data[1] = rs.getString("NAMA_MAHASISWA");
                 data[2] = rs.getString("PRODI");
@@ -198,6 +200,7 @@ public class ManageData extends javax.swing.JFrame {
                 data[11] = rs.getString("NAMA_IBU");
                 data[12] = rs.getString("TELEPON_ORANG_TUA");
                 data[13] = rs.getString("ALAMAT_ORANG_TUA");
+                data[14] = rs.getString("jenjang");
                 
                 model.addRow(data);
                 tabelMahasiswa.setModel(model);
@@ -430,6 +433,8 @@ public class ManageData extends javax.swing.JFrame {
         btnPilihGambar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lbl_image = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        cbjenjang = new javax.swing.JComboBox<>();
         manageDosen = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -635,6 +640,10 @@ public class ManageData extends javax.swing.JFrame {
             .addComponent(lbl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
         );
 
+        jLabel28.setText("Jenjang");
+
+        cbjenjang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S1", "D3" }));
+
         javax.swing.GroupLayout manageMahasiswaLayout = new javax.swing.GroupLayout(manageMahasiswa);
         manageMahasiswa.setLayout(manageMahasiswaLayout);
         manageMahasiswaLayout.setHorizontalGroup(
@@ -699,11 +708,14 @@ public class ManageData extends javax.swing.JFrame {
                                 .addGroup(manageMahasiswaLayout.createSequentialGroup()
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel26)
-                                        .addComponent(jLabel27))
+                                        .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel28)
+                                            .addComponent(jLabel27)))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
-                                        .addComponent(tfAlamatOrtu))))
+                                        .addComponent(tfAlamatOrtu)
+                                        .addComponent(cbjenjang, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -765,7 +777,9 @@ public class ManageData extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(tfAlamatMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfAlamatMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28)
+                    .addComponent(cbjenjang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
@@ -1680,14 +1694,15 @@ public class ManageData extends javax.swing.JFrame {
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
+        String jenjang = cbjenjang.getSelectedItem().toString();
 
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(asalFile)){
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(jenjang) & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
                 String linkFile = "src\\gambar\\"+nrp+"."+jenisFile;
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+link+"')");
+                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+jenjang+"', '"+link+"')");
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();
@@ -1726,7 +1741,8 @@ public class ManageData extends javax.swing.JFrame {
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu)  & !"".equals(asalFile)){
+        String jenjang = cbjenjang.getSelectedItem().toString();
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) &!"".equals(jenjang) & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
@@ -1735,7 +1751,7 @@ public class ManageData extends javax.swing.JFrame {
                 rs.next();
                 String fileLama = rs.getString("link_foto").replace("\\", "\\\\");
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("UPDATE `mahasiswa` SET `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
+                stm.executeUpdate("UPDATE `mahasiswa` SET `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"',`jenjang`='"+jenjang+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
                 if(!fileLama.equals(link)){
                     Files.delete(Paths.get(fileLama));
                     Files.copy(Paths.get(asalFile), Paths.get(linkFile));
@@ -1822,6 +1838,11 @@ public class ManageData extends javax.swing.JFrame {
         tfNamaIbu.setText(tabelMahasiswa.getValueAt(row, 11).toString());
         tfTelpOrtu.setText(tabelMahasiswa.getValueAt(row, 12).toString());
         tfAlamatOrtu.setText(tabelMahasiswa.getValueAt(row, 13).toString());
+        if(tabelMahasiswa.getValueAt(row, 14).equals("S1")){
+            cbjenjang.setSelectedIndex(0);
+        }else if (tabelMahasiswa.getValueAt(row, 14).equals("D3")){
+            cbjenjang.setSelectedIndex(1);
+        }
 
         try {
             BufferedImage img = ImageIO.read(new File(dataFoto[row]));
@@ -2200,6 +2221,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JComboBox<String> cbStatusKepegawaian;
     private javax.swing.JComboBox<String> cbidkelas;
+    private javax.swing.JComboBox<String> cbjenjang;
     private javax.swing.JComboBox<String> cbnipdosen;
     private javax.swing.JComboBox<String> cbruang;
     private javax.swing.JLabel jLabel1;
@@ -2222,6 +2244,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
