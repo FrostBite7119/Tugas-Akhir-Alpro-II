@@ -45,6 +45,7 @@ public class LihatData extends javax.swing.JFrame {
         conn = DB.con;
         stm = DB.stm;
         updatetabeljadwalmhs();
+        updateTabelTranskrip();
         
     }
     private void updatetabeljadwalmhs(){
@@ -55,6 +56,18 @@ public class LihatData extends javax.swing.JFrame {
         model.addColumn("Waktu");
         model.addColumn("Pengajar");
         tabeljadwal.setModel(model);
+    }
+    
+    private void updateTabelTranskrip(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No");
+        model.addColumn("Kode Mata Kuliah");
+        model.addColumn("Nama Mata Kuliah");
+        model.addColumn("SKS");
+        model.addColumn("Nilai");
+        model.addColumn("Index");
+        model.addColumn("NxK");
+        tabelTranskrip.setModel(model);
     }
 
     /**
@@ -114,32 +127,33 @@ public class LihatData extends javax.swing.JFrame {
         tabeljadwal = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        panelTranskrip = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        lbJenjang = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        lbProdiTranskrip = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        lbNamaTranskrip = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
+        lbNomorInduk = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelTranskrip = new javax.swing.JTable();
         jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lbTotalSks = new javax.swing.JLabel();
+        tfTampilTranskrip = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
+        lbLulusSks = new javax.swing.JLabel();
+        lbTotalNilai = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
+        lbIpk = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
+        lbSksD = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        lbSksE = new javax.swing.JLabel();
+        btnTampilNilai = new javax.swing.JButton();
+        btnClearTranskrip = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -432,23 +446,20 @@ public class LihatData extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                     .addGroup(panelJadwalLayout.createSequentialGroup()
                         .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
                             .addGroup(panelJadwalLayout.createSequentialGroup()
-                                .addGroup(panelJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(panelJadwalLayout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tfnrpmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton1)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfnrpmhs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1))
                             .addGroup(panelJadwalLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfNrpNama)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2)))
-                        .addGap(106, 106, 106)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton3)
                         .addGap(23, 23, 23)))
                 .addContainerGap())
@@ -481,21 +492,13 @@ public class LihatData extends javax.swing.JFrame {
 
         jLabel14.setText("Jenjang Pendidikan");
 
-        jLabel15.setText("Jenjang");
-
         jLabel16.setText("Program Studi");
-
-        jLabel17.setText("Prodi");
 
         jLabel18.setText("Nama");
 
-        jLabel19.setText("Nama");
-
         jLabel20.setText("Nomor Induk");
 
-        jLabel28.setText("Nomor Induk");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelTranskrip.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -506,137 +509,140 @@ public class LihatData extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tabelTranskrip);
 
         jLabel29.setText("Total Ambil SKS");
 
-        jLabel30.setText("Total");
-
         jLabel31.setText("Total SKS Lulus");
-
-        jLabel32.setText("Total Lulus");
-
-        jLabel33.setText("Total Nilai");
 
         jLabel34.setText("Total Nilai");
 
         jLabel35.setText("IPK");
 
-        jLabel36.setText("Nilai IPK");
-
         jLabel37.setText("Total SKS D");
-
-        jLabel38.setText("SKS D");
 
         jLabel39.setText("Total SKS E");
 
-        jLabel40.setText("SKS E");
+        btnTampilNilai.setText("Tampil");
+        btnTampilNilai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTampilNilaiActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Tampil");
+        btnClearTranskrip.setText("Clear");
+        btnClearTranskrip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearTranskripActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelTranskripLayout = new javax.swing.GroupLayout(panelTranskrip);
+        panelTranskrip.setLayout(panelTranskripLayout);
+        panelTranskripLayout.setHorizontalGroup(
+            panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTranskripLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelTranskripLayout.createSequentialGroup()
+                        .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(jLabel16)
                             .addComponent(jLabel18)
                             .addComponent(jLabel20))
                         .addGap(38, 38, 38)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel19)
-                            .addComponent(jLabel28)))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel29)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel30))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel31)
-                                .addComponent(jLabel34)
-                                .addComponent(jLabel35)
-                                .addComponent(jLabel37)
-                                .addComponent(jLabel39))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel32, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel38, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                        .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbProdiTranskrip)
+                            .addComponent(lbJenjang)
+                            .addComponent(lbNamaTranskrip)
+                            .addGroup(panelTranskripLayout.createSequentialGroup()
+                                .addComponent(lbNomorInduk)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnClearTranskrip))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTranskripLayout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbTotalSks))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTranskripLayout.createSequentialGroup()
+                        .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel37)
+                            .addComponent(jLabel39))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbTotalNilai, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbLulusSks, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbIpk, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbSksD, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbSksE, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(panelTranskripLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfTampilTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btnTampilNilai)
                 .addGap(34, 34, 34))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelTranskripLayout.setVerticalGroup(
+            panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTranskripLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(tfTampilTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTampilNilai))
                 .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jLabel15))
+                    .addComponent(lbJenjang))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel17))
+                    .addComponent(lbProdiTranskrip))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jLabel19))
+                    .addComponent(lbNamaTranskrip))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jLabel28))
-                .addGap(30, 30, 30)
+                    .addComponent(lbNomorInduk)
+                    .addComponent(btnClearTranskrip))
+                .addGap(25, 25, 25)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29)
-                    .addComponent(jLabel30))
+                    .addComponent(lbTotalSks))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel31)
-                    .addComponent(jLabel32))
+                    .addComponent(lbLulusSks))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTotalNilai)
                     .addComponent(jLabel34))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel35)
-                    .addComponent(jLabel36))
+                    .addComponent(lbIpk))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel37)
-                    .addComponent(jLabel38))
+                    .addComponent(lbSksD))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel39)
-                    .addComponent(jLabel40))
-                .addContainerGap(61, Short.MAX_VALUE))
+                    .addComponent(lbSksE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
-        parentPanel.add(jPanel2, "card4");
+        parentPanel.add(panelTranskrip, "panelTranskrip");
 
         jMenu1.setText("Menu");
 
@@ -657,6 +663,11 @@ public class LihatData extends javax.swing.JFrame {
         jMenu1.add(menuJadwal);
 
         jMenuItem2.setText("Transkrip Nilai");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -836,6 +847,104 @@ public class LihatData extends javax.swing.JFrame {
         cl.show(parentPanel, "panelMahasiswa");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void btnTampilNilaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilNilaiActionPerformed
+        // TODO add your handling code here:
+        String nrp = tfTampilTranskrip.getText();
+        if(!"".equals(tfTampilTranskrip.getText())){
+            try {
+                rs = stm.executeQuery("SELECT * FROM mahasiswa WHERE nrp = '"+nrp+"'");
+                rs.next();
+                lbJenjang.setText(rs.getString("jenjang"));
+                lbProdiTranskrip.setText(rs.getString("PRODI"));
+                lbNamaTranskrip.setText(rs.getString("NAMA_MAHASISWA"));
+                lbNomorInduk.setText(rs.getString("NRP"));
+
+                rs = stm.executeQuery("SELECT matakuliah.KODE_MATA_KULIAH, matakuliah.NAMA_MATA_KULIAH, "
+                        + "matakuliah.sks, transkrip.nilai FROM mengambil INNER JOIN transkrip ON "
+                        + "mengambil.id_ambil_matkul = transkrip.id_ambil_matkul INNER JOIN matakuliah ON "
+                        + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN kelas ON "
+                        + "matakuliah.ID_KELAS = kelas.ID_KELAS INNER JOIN dosen ON matakuliah.NIP_DOSEN = "
+                        + "dosen.NIP_DOSEN WHERE mengambil.NRP = '"+nrp+"';");
+
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("No");
+                model.addColumn("Kode Mata Kuliah");
+                model.addColumn("Nama Mata Kuliah");
+                model.addColumn("SKS");
+                model.addColumn("Nilai");
+                model.addColumn("Index");
+                model.addColumn("NxK");
+                tabelTranskrip.setModel(model);
+
+                int no = 1;
+                while(rs.next()){
+                    Object[] data = new Object[7];
+                    data[0] = no;
+                    data[1] = rs.getString("KODE_MATA_KULIAH");
+                    data[2] = rs.getString("NAMA_MATA_KULIAH");
+                    data[3] = rs.getString("sks");
+                    if(Double.valueOf(rs.getString("nilai")) == 4){
+                        data[4] = "A";
+                    }else if(Double.valueOf(rs.getString("nilai")) >= 3.5){
+                        data[4] = "B+";
+                    }else if(Double.valueOf(rs.getString("nilai")) >= 3){
+                        data[4] = "B";
+                    }else if(Double.valueOf(rs.getString("nilai")) >= 2){
+                        data[4] = "C";
+                    }else if(Double.valueOf(rs.getString("nilai")) >= 1){
+                        data[4] = "D";
+                    }else{
+                        data[4] = "E";
+                    }
+                    data[5] = rs.getString("nilai");
+                    data[6] = Double.valueOf("nilai") * Double.valueOf(rs.getString("sks"));
+                    model.addRow(data);
+                    tabeljadwal.setModel(model);
+                    no++;
+                }
+                stm.executeQuery("SELECT SUM(matakuliah.sks) FROM mengambil INNER JOIN matakuliah ON "
+                        + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN transkrip "
+                        + "ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul "
+                        + "WHERE mengambil.NRP = '"+nrp+"' AND transkrip.nilai >= 2");
+                
+                stm.executeQuery("");
+                
+                int totalLulus = 0;
+                
+                while(rs.next()){
+                    totalLulus =  rs.getInt(1);
+                }
+                
+                lbLulusSks.setText(String.valueOf(totalLulus));      
+            }catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Kolom harus diisi terlebih dahulu!");
+        }
+    }//GEN-LAST:event_btnTampilNilaiActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) parentPanel.getLayout();
+        cl.show(parentPanel, "panelTranskrip");
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void btnClearTranskripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearTranskripActionPerformed
+        // TODO add your handling code here:
+        lbJenjang.setText("");
+        lbProdiTranskrip.setText("");
+        lbNamaTranskrip.setText("");
+        lbNomorInduk.setText("");
+        updateTabelTranskrip();
+        lbTotalSks.setText("");
+        lbLulusSks.setText("");
+        lbTotalNilai.setText("");
+        lbIpk.setText("");
+        lbSksD.setText("");
+        lbSksE.setText("");
+    }//GEN-LAST:event_btnClearTranskripActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -873,22 +982,20 @@ public class LihatData extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnClearTranskrip;
     private javax.swing.JButton btnTampil;
+    private javax.swing.JButton btnTampilNilai;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -898,21 +1005,14 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -923,17 +1023,26 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbIpk;
+    private javax.swing.JLabel lbJenjang;
+    private javax.swing.JLabel lbLulusSks;
+    private javax.swing.JLabel lbNamaTranskrip;
+    private javax.swing.JLabel lbNomorInduk;
+    private javax.swing.JLabel lbProdiTranskrip;
+    private javax.swing.JLabel lbSksD;
+    private javax.swing.JLabel lbSksE;
+    private javax.swing.JLabel lbTotalNilai;
+    private javax.swing.JLabel lbTotalSks;
     private javax.swing.JLabel lbl_image;
     private javax.swing.JMenuItem menuJadwal;
     private javax.swing.JMenu menuKeluar;
     private javax.swing.JPanel panelJadwal;
     private javax.swing.JPanel panelMahasiswa;
+    private javax.swing.JPanel panelTranskrip;
     private javax.swing.JPanel parentPanel;
+    private javax.swing.JTable tabelTranskrip;
     private javax.swing.JTable tabeljadwal;
     private javax.swing.JLabel tfAgama;
     private javax.swing.JLabel tfAlamat;
@@ -951,6 +1060,7 @@ public class LihatData extends javax.swing.JFrame {
     private javax.swing.JLabel tfOrtu;
     private javax.swing.JLabel tfProdi;
     private javax.swing.JLabel tfStatus;
+    private javax.swing.JTextField tfTampilTranskrip;
     private javax.swing.JTextField tfnrpmhs;
     // End of variables declaration//GEN-END:variables
 }
