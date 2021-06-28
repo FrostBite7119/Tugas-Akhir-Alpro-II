@@ -102,6 +102,7 @@ public class ManageData extends javax.swing.JFrame {
         cbStatus.setSelectedIndex(0);
         rbPriaMhs.setSelected(true);
         cbAgama.setSelectedIndex(0);
+        cbjenjang.setSelectedIndex(0);
         tfAlamatMhs.setText("");
         tfEmailMhs.setText("");
         tfNoHpMhs.setText("");
@@ -178,12 +179,13 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("NAMA Ibu");
         model.addColumn("Telepon Orang Tua");
         model.addColumn("Alamat Orang Tua");
+        model.addColumn("Jenjang");
         tabelMahasiswa.setModel(model);
         
         try{
             rs = stm.executeQuery("SELECT * FROM mahasiswa");
             while(rs.next()){
-                Object[] data = new Object[14];
+                Object[] data = new Object[15];
                 data[0] = rs.getString("NRP");
                 data[1] = rs.getString("NAMA_MAHASISWA");
                 data[2] = rs.getString("PRODI");
@@ -198,6 +200,7 @@ public class ManageData extends javax.swing.JFrame {
                 data[11] = rs.getString("NAMA_IBU");
                 data[12] = rs.getString("TELEPON_ORANG_TUA");
                 data[13] = rs.getString("ALAMAT_ORANG_TUA");
+                data[14] = rs.getString("jenjang");
                 
                 model.addRow(data);
                 tabelMahasiswa.setModel(model);
@@ -228,17 +231,19 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Nama Kelas");
         model.addColumn("Periode");
         model.addColumn("Nama Mata Kuliah");
+        model.addColumn("SKS");
         tabelMatkul.setModel(model);
         
         try{
             rs = stm.executeQuery("SELECT * FROM matakuliah INNER JOIN dosen ON matakuliah.NIP_DOSEN = dosen.NIP_DOSEN INNER JOIN kelas ON matakuliah.ID_KELAS = kelas.ID_KELAS");
             while(rs.next()){
-                Object[] data = new Object[5];
+                Object[] data = new Object[6];
                 data[0] = rs.getString("KODE_MATA_KULIAH");
                 data[1] = rs.getString("NAMA_DOSEN");
                 data[2] = rs.getString("KELAS");
                 data[3] = rs.getString("PERIODE");
                 data[4] = rs.getString("NAMA_MATA_KULIAH");
+                data[5] = rs.getString("SKS");
                 model.addRow(data);
                 tabelMatkul.setModel(model);
             }
@@ -376,6 +381,7 @@ public class ManageData extends javax.swing.JFrame {
         cbnipdosen.setSelectedIndex(0);
         cbidkelas.setSelectedIndex(0);
         tabelMatkul.clearSelection();
+        tfsks.setText("");
        
     }
     /**
@@ -430,6 +436,8 @@ public class ManageData extends javax.swing.JFrame {
         btnPilihGambar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lbl_image = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        cbjenjang = new javax.swing.JComboBox<>();
         manageDosen = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -511,6 +519,8 @@ public class ManageData extends javax.swing.JFrame {
         btclearmatkul = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tabelMatkul = new javax.swing.JTable();
+        jLabel46 = new javax.swing.JLabel();
+        tfsks = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -635,6 +645,10 @@ public class ManageData extends javax.swing.JFrame {
             .addComponent(lbl_image, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
         );
 
+        jLabel28.setText("Jenjang");
+
+        cbjenjang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S1", "D3" }));
+
         javax.swing.GroupLayout manageMahasiswaLayout = new javax.swing.GroupLayout(manageMahasiswa);
         manageMahasiswa.setLayout(manageMahasiswaLayout);
         manageMahasiswaLayout.setHorizontalGroup(
@@ -699,11 +713,14 @@ public class ManageData extends javax.swing.JFrame {
                                 .addGroup(manageMahasiswaLayout.createSequentialGroup()
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel26)
-                                        .addComponent(jLabel27))
+                                        .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel28)
+                                            .addComponent(jLabel27)))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(tfTelpOrtu)
-                                        .addComponent(tfAlamatOrtu))))
+                                        .addComponent(tfAlamatOrtu)
+                                        .addComponent(cbjenjang, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createSequentialGroup()
                                 .addComponent(btnClearMhs)
                                 .addGap(10, 10, 10)
@@ -765,7 +782,9 @@ public class ManageData extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(tfAlamatMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfAlamatMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28)
+                    .addComponent(cbjenjang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
@@ -1338,10 +1357,22 @@ public class ManageData extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tabelMatkul);
 
+        jLabel46.setText("SKS");
+
         javax.swing.GroupLayout manageMatkulLayout = new javax.swing.GroupLayout(manageMatkul);
         manageMatkul.setLayout(manageMatkulLayout);
         manageMatkulLayout.setHorizontalGroup(
             manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btclearmatkul)
+                .addGap(18, 18, 18)
+                .addComponent(btdeletematkul)
+                .addGap(18, 18, 18)
+                .addComponent(btupdatematkul)
+                .addGap(18, 18, 18)
+                .addComponent(btinputmatkul)
+                .addGap(41, 41, 41))
             .addGroup(manageMatkulLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1358,18 +1389,10 @@ public class ManageData extends javax.swing.JFrame {
                                         .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                                                .addComponent(btclearmatkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btdeletematkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btupdatematkul)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btinputmatkul))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))))))
+                                        .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                            .addComponent(tfsks)))))
                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
@@ -1383,8 +1406,11 @@ public class ManageData extends javax.swing.JFrame {
                         .addComponent(jLabel35)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(manageMatkulLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(manageMatkulLayout.createSequentialGroup()
+                        .addComponent(jLabel46)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         manageMatkulLayout.setVerticalGroup(
             manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1413,12 +1439,16 @@ public class ManageData extends javax.swing.JFrame {
                     .addComponent(tfnamamatkul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btinputmatkul)
-                    .addComponent(btupdatematkul)
+                    .addComponent(jLabel46)
+                    .addComponent(tfsks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btclearmatkul)
                     .addComponent(btdeletematkul)
-                    .addComponent(btclearmatkul))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                    .addComponent(btupdatematkul)
+                    .addComponent(btinputmatkul))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1680,14 +1710,15 @@ public class ManageData extends javax.swing.JFrame {
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
+        String jenjang = cbjenjang.getSelectedItem().toString();
 
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(asalFile)){
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) & !"".equals(jenjang) & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
                 String linkFile = "src\\gambar\\"+nrp+"."+jenisFile;
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+link+"')");
+                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+jenjang+"', '"+link+"')");
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();
@@ -1726,7 +1757,8 @@ public class ManageData extends javax.swing.JFrame {
         String ibu = tfNamaIbu.getText();
         String telpOrtu = tfTelpOrtu.getText();
         String alamatOrtu = tfAlamatOrtu.getText();
-        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu)  & !"".equals(asalFile)){
+        String jenjang = cbjenjang.getSelectedItem().toString();
+        if(!"".equals(nrp) & !"".equals(nama) & !"".equals(prodi) & !"".equals(jenisKelamin) & !"".equals(agama) & !"".equals(alamat) & !"".equals(email) & !"".equals(noHpMhs) & !"".equals(ayah) & !"".equals(ktpAyah) & !"".equals(ibu) & !"".equals(telpOrtu) & !"".equals(alamatOrtu) &!"".equals(jenjang) & !"".equals(asalFile)){
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
@@ -1735,7 +1767,7 @@ public class ManageData extends javax.swing.JFrame {
                 rs.next();
                 String fileLama = rs.getString("link_foto").replace("\\", "\\\\");
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("UPDATE `mahasiswa` SET `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
+                stm.executeUpdate("UPDATE `mahasiswa` SET `NAMA_MAHASISWA`='"+nama+"',`PRODI`='"+prodi+"',`STATUS_MASUK`='"+statusMasuk+"',`JENIS_KELAMIN`='"+jenisKelamin+"',`AGAMA`='"+agama+"',`ALAMAT`='"+alamat+"',`EMAIL`='"+email+"',`NO_HP`='"+noHpMhs+"',`NAMA_AYAH`='"+ayah+"',`NOMOR_KTP_AYAH`='"+ktpAyah+"',`NAMA_IBU`='"+ibu+"',`TELEPON_ORANG_TUA`='"+telpOrtu+"',`ALAMAT_ORANG_TUA`='"+alamatOrtu+"',`jenjang`='"+jenjang+"', link_foto = '"+link+"' WHERE NRP = '"+nrp+"'");
                 if(!fileLama.equals(link)){
                     Files.delete(Paths.get(fileLama));
                     Files.copy(Paths.get(asalFile), Paths.get(linkFile));
@@ -1822,6 +1854,11 @@ public class ManageData extends javax.swing.JFrame {
         tfNamaIbu.setText(tabelMahasiswa.getValueAt(row, 11).toString());
         tfTelpOrtu.setText(tabelMahasiswa.getValueAt(row, 12).toString());
         tfAlamatOrtu.setText(tabelMahasiswa.getValueAt(row, 13).toString());
+        if(tabelMahasiswa.getValueAt(row, 14).equals("S1")){
+            cbjenjang.setSelectedIndex(0);
+        }else if (tabelMahasiswa.getValueAt(row, 14).equals("D3")){
+            cbjenjang.setSelectedIndex(1);
+        }
 
         try {
             BufferedImage img = ImageIO.read(new File(dataFoto[row]));
@@ -1988,10 +2025,11 @@ public class ManageData extends javax.swing.JFrame {
         String idkelas = dataKelas[indexKelas];
         String periode = tfperiode.getText();
         String namamatkul = tfnamamatkul.getText();
-        if(!"".equals(kdmatkul) & !"".equals(nipdosen) & !"".equals(nipdosen) & !"".equals(idkelas) & !"".equals(periode) & !"".equals(namamatkul))
+        String sks = tfsks.getText();
+        if(!"".equals(kdmatkul) & !"".equals(nipdosen) & !"".equals(nipdosen) & !"".equals(idkelas) & !"".equals(periode) & !"".equals(namamatkul) & !"".equals(sks))
         {
             try {
-                stm.executeUpdate("INSERT INTO matakuliah VALUES('"+kdmatkul+"', '"+nipdosen+"', '"+idkelas+"', '"+periode+"', '"+namamatkul+"')");
+                stm.executeUpdate("INSERT INTO matakuliah VALUES('"+kdmatkul+"', '"+nipdosen+"', '"+idkelas+"', '"+periode+"', '"+namamatkul+"', '"+sks+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMatkul();
                 refreshData();
@@ -2044,6 +2082,7 @@ public class ManageData extends javax.swing.JFrame {
         
         tfperiode.setText(tabelMatkul.getValueAt(row, 3).toString());
         tfnamamatkul.setText(tabelMatkul.getValueAt(row, 4).toString());
+        tfsks.setText(tabelMatkul.getValueAt(row, 5).toString());
     }//GEN-LAST:event_tabelMatkulMouseClicked
 
     private void menuAmbilMkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAmbilMkActionPerformed
@@ -2110,9 +2149,10 @@ public class ManageData extends javax.swing.JFrame {
         String idKls = dataKelas[idKelas]; 
         String periode = tfperiode.getText();
         String namamatkul = tfnamamatkul.getText();
-        if(!"".equals(kodeMk) && !"".equals(nipDosen) && !"".equals(periode) && !"".equals(namamatkul) && !"".equals(idKls)){
+        String sks = tfsks.getText();
+        if(!"".equals(kodeMk) && !"".equals(nipDosen) && !"".equals(periode) && !"".equals(namamatkul) && !"".equals(idKls) && !"".equals(sks)){
             try{
-                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"' WHERE KODE_MATA_KULIAH = '"+kodeMk+"'");
+                stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"', SKS = '"+sks+"' WHERE KODE_MATA_KULIAH = '"+kodeMk+"'");
                 JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                 clearMatkul();
                 refreshData();            
@@ -2200,6 +2240,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JComboBox<String> cbStatusKepegawaian;
     private javax.swing.JComboBox<String> cbidkelas;
+    private javax.swing.JComboBox<String> cbjenjang;
     private javax.swing.JComboBox<String> cbnipdosen;
     private javax.swing.JComboBox<String> cbruang;
     private javax.swing.JLabel jLabel1;
@@ -2222,6 +2263,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
@@ -2241,6 +2283,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2301,6 +2344,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JTextField tfnamamatkul;
     private javax.swing.JTextField tfperiode;
     private javax.swing.JTextField tfpertemuan;
+    private javax.swing.JTextField tfsks;
     private javax.swing.JTextField tfwaktu;
     private javax.swing.JTextField ttlDosen;
     // End of variables declaration//GEN-END:variables
