@@ -1791,7 +1791,7 @@ public class ManageData extends javax.swing.JFrame {
                 rs = stm.executeQuery("SELECT link_foto FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 String fileFoto = rs.getString("link_foto");
-                stm.executeUpdate("DELETE FROM mengambil WHERE NRP = '"+nrp+"'");
+                stm.executeUpdate("DELETE mengambil, transkrip FROM mengambil LEFT JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mengambil.NRP = '"+nrp+"'");
                 stm.executeUpdate("DELETE FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 Files.delete(Paths.get(fileFoto));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
@@ -2052,7 +2052,7 @@ public class ManageData extends javax.swing.JFrame {
         String kdmatkul = tfkdmatkul.getText();
         if(!"".equals(kdmatkul)){
             try{
-                stm.executeUpdate("DELETE FROM mengambil WHERE kode_mata_kuliah = '"+kdmatkul+"'");
+                stm.executeUpdate("DELETE mengambil, transkrip FROM mengambil LEFT JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mengambil.kode_mata_kuliah = '"+kdmatkul+"'");
                 stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
@@ -2128,7 +2128,7 @@ public class ManageData extends javax.swing.JFrame {
         String ambilMk = tfKodeAmbilMk.getText();
         if(!"".equals(ambilMk)){
             try{
-                stm.executeUpdate("delete from mengambil WHERE id_ambil_matkul ='"+ambilMk+"'");
+                stm.executeQuery("DELETE mengambil, transkrip FROM mengambil LEFT JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mengambil.id_ambil_mk = '"+ambilMk+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearAmbilMk();
                 refreshData();
