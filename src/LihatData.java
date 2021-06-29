@@ -883,39 +883,76 @@ public class LihatData extends javax.swing.JFrame {
                     data[1] = rs.getString("KODE_MATA_KULIAH");
                     data[2] = rs.getString("NAMA_MATA_KULIAH");
                     data[3] = rs.getString("sks");
-                    if(Double.valueOf(rs.getString("nilai")) == 4){
+                    if(Double.parseDouble(rs.getString("nilai")) == 4){
                         data[4] = "A";
-                    }else if(Double.valueOf(rs.getString("nilai")) >= 3.5){
+                    }else if(Double.parseDouble(rs.getString("nilai")) >= 3.5){
                         data[4] = "B+";
-                    }else if(Double.valueOf(rs.getString("nilai")) >= 3){
+                    }else if(Double.parseDouble(rs.getString("nilai")) >= 3){
                         data[4] = "B";
-                    }else if(Double.valueOf(rs.getString("nilai")) >= 2){
+                    }else if(Double.parseDouble(rs.getString("nilai")) >= 2){
                         data[4] = "C";
-                    }else if(Double.valueOf(rs.getString("nilai")) >= 1){
+                    }else if(Double.parseDouble(rs.getString("nilai")) >= 1){
                         data[4] = "D";
                     }else{
                         data[4] = "E";
                     }
                     data[5] = rs.getString("nilai");
-                    data[6] = Double.valueOf("nilai") * Double.valueOf(rs.getString("sks"));
+                    data[6] = Double.valueOf("nilai") * Double.parseDouble(rs.getString("sks"));
                     model.addRow(data);
                     tabeljadwal.setModel(model);
                     no++;
                 }
+                
+                //Total Ambil SKS
+                stm.executeQuery("SELECT SUM(matakuliah.sks) FROM mengambil INNER JOIN matakuliah ON "
+                        + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH WHERE "
+                        + "mengambil.NRP='"+nrp+"'");
+                rs.next();
+                int totalAmbilSks = 0;
+                totalAmbilSks = rs.getInt(1);
+                lbTotalSks.setText(Integer.toString(totalAmbilSks));
+                
+                //Total SKS Lulus
                 stm.executeQuery("SELECT SUM(matakuliah.sks) FROM mengambil INNER JOIN matakuliah ON "
                         + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN transkrip "
                         + "ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul "
                         + "WHERE mengambil.NRP = '"+nrp+"' AND transkrip.nilai >= 2");
                 
-                stm.executeQuery("");
-                
                 int totalLulus = 0;
+                rs.next();
+                totalLulus =  rs.getInt(1);
+                lbLulusSks.setText(Integer.toString(totalLulus));
                 
+                //Total Nilai
+                stm.executeQuery("SELECT matakuliah.sks, transkrip.nilai FROM mengambil INNER JOIN "
+                        + "matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH "
+                        + "INNER JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul "
+                        + "WHERE mengambil.NRP = '"+nrp+"'");
+                double totalNilai = 0;
                 while(rs.next()){
-                    totalLulus =  rs.getInt(1);
+                    totalNilai += Double.parseDouble(rs.getString("sks")) * Double.parseDouble(rs.getString("nilai"));
                 }
+                lbTotalNilai.setText(String.valueOf(totalNilai));
                 
-                lbLulusSks.setText(String.valueOf(totalLulus));      
+                //Total SKS D
+                stm.executeQuery("SELECT SUM(matakuliah.sks) FROM mengambil INNER JOIN matakuliah ON "
+                        + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN transkrip "
+                        + "ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul "
+                        + "WHERE mengambil.NRP = '"+nrp+"' AND transkrip.nilai >= 1");
+                rs.next();
+                int totalAmbilSksD = 0;
+                totalAmbilSksD = rs.getInt(1);
+                lbSksD.setText(Integer.toString(totalAmbilSksD));
+                
+                //Total SKS E
+                stm.executeQuery("SELECT SUM(matakuliah.sks) FROM mengambil INNER JOIN matakuliah ON "
+                        + "mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN transkrip "
+                        + "ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul "
+                        + "WHERE mengambil.NRP = '"+nrp+"' AND transkrip.nilai >= 1");
+                rs.next();
+                int totalAmbilSksE = 0;
+                totalAmbilSksE = rs.getInt(1);
+                lbSksE.setText(Integer.toString(totalAmbilSksE));
             }catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
