@@ -526,17 +526,15 @@ public class ManageData extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel50 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel51 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        tfKodeMatkulTranskrip = new javax.swing.JTextField();
+        tfNrpTranskrip = new javax.swing.JTextField();
+        tfNilaiTranskrip = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -1476,7 +1474,7 @@ public class ManageData extends javax.swing.JFrame {
 
         jLabel48.setText("Kode Mata Kuliah");
 
-        jLabel49.setText("Nama Mata Kuliah");
+        jLabel49.setText("NRP");
 
         jButton1.setText("INPUT");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1484,8 +1482,6 @@ public class ManageData extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jLabel50.setText("SKS");
 
         jButton2.setText("UPDATE");
 
@@ -1518,11 +1514,14 @@ public class ManageData extends javax.swing.JFrame {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
                     .addGroup(manageTranskripLayout.createSequentialGroup()
                         .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel49)
-                            .addComponent(jLabel51)
                             .addComponent(jLabel47)
-                            .addComponent(jLabel50))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(manageTranskripLayout.createSequentialGroup()
+                                .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel51)
+                                    .addComponent(jLabel49))
+                                .addGap(113, 113, 113)
+                                .addComponent(tfNilaiTranskrip)))
+                        .addGap(91, 91, 91)
                         .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1531,10 +1530,8 @@ public class ManageData extends javax.swing.JFrame {
                         .addComponent(jLabel48)
                         .addGap(51, 51, 51)
                         .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4))
+                            .addComponent(tfNrpTranskrip)
+                            .addComponent(tfKodeMatkulTranskrip))
                         .addGap(91, 91, 91)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1547,23 +1544,20 @@ public class ManageData extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel48)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfKodeMatkulTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel49)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNrpTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel50)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
                     .addComponent(jLabel51)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(tfNilaiTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
@@ -2302,6 +2296,22 @@ public class ManageData extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(!"".equals(tfKodeMatkulTranskrip.getText()) && !"".equals(tfNrpTranskrip.getText()) && !"".equals(tfNilaiTranskrip.getText())){
+            try{
+                stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
+                if(rs.next()){
+                    String idAmbilMatkul = rs.getString("id_ambil_matkul");
+                    stm.executeQuery("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
+                    JOptionPane.showMessageDialog(null, "Data berhasil diinput");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Mahasiswa tidak mengambil matakuliah tersebut");
+                }
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Kolom harus diisi terlebih dahulu");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -2427,7 +2437,6 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2444,10 +2453,6 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lbl_image;
     private javax.swing.JPanel manageAmbilMk;
     private javax.swing.JPanel manageDosen;
@@ -2477,6 +2482,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JTextField tfEmailMhs;
     private javax.swing.JTextField tfJabatanAkademik;
     private javax.swing.JTextField tfKodeAmbilMk;
+    private javax.swing.JTextField tfKodeMatkulTranskrip;
     private javax.swing.JTextField tfKtpAyah;
     private javax.swing.JTextField tfMatkulAmbilMk;
     private javax.swing.JTextField tfNamaAyah;
@@ -2484,10 +2490,12 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JTextField tfNamaIbu;
     private javax.swing.JTextField tfNamaMhs;
     private javax.swing.JTextField tfNidn;
+    private javax.swing.JTextField tfNilaiTranskrip;
     private javax.swing.JTextField tfNip;
     private javax.swing.JTextField tfNoHpMhs;
     private javax.swing.JTextField tfNrp;
     private javax.swing.JTextField tfNrpAmbilMk;
+    private javax.swing.JTextField tfNrpTranskrip;
     private javax.swing.JTextField tfTeleponDosen;
     private javax.swing.JTextField tfTelpOrtu;
     private javax.swing.JTextField tfidkelas;
