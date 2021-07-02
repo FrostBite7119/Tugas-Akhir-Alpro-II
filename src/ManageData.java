@@ -84,6 +84,7 @@ public class ManageData extends javax.swing.JFrame {
                 model.addRow(data);
                 tblAmbilMk.setModel(model);
             }
+            rs.close();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -99,20 +100,6 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Nilai");
         
         tabelTranskrip.setModel(model);
-        
-        try{
-          rs = stm.executeQuery("SELECT * FROM transkrip");
-          while(rs.next()){
-              Object[] data = new Object[3];
-              data[0] = rs.getString("id_ambil_matkul");
-              data[1] = rs.getString("id_transkrip_nilai");
-              data[2] = rs.getString("nilai");
-              model.addRow(data);
-              tabelTranskrip.setModel(model);
-          }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e); 
-        }
     }
     
     private void refreshData(){
@@ -156,8 +143,6 @@ public class ManageData extends javax.swing.JFrame {
         tfNrpTranskrip.setText("");
         tfNilaiTranskrip.setText("");
         tfIdTranskrip.setText("");
-        tfNamaMhsTranskrip.setText("");
-        tfNamaMatkulTranskrip.setText("");
         tabelTranskrip.clearSelection();
     }
     private int getNumberDosen(){
@@ -167,6 +152,7 @@ public class ManageData extends javax.swing.JFrame {
             while(rs.next()){
                 row =  rs.getInt(1);
             }
+            rs.close();
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -180,6 +166,7 @@ public class ManageData extends javax.swing.JFrame {
             while(rs.next()){
                 row =  rs.getInt(1);
             }
+            rs.close();
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -192,6 +179,7 @@ public class ManageData extends javax.swing.JFrame {
             while(rs.next()){
                 row =  rs.getInt(1);
             }
+            rs.close();
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -251,6 +239,7 @@ public class ManageData extends javax.swing.JFrame {
                     dataFoto[i] = rs.getString("link_foto");
                     i++;
                 }
+                rs.close();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -364,6 +353,7 @@ public class ManageData extends javax.swing.JFrame {
                 model.addRow(data);
                 tabelDosen.setModel(model);
             }
+            rs.close();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -391,6 +381,7 @@ public class ManageData extends javax.swing.JFrame {
                 model.addRow(data);
                 tabelKelas.setModel(model);
             }
+            rs.close();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -570,12 +561,8 @@ public class ManageData extends javax.swing.JFrame {
         tfKodeMatkulTranskrip = new javax.swing.JTextField();
         tfNrpTranskrip = new javax.swing.JTextField();
         tfNilaiTranskrip = new javax.swing.JTextField();
-        jLabel50 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
         tfIdTranskrip = new javax.swing.JTextField();
-        tfNamaMhsTranskrip = new javax.swing.JTextField();
-        tfNamaMatkulTranskrip = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemMahasiswa = new javax.swing.JMenuItem();
@@ -1525,6 +1512,11 @@ public class ManageData extends javax.swing.JFrame {
         });
 
         btnUpdateTrans.setText("UPDATE");
+        btnUpdateTrans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateTransActionPerformed(evt);
+            }
+        });
 
         jLabel51.setText("Nilai");
 
@@ -1555,11 +1547,7 @@ public class ManageData extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(tabelTranskrip);
 
-        jLabel50.setText("Nama");
-
         jLabel52.setText("Id Transkrip Nilai");
-
-        jLabel53.setText("Nama Mata Kuliah");
 
         javax.swing.GroupLayout manageTranskripLayout = new javax.swing.GroupLayout(manageTranskrip);
         manageTranskrip.setLayout(manageTranskripLayout);
@@ -1572,29 +1560,21 @@ public class ManageData extends javax.swing.JFrame {
                     .addGroup(manageTranskripLayout.createSequentialGroup()
                         .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(manageTranskripLayout.createSequentialGroup()
-                                .addComponent(jLabel48)
-                                .addGap(51, 51, 51)
-                                .addComponent(tfKodeMatkulTranskrip))
-                            .addGroup(manageTranskripLayout.createSequentialGroup()
-                                .addComponent(jLabel50)
-                                .addGap(116, 116, 116)
-                                .addComponent(tfNamaMhsTranskrip))
-                            .addGroup(manageTranskripLayout.createSequentialGroup()
                                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel47)
                                     .addGroup(manageTranskripLayout.createSequentialGroup()
                                         .addGap(1, 1, 1)
                                         .addComponent(jLabel49)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 492, Short.MAX_VALUE))
                             .addGroup(manageTranskripLayout.createSequentialGroup()
                                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel53)
+                                    .addComponent(jLabel48)
                                     .addComponent(jLabel51))
-                                .addGap(46, 46, 46)
+                                .addGap(49, 49, 49)
                                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfNamaMatkulTranskrip)
-                                    .addComponent(tfNilaiTranskrip))))
-                        .addGap(83, 83, 83)
+                                    .addComponent(tfKodeMatkulTranskrip)
+                                    .addComponent(tfNilaiTranskrip))
+                                .addGap(91, 91, 91)))
                         .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnUpdateTrans, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnClearTrans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1627,24 +1607,16 @@ public class ManageData extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClearTrans)
-                    .addComponent(jLabel50)
-                    .addComponent(tfNamaMhsTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel48)
+                    .addComponent(tfKodeMatkulTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeleteTrans)
-                    .addComponent(jLabel48)
-                    .addComponent(tfKodeMatkulTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel53)
-                    .addComponent(tfNamaMatkulTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel51)
                     .addComponent(tfNilaiTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         parentPanel.add(manageTranskrip, "manageTranskrip");
@@ -2382,7 +2354,7 @@ public class ManageData extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!"".equals(tfKodeMatkulTranskrip.getText()) && !"".equals(tfNrpTranskrip.getText()) && !"".equals(tfNilaiTranskrip.getText())){
             try{
-                stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
+                ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
                 if(rs.next()){
                     String idAmbilMatkul = rs.getString("id_ambil_matkul");
                     stm.executeQuery("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
@@ -2411,21 +2383,11 @@ public class ManageData extends javax.swing.JFrame {
 
     private void btnDeleteTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTransActionPerformed
         // TODO add your handling code here:
-        String KodeMatkul = tfKodeMatkulTranskrip.getText();
-        if (!"".equals(KodeMatkul)){
-            try{
-              stm.executeQuery("DELETE mengambil, transkrip FROM mengambil LEFT JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mengambil.id_ambil_matkul = '"+KodeMatkul+"'");
-              stm.executeQuery("DELETE FROM transkrip WHERE id_ambil_matkul = '"+KodeMatkul+"'");
-              JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
-              clearTRANS();
-              refreshData();
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null, ex);
-            }
-        }else{
-           JOptionPane.showMessageDialog(null, "Kolom Kode Mata Kuliah kosong silahkan klik data pada tabel untuk mengisinya!");  
-        }
     }//GEN-LAST:event_btnDeleteTransActionPerformed
+
+    private void btnUpdateTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTransActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateTransActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2544,10 +2506,8 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2599,9 +2559,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JTextField tfNamaAyah;
     private javax.swing.JTextField tfNamaDosen;
     private javax.swing.JTextField tfNamaIbu;
-    private javax.swing.JTextField tfNamaMatkulTranskrip;
     private javax.swing.JTextField tfNamaMhs;
-    private javax.swing.JTextField tfNamaMhsTranskrip;
     private javax.swing.JTextField tfNidn;
     private javax.swing.JTextField tfNilaiTranskrip;
     private javax.swing.JTextField tfNip;
