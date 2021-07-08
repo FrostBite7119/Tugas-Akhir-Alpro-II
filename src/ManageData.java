@@ -98,8 +98,28 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Kode Mata Kuliah");
         model.addColumn("Nama Mata Kuliah");
         model.addColumn("Nilai");
-        
         tabelTranskrip.setModel(model);
+        try{ //transkrip.id_transkrip_nilai, mahasiswa.NRP, mahasiswa.NAMA_MAHASISWA, matakuliah.KODE_MATA_KULIAH, matakuliah.NAMA_MATA_KULIAH, transkrip.nilai
+            rs = stm.executeQuery("SELECT * FROM transkrip "
+                    + "INNER JOIN mengambil ON transkrip.id_ambil_matkul = mengambil.id_ambil_matkul "
+                    + "INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH "
+                    + "INNER JOIN mahasiswa ON mengambil.NRP = mahasiswa.NRP");
+            while(rs.next()){
+                Object[] data = new Object[6];
+                data[0] = rs.getString("id_transkrip_nilai");
+                data[1] = rs.getString("NRP");
+                data[2] = rs.getString("NAMA_MAHASISWA");
+                data[3] = rs.getString("KODE_MATA_KULIAH");
+                data[4] = rs.getString("NAMA_MATA_KULIAH");
+                data[5] = rs.getString("NILAI");
+                model.addRow(data);
+                tblAmbilMk.setModel(model);
+            }
+            rs.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
     }
     
     private void refreshData(){
@@ -108,6 +128,7 @@ public class ManageData extends javax.swing.JFrame {
         updateTabelKelas();
         updateTabelMatkul();
         updateTabelAmbilMk();
+        updateTabelTranskrip();
     }
     private void clearMahasiswa(){
         tfNrp.setText("");
@@ -1170,7 +1191,7 @@ public class ManageData extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
                         .addComponent(jLabel34)
                         .addGap(75, 75, 75)
-                        .addComponent(cbruang, 0, 574, Short.MAX_VALUE)
+                        .addComponent(cbruang, 0, 616, Short.MAX_VALUE)
                         .addGap(31, 31, 31))
                     .addGroup(manageKelasLayout.createSequentialGroup()
                         .addComponent(jLabel41)
@@ -1545,6 +1566,11 @@ public class ManageData extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabelTranskrip.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelTranskripMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(tabelTranskrip);
 
         jLabel52.setText("Id Transkrip Nilai");
@@ -2362,8 +2388,10 @@ public class ManageData extends javax.swing.JFrame {
                 ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
                 if(rs.next()){
                     String idAmbilMatkul = rs.getString("id_ambil_matkul");
-                    stm.executeQuery("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
+                    stm.executeUpdate("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
                     JOptionPane.showMessageDialog(null, "Data berhasil diinput");
+                    clearTRANS();
+                    refreshData();
                 }else{
                     JOptionPane.showMessageDialog(null, "Mahasiswa tidak mengambil matakuliah tersebut");
                 }
@@ -2392,7 +2420,36 @@ public class ManageData extends javax.swing.JFrame {
 
     private void btnUpdateTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTransActionPerformed
         // TODO add your handling code here:
+        if(!"".equals(tfKodeMatkulTranskrip.getText()) && !"".equals(tfNrpTranskrip.getText()) && !"".equals(tfNilaiTranskrip.getText())){
+           try {
+                ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
+                if(rs.next()){
+                    String idAmbilMatkul = rs.getString("id_ambil_matkul");
+                    stm.executeUpdate("UPDATE transkrip SET NILAI = '"+tfNilaiTranskrip.getText()+"' WHERE id_transkrip_nilai = '"+tfIdTranskrip.getText()+"'");
+                    JOptionPane.showMessageDialog(null, "Data berhasil diupdate");
+                    clearTRANS();
+                    refreshData();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Lengkapi Inputan");
+                }
+            }
+           catch (SQLException err) {
+                JOptionPane.showMessageDialog(null, err);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Semua data harus diisi terlebih dahulu!");
+        }
     }//GEN-LAST:event_btnUpdateTransActionPerformed
+
+    private void tabelTranskripMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelTranskripMouseClicked
+        // TODO add your handling code here:
+        int row = tabelTranskrip.getSelectedRow();
+        tfIdTranskrip.setText(tabelTranskrip.getValueAt(row, 0).toString());
+        tfNrpTranskrip.setText(tabelTranskrip.getValueAt(row, 1).toString());
+        tfKodeMatkulTranskrip.setText(tabelTranskrip.getValueAt(row, 3).toString());
+        tfNilaiTranskrip.setText(tabelTranskrip.getValueAt(row, 5).toString());
+    }//GEN-LAST:event_tabelTranskripMouseClicked
 
     /**
      * @param args the command line arguments

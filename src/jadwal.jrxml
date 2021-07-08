@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9718a408-2a14-488f-ab26-216fe5ec3123">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -34,7 +34,7 @@
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="201" y="24" width="141" height="29" uuid="0ec31a06-0afe-4e92-8619-ba01b2433b0b"/>
+				<reportElement x="201" y="24" width="141" height="29"/>
 				<textElement>
 					<font size="20" isBold="true"/>
 				</textElement>
@@ -45,25 +45,27 @@
 	<pageHeader>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="34" y="0" width="100" height="20" uuid="e57bb65a-fd0b-4838-b77c-0c234836f451"/>
+				<reportElement x="34" y="0" width="100" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[NRP	:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="134" y="0" width="100" height="20" uuid="b4407b55-7200-4f73-b506-14d284c7b189"/>
+				<reportElement x="134" y="0" width="100" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{NRP}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="263" y="0" width="100" height="20" uuid="3480b86b-22ab-4964-b0f8-a72888ae03b0"/>
+				<reportElement x="263" y="0" width="100" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Nama	:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="363" y="0" width="129" height="20" uuid="458d94f2-d0cf-41ba-b511-7841b4fe9b6d"/>
+				<reportElement x="363" y="0" width="129" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{NAMA_MAHASISWA}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -71,29 +73,32 @@
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="116" height="20" uuid="c80dcd3a-a9e8-427d-8554-7fca43fecf6b"/>
+				<reportElement x="0" y="0" width="116" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Kode Matakuliah]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="116" y="0" width="118" height="20" uuid="5d6f54c5-298f-4338-bbdb-28c7ebd10edf"/>
+				<reportElement x="116" y="0" width="118" height="20"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Nama Matakuliah]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="234" y="0" width="100" height="20" uuid="f63f106f-ad9d-492f-88f8-042044de5c17"/>
+				<reportElement x="234" y="0" width="100" height="20"/>
+				<textElement/>
 				<text><![CDATA[KELAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="334" y="0" width="100" height="20" uuid="48d5d0e2-4a00-417f-aa66-bcf5d8a96019"/>
+				<reportElement x="334" y="0" width="100" height="20"/>
+				<textElement/>
 				<text><![CDATA[WAKTU]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="434" y="1" width="121" height="20" uuid="687cf166-b571-453b-87d3-7546b0790410"/>
+				<reportElement x="434" y="1" width="121" height="20"/>
+				<textElement/>
 				<text><![CDATA[NAMA_DOSEN]]></text>
 			</staticText>
 		</band>
@@ -101,23 +106,28 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="116" height="20" uuid="6343125f-2be6-4d41-bf0e-321bbda918c6"/>
+				<reportElement x="0" y="0" width="116" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{KODE_MATA_KULIAH}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="116" y="0" width="118" height="20" uuid="4261920b-3330-49f3-a6d3-8e8f8bdb8edf"/>
+				<reportElement x="116" y="0" width="118" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{NAMA_MATA_KULIAH}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="234" y="0" width="100" height="20" uuid="d9624d3f-1068-4b6f-ac3c-ab9310cd7de7"/>
+				<reportElement x="234" y="0" width="100" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{KELAS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="334" y="0" width="100" height="20" uuid="b39c77b8-47aa-41a1-995f-a4deb933d5b3"/>
+				<reportElement x="334" y="0" width="100" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{WAKTU}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="434" y="0" width="121" height="20" uuid="1806fdb0-9ac0-4c22-accc-9088748b0eca"/>
+				<reportElement x="434" y="0" width="121" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{NAMA_DOSEN}]]></textFieldExpression>
 			</textField>
 		</band>
