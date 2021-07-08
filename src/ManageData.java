@@ -1549,6 +1549,8 @@ public class ManageData extends javax.swing.JFrame {
 
         jLabel52.setText("Id Transkrip Nilai");
 
+        tfIdTranskrip.setEditable(false);
+
         javax.swing.GroupLayout manageTranskripLayout = new javax.swing.GroupLayout(manageTranskrip);
         manageTranskrip.setLayout(manageTranskripLayout);
         manageTranskripLayout.setHorizontalGroup(
@@ -1583,9 +1585,12 @@ public class ManageData extends javax.swing.JFrame {
                         .addComponent(jLabel52)
                         .addGap(52, 52, 52)
                         .addGroup(manageTranskripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNrpTranskrip)
-                            .addComponent(tfIdTranskrip))
-                        .addGap(91, 91, 91)
+                            .addGroup(manageTranskripLayout.createSequentialGroup()
+                                .addComponent(tfNrpTranskrip)
+                                .addGap(91, 91, 91))
+                            .addGroup(manageTranskripLayout.createSequentialGroup()
+                                .addComponent(tfIdTranskrip, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(btnInputTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
