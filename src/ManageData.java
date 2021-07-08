@@ -2416,6 +2416,19 @@ public class ManageData extends javax.swing.JFrame {
 
     private void btnDeleteTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTransActionPerformed
         // TODO add your handling code here:
+        String idtrskpnilai = tfIdTranskrip.getText();
+        if(!"".equals(idtrskpnilai)){
+            try{
+                stm.executeUpdate("DELETE FROM transkrip WHERE id_transkrip_nilai = '"+idtrskpnilai+"'");
+                JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
+                clearTRANS();
+                refreshData();
+            }catch(SQLException ex){
+               JOptionPane.showMessageDialog(null, ex); 
+            }
+        }else{
+          JOptionPane.showMessageDialog(null, "Kolom Id Transkrip Nilai kosong silahkan klik data pada tabel untuk mengisinya!");  
+        }
     }//GEN-LAST:event_btnDeleteTransActionPerformed
 
     private void btnUpdateTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTransActionPerformed
