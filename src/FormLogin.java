@@ -140,7 +140,7 @@ public class FormLogin extends javax.swing.JFrame {
             if (rs.next()){
                 if(tfuname.getText().equals(rs.getString("username"))
                 && tfpw.getText().equals(rs.getString("password"))) {
-                MainMenu menu = new MainMenu();
+                ManageData menu = new ManageData();
                 menu.setVisible(true);
                 this.dispose();
                 }

@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.Random;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -1743,7 +1744,7 @@ public class ManageData extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        menuKeluar.setText("Keluar");
+        menuKeluar.setText("Logout");
         menuKeluar.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
@@ -1773,8 +1774,8 @@ public class ManageData extends javax.swing.JFrame {
 
     private void menuKeluarMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuKeluarMenuSelected
         // TODO add your handling code here:
-        MainMenu main = new MainMenu();
-        main.setVisible(true);
+        FormLogin logout = new FormLogin();
+        logout.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_menuKeluarMenuSelected
 
@@ -1961,7 +1962,9 @@ public class ManageData extends javax.swing.JFrame {
                 String jenisFile = asalFile.substring(index + 1);
                 String linkFile = "src\\gambar\\"+nrp+"."+jenisFile;
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+jenjang+"', '"+link+"', 0)");
+                Random rand = new Random();
+                int password = 10000000+ rand.nextInt(90000000);
+                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+jenjang+"', '"+link+"', 0, '"+password+"')");
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();

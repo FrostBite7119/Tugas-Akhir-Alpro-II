@@ -38,6 +38,7 @@ public class FormLoginMhs extends javax.swing.JFrame {
         tfNrp = new javax.swing.JTextField();
         tfPassword = new javax.swing.JPasswordField();
         btnLoginMhs = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +55,13 @@ public class FormLoginMhs extends javax.swing.JFrame {
         btnLoginMhs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginMhsActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Beralih ke Admin");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -74,7 +82,8 @@ public class FormLoginMhs extends javax.swing.JFrame {
                             .addComponent(tfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
                         .addGap(0, 40, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLoginMhs)))
                 .addContainerGap())
         );
@@ -90,7 +99,9 @@ public class FormLoginMhs extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addComponent(btnLoginMhs)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLoginMhs)
+                    .addComponent(jButton1))
                 .addGap(25, 25, 25))
         );
 
@@ -131,7 +142,8 @@ public class FormLoginMhs extends javax.swing.JFrame {
           if (rs.next()){
               if(tfNrp.getText().equals(rs.getString("NRP"))
               && tfPassword.getText().equals(rs.getString("password"))) {
-                  ManageData menu = new ManageData();
+                  LihatData menu = new LihatData();
+                  menu.setData(tfNrp.getText());
                   menu.setVisible(true);
                   this.dispose();
               }
@@ -143,6 +155,13 @@ public class FormLoginMhs extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnLoginMhsActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FormLogin loginAdmin = new FormLogin();
+        loginAdmin.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,18 +199,13 @@ public class FormLoginMhs extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btlogin;
     private javax.swing.JButton btnLoginMhs;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tfNrp;
     private javax.swing.JPasswordField tfPassword;
-    private javax.swing.JPasswordField tfpw;
-    private javax.swing.JTextField tfuname;
     // End of variables declaration//GEN-END:variables
 }
