@@ -170,7 +170,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="28" pref="147" max="32767" attributes="0"/>
+                              <EmptySpace min="28" pref="189" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
@@ -993,15 +993,16 @@
                               <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                              <Component id="cbruang" pref="616" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
+                                      <Component id="cbruang" min="-2" pref="509" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabel41" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="31" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -1047,7 +1048,7 @@
                           <Component id="btclearkelas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="380" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="394" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1380,17 +1381,17 @@
                                           <Component id="jLabel40" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="cbidkelas" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace max="32767" attributes="0"/>
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Component id="tfnamamatkul" alignment="1" max="32767" attributes="0"/>
                                                   <Component id="tfperiode" alignment="1" pref="500" max="32767" attributes="0"/>
                                                   <Component id="tfsks" max="32767" attributes="0"/>
                                               </Group>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                                              <Component id="cbidkelas" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>

@@ -34,7 +34,6 @@ public class ManageData extends javax.swing.JFrame {
     Connection conn;
     Statement stm;
     ResultSet rs;
-    String sql;
     String[] dataDosen;
     String[] dataFoto;
     String[] dataKelas;
@@ -56,6 +55,48 @@ public class ManageData extends javax.swing.JFrame {
         updateTabelTranskrip();
     }
     
+    private void updateIpk(){
+        try {
+            // Kasus 1
+            Statement stat = conn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM mahasiswa LEFT JOIN mengambil ON mahasiswa.NRP = mengambil.NRP WHERE mengambil.NRP IS NULL;");
+            while(rs.next()){
+                stat.executeUpdate("UPDATE mahasiswa SET IPK = 0 WHERE NRP = '"+rs.getString("NRP")+"'");
+            }
+            
+            // Kasus 2
+            Statement stat2 = conn.createStatement();
+            ResultSet rs2 = stm.executeQuery("SELECT * FROM (SELECT mahasiswa.NRP, mahasiswa.IPK, mengambil.id_ambil_matkul FROM mahasiswa INNER JOIN mengambil ON mahasiswa.NRP = mengambil.NRP) p LEFT JOIN transkrip ON p.id_ambil_matkul = transkrip.id_ambil_matkul WHERE transkrip.id_ambil_matkul IS NULL;");
+            while(rs2.next()){
+                stat2.executeUpdate("UPDATE mahasiswa SET IPK = 0 WHERE NRP = '"+rs2.getString("NRP")+"'");
+            }
+            
+            // Kasus 3
+            double mutu = 0;
+            int jumlahSks;
+            Statement stat3 = conn.createStatement();
+            Statement stat4 = conn.createStatement();
+            Statement stat5 = conn.createStatement();
+            Statement stat6 = conn.createStatement();
+            ResultSet rs3 = stat3.executeQuery("SELECT * FROM mahasiswa INNER JOIN mengambil ON mahasiswa.NRP = mengambil.NRP INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul;");
+            
+            while(rs3.next()){
+                ResultSet rs4 = stat4.executeQuery("SELECT * FROM mahasiswa INNER JOIN mengambil ON mahasiswa.NRP = mengambil.NRP INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mahasiswa.NRP = '"+rs3.getString("NRP")+"';");
+                while(rs4.next()){
+                    mutu += Double.parseDouble(rs4.getString("nilai")) * Double.parseDouble(rs4.getString("sks"));
+                }
+                ResultSet rs5 = stat5.executeQuery("SELECT SUM(matakuliah.sks) FROM mahasiswa INNER JOIN mengambil ON mahasiswa.NRP = mengambil.NRP INNER JOIN matakuliah ON mengambil.KODE_MATA_KULIAH = matakuliah.KODE_MATA_KULIAH INNER JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mahasiswa.NRP = '"+rs3.getString("NRP")+"';");
+                rs5.next();
+                jumlahSks = rs5.getInt(1);
+                double ipk = mutu/jumlahSks;
+                stat6.executeUpdate("UPDATE mahasiswa SET IPK = '"+ipk+"' WHERE NRP = '"+rs3.getString("NRP")+"'");
+                mutu = 0;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+    }
     private void clearAmbilMk(){
         tfNrpAmbilMk.setText("");
         tfMatkulAmbilMk.setText("");
@@ -113,7 +154,7 @@ public class ManageData extends javax.swing.JFrame {
                 data[4] = rs.getString("NAMA_MATA_KULIAH");
                 data[5] = rs.getString("NILAI");
                 model.addRow(data);
-                tblAmbilMk.setModel(model);
+                tabelTranskrip.setModel(model);
             }
             rs.close();
         }catch(SQLException e){
@@ -354,9 +395,8 @@ public class ManageData extends javax.swing.JFrame {
         model.addColumn("Jabatan Akademik");
         tabelDosen.setModel(model);
         
-        sql = "SELECT * FROM dosen WHERE NIP_DOSEN != '000'";
         try{
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery("SELECT * FROM dosen WHERE NIP_DOSEN != '000'");
             while(rs.next()){
                 Object[] data = new Object[11];
                 data[0] = rs.getString("NIP_DOSEN");
@@ -389,9 +429,8 @@ public class ManageData extends javax.swing.JFrame {
         
         tabelKelas.setModel(model);
         
-        sql = "SELECT * FROM kelas WHERE id_kelas != '000'";
         try{
-            rs = stm.executeQuery(sql);
+            rs = stm.executeQuery("SELECT * FROM kelas WHERE id_kelas != '000'");
             while(rs.next()){
                 Object[] data = new Object[5];
                 data[0] = rs.getString("ID_KELAS");
@@ -755,7 +794,7 @@ public class ManageData extends javax.swing.JFrame {
                                         .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(tfNamaMhs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(cbProdi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(28, 147, Short.MAX_VALUE)
+                        .addGap(28, 189, Short.MAX_VALUE)
                         .addGroup(manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMahasiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(manageMahasiswaLayout.createSequentialGroup()
@@ -1188,14 +1227,14 @@ public class ManageData extends javax.swing.JFrame {
                     .addGroup(manageKelasLayout.createSequentialGroup()
                         .addComponent(jLabel29)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
-                        .addComponent(jLabel34)
-                        .addGap(75, 75, 75)
-                        .addComponent(cbruang, 0, 616, Short.MAX_VALUE)
-                        .addGap(31, 31, 31))
                     .addGroup(manageKelasLayout.createSequentialGroup()
-                        .addComponent(jLabel41)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(manageKelasLayout.createSequentialGroup()
+                                .addComponent(jLabel34)
+                                .addGap(182, 182, 182)
+                                .addComponent(cbruang, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel41))
+                        .addContainerGap(31, Short.MAX_VALUE))))
         );
         manageKelasLayout.setVerticalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1231,7 +1270,7 @@ public class ManageData extends javax.swing.JFrame {
                     .addComponent(btdeletekelas)
                     .addComponent(btclearkelas))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1448,15 +1487,15 @@ public class ManageData extends javax.swing.JFrame {
                                     .addComponent(jLabel39)
                                     .addComponent(jLabel40))
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
-                                        .addGap(48, 48, 48)
-                                        .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMatkulLayout.createSequentialGroup()
+                                    .addGroup(manageMatkulLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(tfnamamatkul, javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(tfperiode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                                            .addComponent(tfsks)))))
+                                            .addComponent(tfsks)))
+                                    .addGroup(manageMatkulLayout.createSequentialGroup()
+                                        .addGap(85, 85, 85)
+                                        .addComponent(cbidkelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(manageMatkulLayout.createSequentialGroup()
                                 .addGroup(manageMatkulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
@@ -1758,11 +1797,10 @@ public class ManageData extends javax.swing.JFrame {
         
         if(!"".equals(nipDosen) & !"".equals(nidnDosen) & !"".equals(namaDosen) & !"".equals(alamatDosen) & !"".equals(teleponDosen) 
                 & !"".equals(emailDosen) & !"".equals(jkDosen) & !"".equals(ttl) & !"".equals(statusKep) & !"".equals(pendidikanDosen) & !"".equals(jabatanAkademik)){
-            sql = "INSERT INTO dosen VALUES('"+nipDosen+"', '"+nidnDosen+"', '"+namaDosen+"', "
-                    + "'"+alamatDosen+"', '"+teleponDosen+"', '"+emailDosen+"','"+jkDosen+"', "
-                    + "'"+ttl+"', '"+statusKep+"', '"+pendidikanDosen+"', '"+jabatanAkademik+"')";
             try{
-                int status = stm.executeUpdate(sql);
+                int status = stm.executeUpdate("INSERT INTO dosen VALUES('"+nipDosen+"', '"+nidnDosen+"', '"+namaDosen+"', "
+                    + "'"+alamatDosen+"', '"+teleponDosen+"', '"+emailDosen+"','"+jkDosen+"', "
+                    + "'"+ttl+"', '"+statusKep+"', '"+pendidikanDosen+"', '"+jabatanAkademik+"')");
                 if(status == 1){
                     JOptionPane.showMessageDialog(null, "Data berhasil diinputkan");
                     clearDosen();
@@ -1860,14 +1898,13 @@ public class ManageData extends javax.swing.JFrame {
         
         if(!"".equals(nipDosen) & !"".equals(nidnDosen) & !"".equals(namaDosen) & !"".equals(alamatDosen) & !"".equals(teleponDosen) 
                 & !"".equals(emailDosen) & !"".equals(jkDosen) & !"".equals(ttl) & !"".equals(statusKep) & !"".equals(pendidikanDosen) & !"".equals(jabatanAkademik)){
-            sql = "UPDATE dosen SET `NIDN_DOSEN`='"+nidnDosen+"',"
+            try{
+                int status = stm.executeUpdate("UPDATE dosen SET `NIDN_DOSEN`='"+nidnDosen+"',"
                     + "`NAMA_DOSEN`='"+namaDosen+"', ALAMAT='"+alamatDosen+"',`TELEPON`='"+teleponDosen+"',"
                     + "`EMAIL`='"+emailDosen+"',`JENIS_KELAMIN`='"+jkDosen+"',`"
                     + "TEMPAT_TANGGAL_LAHIR`='"+ttl+"',`STATUS_KEPEGAWAIAN`='"+statusKep+"',`"
                     + "PENDIDIKAN_TERTINGGI`='"+pendidikanDosen+"',`JABATAN_AKADEMIK`='"+jabatanAkademik+"' "
-            + "WHERE NIP_DOSEN = '"+nipDosen+"'";
-            try{
-                int status = stm.executeUpdate(sql);
+            + "WHERE NIP_DOSEN = '"+nipDosen+"'");
                 if(status == 1){
                     JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                     clearDosen();
@@ -1924,7 +1961,7 @@ public class ManageData extends javax.swing.JFrame {
                 String jenisFile = asalFile.substring(index + 1);
                 String linkFile = "src\\gambar\\"+nrp+"."+jenisFile;
                 String link = linkFile.replace("\\", "\\\\");
-                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+jenjang+"', '"+link+"')");
+                stm.executeUpdate("INSERT INTO mahasiswa VALUES('"+nrp+"', '"+nama+"', '"+prodi+"', '"+statusMasuk+"','"+jenisKelamin+"', '"+agama+"', '"+alamat+"', '"+email+"', '"+noHpMhs+"', '"+ayah+"', '"+ktpAyah+"', '"+ibu+"', '"+telpOrtu+"', '"+alamatOrtu+"', '"+jenjang+"', '"+link+"', 0)");
                 Files.copy(Paths.get(asalFile), Paths.get(linkFile));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearMahasiswa();
@@ -1997,7 +2034,8 @@ public class ManageData extends javax.swing.JFrame {
                 rs = stm.executeQuery("SELECT link_foto FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 String fileFoto = rs.getString("link_foto");
-                stm.executeUpdate("DELETE mengambil, transkrip FROM mengambil LEFT JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mengambil.NRP = '"+nrp+"'");
+                stm.executeUpdate("DELETE transkrip FROM transkrip INNER JOIN mengambil ON transkrip.id_ambil_matkul = mengambil.id_ambil_matkul WHERE mengambil.NRP = '"+nrp+"'");
+                stm.executeUpdate("DELETE FROM mengambil WHERE mengambil.NRP = '"+nrp+"'");
                 stm.executeUpdate("DELETE FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 Files.delete(Paths.get(fileFoto));
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
@@ -2143,10 +2181,9 @@ public class ManageData extends javax.swing.JFrame {
         // TODO add your handling code here:
         String idkelas = tfidkelas.getText();
         if(!"".equals(idkelas)){
-            sql = "UPDATE matakuliah SET ID_KELAS = '000' WHERE ID_KELAS = '"+idkelas+"'";
-            sql = "DELETE FROM KELAS WHERE ID_KELAS = '"+idkelas+"'";
             try{
-                stm.executeUpdate(sql);
+                stm.executeUpdate("UPDATE matakuliah SET ID_KELAS = '000' WHERE ID_KELAS = '"+idkelas+"'");
+                stm.executeUpdate("DELETE FROM KELAS WHERE ID_KELAS = '"+idkelas+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearKelas();
                 refreshData();
@@ -2258,8 +2295,10 @@ public class ManageData extends javax.swing.JFrame {
         String kdmatkul = tfkdmatkul.getText();
         if(!"".equals(kdmatkul)){
             try{
-                stm.executeUpdate("DELETE mengambil, transkrip FROM mengambil LEFT JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mengambil.kode_mata_kuliah = '"+kdmatkul+"'");
+                stm.executeUpdate("DELETE transkrip FROM transkrip INNER JOIN mengambil ON transkrip.id_ambil_matkul = mengambil.id_ambil_matkul WHERE mengambil.kode_mata_kuliah = '"+kdmatkul+"'");
+                stm.executeUpdate("DELETE FROM mengambil WHERE kode_mata_kuliah = '"+kdmatkul+"'");
                 stm.executeUpdate("DELETE FROM matakuliah WHERE kode_mata_kuliah = '"+kdmatkul+"'");
+                updateIpk();
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearMatkul();
                 refreshData();
@@ -2334,7 +2373,9 @@ public class ManageData extends javax.swing.JFrame {
         String ambilMk = tfKodeAmbilMk.getText();
         if(!"".equals(ambilMk)){
             try{
-                stm.executeQuery("DELETE mengambil, transkrip FROM mengambil LEFT JOIN transkrip ON mengambil.id_ambil_matkul = transkrip.id_ambil_matkul WHERE mengambil.id_ambil_mk = '"+ambilMk+"'");
+                stm.executeUpdate("DELETE transkrip FROM transkrip INNER JOIN mengambil ON transkrip.id_ambil_matkul = mengambil.id_ambil_matkul WHERE mengambil.id_ambil_matkul = '"+ambilMk+"'");
+                stm.executeUpdate("DELETE FROM mengambil WHERE mengambil.id_ambil_matkul = '"+ambilMk+"'");
+                updateIpk();
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearAmbilMk();
                 refreshData();
@@ -2361,7 +2402,8 @@ public class ManageData extends javax.swing.JFrame {
                 stm.executeUpdate("UPDATE matakuliah SET NIP_DOSEN = '"+nipDosen+"', ID_KELAS = '"+idKls+"', PERIODE = '"+periode+"', NAMA_MATA_KULIAH = '"+namamatkul+"', SKS = '"+sks+"' WHERE KODE_MATA_KULIAH = '"+kodeMk+"'");
                 JOptionPane.showMessageDialog(null, "Data berhasil di-update");
                 clearMatkul();
-                refreshData();            
+                refreshData();
+                updateIpk();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null, e);
             }
@@ -2387,11 +2429,18 @@ public class ManageData extends javax.swing.JFrame {
             try{
                 ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
                 if(rs.next()){
-                    String idAmbilMatkul = rs.getString("id_ambil_matkul");
-                    stm.executeUpdate("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
-                    JOptionPane.showMessageDialog(null, "Data berhasil diinput");
-                    clearTRANS();
-                    refreshData();
+                    Statement stat = conn.createStatement();
+                    ResultSet rs2 = stat.executeQuery("SELECT * FROM transkrip INNER JOIN mengambil ON transkrip.id_ambil_matkul = mengambil.id_ambil_matkul WHERE mengambil.NRP = '"+tfNrpTranskrip.getText()+"' AND mengambil.KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
+                    if(rs2.next()){
+                        JOptionPane.showMessageDialog(null, "Data nilai sudah diinputkan");
+                    }else{
+                        String idAmbilMatkul = rs.getString("id_ambil_matkul");
+                        stm.executeUpdate("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
+                        updateIpk();
+                        JOptionPane.showMessageDialog(null, "Data berhasil diinput");
+                        clearTRANS();
+                        refreshData();
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "Mahasiswa tidak mengambil matakuliah tersebut");
                 }
@@ -2420,6 +2469,7 @@ public class ManageData extends javax.swing.JFrame {
         if(!"".equals(idtrskpnilai)){
             try{
                 stm.executeUpdate("DELETE FROM transkrip WHERE id_transkrip_nilai = '"+idtrskpnilai+"'");
+                updateIpk();
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
                 clearTRANS();
                 refreshData();
@@ -2439,6 +2489,7 @@ public class ManageData extends javax.swing.JFrame {
                 if(rs.next()){
                     String idAmbilMatkul = rs.getString("id_ambil_matkul");
                     stm.executeUpdate("UPDATE transkrip SET NILAI = '"+tfNilaiTranskrip.getText()+"' WHERE id_transkrip_nilai = '"+tfIdTranskrip.getText()+"'");
+                    updateIpk();
                     JOptionPane.showMessageDialog(null, "Data berhasil diupdate");
                     clearTRANS();
                     refreshData();
@@ -2480,15 +2531,11 @@ public class ManageData extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManageData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManageData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManageData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ManageData.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
