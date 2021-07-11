@@ -10,13 +10,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -201,6 +205,7 @@ public class ManageData extends javax.swing.JFrame {
         tfwaktu.setText("");
         cbruang.setSelectedIndex(0);
         tabelKelas.clearSelection();
+        tanggalan.setCalendar(null);
     }
     private void clearTRANS(){
         tfKodeMatkulTranskrip.setText("");
@@ -2145,7 +2150,7 @@ public class ManageData extends javax.swing.JFrame {
         SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
         String datetime = String.valueOf(fm.format(tanggalan.getDate())) +" "+ tfwaktu.getText();
         String ruang = cbruang.getSelectedItem().toString();
-        if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan)){
+        if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan) &!"".equals(datetime) & !"".equals(tfwaktu.getText())){
            try {
                 stm.executeUpdate("INSERT INTO kelas VALUES('"+idkelas+"', '"+namakelas+"', '"+pertemuan+"', "
                     + "'"+datetime+"', '"+ruang+"')");
@@ -2175,7 +2180,7 @@ public class ManageData extends javax.swing.JFrame {
         SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
         String datetime = String.valueOf(fm.format(tanggalan.getDate()))+" "+tfwaktu.getText();
         String ruang = cbruang.getSelectedItem().toString();
-        if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan)){
+        if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan) &!"".equals(datetime) & !"".equals(tfwaktu.getText())){
            try {
                 stm.executeUpdate("UPDATE kelas SET `KELAS`='"+namakelas+"',`PERTEMUAN`='"+pertemuan+"',`WAKTU`='"+datetime+"',`RUANG`='"+ruang+"' WHERE ID_KELAS = '"+idkelas+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
@@ -2227,7 +2232,16 @@ public class ManageData extends javax.swing.JFrame {
         tfidkelas.setText(tabelKelas.getValueAt(row, 0).toString());
         tfnamakelas.setText(tabelKelas.getValueAt(row, 1).toString());
         tfpertemuan.setText(tabelKelas.getValueAt(row, 2).toString());
-        tfwaktu.setText(tabelKelas.getValueAt(row, 3).toString().substring(10));
+        int index = tabelKelas.getValueAt(row, 3).toString().lastIndexOf(" ");
+        String jam = tabelKelas.getValueAt(row, 3).toString().substring(index + 1);
+        tfwaktu.setText(jam);
+        String tanggal = tabelKelas.getValueAt(row, 3).toString().substring(0, 10);
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(tanggal);
+            tanggalan.setDate(date);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
         if(tabelKelas.getValueAt(row, 4).equals("A.1.1")){
             cbruang.setSelectedIndex(0);
         }else if(tabelKelas.getValueAt(row, 4).equals("A.2.2")){
