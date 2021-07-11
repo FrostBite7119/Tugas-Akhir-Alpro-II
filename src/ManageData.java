@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -575,6 +576,7 @@ public class ManageData extends javax.swing.JFrame {
         btdeletekelas = new javax.swing.JButton();
         btclearkelas = new javax.swing.JButton();
         jLabel41 = new javax.swing.JLabel();
+        tanggalan = new com.toedter.calendar.JDateChooser();
         manageAmbilMk = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
@@ -1134,6 +1136,12 @@ public class ManageData extends javax.swing.JFrame {
 
         jLabel33.setText("Waktu");
 
+        tfwaktu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfwaktuActionPerformed(evt);
+            }
+        });
+
         jLabel34.setText("Ruang");
 
         cbruang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A.1.1", "A.2.3", "A.3.3", "B.1.1", "B.2.2", "B.3.3", "C.1.1", "C.2.2", "C.3.3", "D.1.1", "D.2.2", "D.3.3", " " }));
@@ -1184,12 +1192,50 @@ public class ManageData extends javax.swing.JFrame {
             }
         });
 
-        jLabel41.setText("Format Penulisan Waktu = YYYY-MM-DD HH:MM:SS");
+        jLabel41.setText("Format Penulisan Jam = HH:MM:SS");
 
         javax.swing.GroupLayout manageKelasLayout = new javax.swing.GroupLayout(manageKelas);
         manageKelas.setLayout(manageKelasLayout);
         manageKelasLayout.setHorizontalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(manageKelasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(manageKelasLayout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(manageKelasLayout.createSequentialGroup()
+                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
+                            .addGroup(manageKelasLayout.createSequentialGroup()
+                                .addComponent(jLabel34)
+                                .addGap(182, 182, 182)
+                                .addComponent(cbruang, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 53, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
+                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(manageKelasLayout.createSequentialGroup()
+                                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel32)
+                                            .addComponent(jLabel33))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(manageKelasLayout.createSequentialGroup()
+                                                .addComponent(tanggalan, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(29, 29, 29)
+                                                .addComponent(tfwaktu))
+                                            .addComponent(tfpertemuan, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(manageKelasLayout.createSequentialGroup()
+                                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel30)
+                                            .addComponent(jLabel31))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tfidkelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tfnamakelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(75, 75, 75)))
+                        .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btclearkelas)
@@ -1200,67 +1246,34 @@ public class ManageData extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btinputkelas)
                 .addContainerGap())
-            .addGroup(manageKelasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageKelasLayout.createSequentialGroup()
-                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(manageKelasLayout.createSequentialGroup()
-                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel30)
-                                    .addComponent(jLabel31))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfidkelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfnamakelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(manageKelasLayout.createSequentialGroup()
-                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jLabel33))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfwaktu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                                    .addComponent(tfpertemuan, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addGap(41, 41, 41))
-                    .addGroup(manageKelasLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
-                        .addContainerGap())
-                    .addGroup(manageKelasLayout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(manageKelasLayout.createSequentialGroup()
-                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(manageKelasLayout.createSequentialGroup()
-                                .addComponent(jLabel34)
-                                .addGap(182, 182, 182)
-                                .addComponent(cbruang, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel41))
-                        .addContainerGap(31, Short.MAX_VALUE))))
         );
         manageKelasLayout.setVerticalGroup(
             manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(manageKelasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel29)
-                .addGap(18, 18, 18)
-                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel30)
-                    .addComponent(tfidkelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel31)
-                    .addComponent(tfnamakelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel32)
-                    .addComponent(tfpertemuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
-                    .addComponent(tfwaktu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
+                .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(manageKelasLayout.createSequentialGroup()
+                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel30)
+                            .addComponent(tfidkelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel31)
+                            .addComponent(tfnamakelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel32)
+                            .addComponent(tfpertemuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel33)
+                            .addComponent(tfwaktu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(tanggalan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
                 .addComponent(jLabel41)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(manageKelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel34))
@@ -1271,7 +1284,7 @@ public class ManageData extends javax.swing.JFrame {
                     .addComponent(btdeletekelas)
                     .addComponent(btclearkelas))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2128,12 +2141,14 @@ public class ManageData extends javax.swing.JFrame {
         String idkelas = tfidkelas.getText();
         String namakelas = tfnamakelas.getText();
         String pertemuan = tfpertemuan.getText();
-        String waktu = tfwaktu.getText();
+        String tampilan ="yyyy-MM-dd" ; 
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+        String datetime = String.valueOf(fm.format(tanggalan.getDate())) +" "+ tfwaktu.getText();
         String ruang = cbruang.getSelectedItem().toString();
         if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan)){
            try {
                 stm.executeUpdate("INSERT INTO kelas VALUES('"+idkelas+"', '"+namakelas+"', '"+pertemuan+"', "
-                    + "'"+waktu+"', '"+ruang+"')");
+                    + "'"+datetime+"', '"+ruang+"')");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Diinput");
                 clearKelas();
                 refreshData();
@@ -2156,11 +2171,13 @@ public class ManageData extends javax.swing.JFrame {
         String idkelas = tfidkelas.getText();
         String namakelas = tfnamakelas.getText();
         String pertemuan = tfpertemuan.getText();
-        String waktu = tfwaktu.getText();
+        String tampilan ="yyyy-MM-dd" ; 
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan); 
+        String datetime = String.valueOf(fm.format(tanggalan.getDate()))+" "+tfwaktu.getText();
         String ruang = cbruang.getSelectedItem().toString();
         if(!"".equals(idkelas) & !"".equals(namakelas) & !"".equals(pertemuan)){
            try {
-                stm.executeUpdate("UPDATE kelas SET `KELAS`='"+namakelas+"',`PERTEMUAN`='"+pertemuan+"',`WAKTU`='"+waktu+"',`RUANG`='"+ruang+"' WHERE ID_KELAS = '"+idkelas+"'");
+                stm.executeUpdate("UPDATE kelas SET `KELAS`='"+namakelas+"',`PERTEMUAN`='"+pertemuan+"',`WAKTU`='"+datetime+"',`RUANG`='"+ruang+"' WHERE ID_KELAS = '"+idkelas+"'");
                 JOptionPane.showMessageDialog(null, "Data Berhasil Di-update");
                 clearKelas();
                 refreshData();
@@ -2210,7 +2227,7 @@ public class ManageData extends javax.swing.JFrame {
         tfidkelas.setText(tabelKelas.getValueAt(row, 0).toString());
         tfnamakelas.setText(tabelKelas.getValueAt(row, 1).toString());
         tfpertemuan.setText(tabelKelas.getValueAt(row, 2).toString());
-        tfwaktu.setText(tabelKelas.getValueAt(row, 3).toString());
+        tfwaktu.setText(tabelKelas.getValueAt(row, 3).toString().substring(10));
         if(tabelKelas.getValueAt(row, 4).equals("A.1.1")){
             cbruang.setSelectedIndex(0);
         }else if(tabelKelas.getValueAt(row, 4).equals("A.2.2")){
@@ -2518,6 +2535,10 @@ public class ManageData extends javax.swing.JFrame {
         tfNilaiTranskrip.setText(tabelTranskrip.getValueAt(row, 5).toString());
     }//GEN-LAST:event_tabelTranskripMouseClicked
 
+    private void tfwaktuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfwaktuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfwaktuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2669,6 +2690,7 @@ public class ManageData extends javax.swing.JFrame {
     private javax.swing.JTable tabelMahasiswa;
     private javax.swing.JTable tabelMatkul;
     private javax.swing.JTable tabelTranskrip;
+    private com.toedter.calendar.JDateChooser tanggalan;
     private javax.swing.JTable tblAmbilMk;
     private javax.swing.JTextField tfAlamatDosen;
     private javax.swing.JTextField tfAlamatMhs;
