@@ -2026,7 +2026,7 @@ public class ManageData extends javax.swing.JFrame {
             try {
                 int index = asalFile.lastIndexOf('.');
                 String jenisFile = asalFile.substring(index + 1);
-                String linkFile = "C:\\Tugas\\agfdaf\\Semester 2\\Algoritma dan Pemrograman II\\Tugas\\14_pertemuan\\TugasAkhir\\src\\gambar\\"+nrp+"."+jenisFile;
+                String linkFile = "src\\gambar\\"+nrp+"."+jenisFile;
                 rs = stm.executeQuery("SELECT * FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 String fileLama = rs.getString("link_foto").replace("\\", "\\\\");
