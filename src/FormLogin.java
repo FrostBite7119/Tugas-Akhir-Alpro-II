@@ -33,22 +33,43 @@ public class FormLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbexitadmin = new javax.swing.JLabel();
         tfuname = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        btlogin = new javax.swing.JButton();
         tfpw = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        btlogin = new javax.swing.JButton();
         btnBeralih = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(800, 500));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Isikan Username dan Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 3, 14))); // NOI18N
+        lbexitadmin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbexitadmin.setForeground(new java.awt.Color(255, 255, 255));
+        lbexitadmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbexitadmin.setText("EXIT");
+        lbexitadmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbexitadminMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lbexitadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 390, 60, 40));
 
-        jLabel1.setText("Username");
+        tfuname.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tfuname.setBorder(null);
+        tfuname.setOpaque(false);
+        getContentPane().add(tfuname, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 210, 30));
 
-        jLabel2.setText("Password");
+        tfpw.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tfpw.setBorder(null);
+        tfpw.setOpaque(false);
+        getContentPane().add(tfpw, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, 210, 30));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bg/1.jpg"))); // NOI18N
+        jLabel4.setPreferredSize(new java.awt.Dimension(800, 500));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 500));
 
         btlogin.setText("LOGIN");
         btlogin.addActionListener(new java.awt.event.ActionListener() {
@@ -56,6 +77,7 @@ public class FormLogin extends javax.swing.JFrame {
                 btloginActionPerformed(evt);
             }
         });
+        getContentPane().add(btlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 280, 40));
 
         btnBeralih.setText("Beralih Ke Mahasiswa");
         btnBeralih.addActionListener(new java.awt.event.ActionListener() {
@@ -63,74 +85,10 @@ public class FormLogin extends javax.swing.JFrame {
                 btnBeralihActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnBeralih)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                        .addComponent(btlogin))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfuname)
-                            .addComponent(tfpw, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tfuname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfpw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btlogin)
-                    .addComponent(btnBeralih))
-                .addContainerGap())
-        );
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("LOGIN ADMIN");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79))
-        );
+        getContentPane().add(btnBeralih, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 260, 40));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btloginActionPerformed
@@ -160,6 +118,11 @@ public class FormLogin extends javax.swing.JFrame {
         new FormLoginMhs().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBeralihActionPerformed
+
+    private void lbexitadminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbexitadminMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_lbexitadminMouseClicked
 
     /**
      * @param args the command line arguments
@@ -199,10 +162,8 @@ public class FormLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btlogin;
     private javax.swing.JButton btnBeralih;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lbexitadmin;
     private javax.swing.JPasswordField tfpw;
     private javax.swing.JTextField tfuname;
     // End of variables declaration//GEN-END:variables
