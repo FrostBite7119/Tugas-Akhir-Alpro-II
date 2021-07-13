@@ -174,7 +174,8 @@ public class LihatData extends javax.swing.JFrame {
                         data[4] = "E";
                     }
                     data[5] = rs.getString("nilai");
-                    data[6] = Double.parseDouble(rs.getString("nilai")) * Double.parseDouble(rs.getString("sks"));
+                    double nxk = Double.parseDouble(rs.getString("nilai")) * Double.parseDouble(rs.getString("sks"));
+                    data[6] = String.format(".%1f", nxk);
                     model.addRow(data);
                     tabeljadwal.setModel(model);
                     no++;
