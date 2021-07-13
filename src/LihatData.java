@@ -217,7 +217,7 @@ public class LihatData extends javax.swing.JFrame {
                 rs = stat3.executeQuery("SELECT * FROM mahasiswa WHERE NRP = '"+nrp+"'");
                 rs.next();
                 double ipk = Double.parseDouble(rs.getString("ipk"));
-                lbIpk.setText(String.valueOf(ipk));
+                lbIpk.setText(String.format("%.2f", ipk));
                 
                 //Total SKS D
                 Statement stat4 = conn.createStatement();
