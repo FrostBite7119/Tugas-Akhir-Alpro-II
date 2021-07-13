@@ -2460,26 +2460,30 @@ public class ManageData extends javax.swing.JFrame {
     private void btnInputTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInputTransActionPerformed
         // TODO add your handling code here:
         if(!"".equals(tfKodeMatkulTranskrip.getText()) && !"".equals(tfNrpTranskrip.getText()) && !"".equals(tfNilaiTranskrip.getText())){
-            try{
-                ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
-                if(rs.next()){
-                    Statement stat = conn.createStatement();
-                    ResultSet rs2 = stat.executeQuery("SELECT * FROM transkrip INNER JOIN mengambil ON transkrip.id_ambil_matkul = mengambil.id_ambil_matkul WHERE mengambil.NRP = '"+tfNrpTranskrip.getText()+"' AND mengambil.KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
-                    if(rs2.next()){
-                        JOptionPane.showMessageDialog(null, "Data nilai sudah diinputkan");
+            if(Double.parseDouble(tfNilaiTranskrip.getText()) <= 4 && Double.parseDouble(tfNilaiTranskrip.getText()) >= 0){
+                try{
+                    ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
+                    if(rs.next()){
+                        Statement stat = conn.createStatement();
+                        ResultSet rs2 = stat.executeQuery("SELECT * FROM transkrip INNER JOIN mengambil ON transkrip.id_ambil_matkul = mengambil.id_ambil_matkul WHERE mengambil.NRP = '"+tfNrpTranskrip.getText()+"' AND mengambil.KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
+                        if(rs2.next()){
+                            JOptionPane.showMessageDialog(null, "Data nilai sudah diinputkan");
+                        }else{
+                            String idAmbilMatkul = rs.getString("id_ambil_matkul");
+                            stm.executeUpdate("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
+                            updateIpk();
+                            JOptionPane.showMessageDialog(null, "Data berhasil diinput");
+                            clearTRANS();
+                            refreshData();
+                        }
                     }else{
-                        String idAmbilMatkul = rs.getString("id_ambil_matkul");
-                        stm.executeUpdate("INSERT INTO transkrip(id_ambil_matkul, nilai) VALUES('"+idAmbilMatkul+"', '"+tfNilaiTranskrip.getText()+"')");
-                        updateIpk();
-                        JOptionPane.showMessageDialog(null, "Data berhasil diinput");
-                        clearTRANS();
-                        refreshData();
+                        JOptionPane.showMessageDialog(null, "Mahasiswa tidak mengambil matakuliah tersebut");
                     }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Mahasiswa tidak mengambil matakuliah tersebut");
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null, e);
                 }
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, e);
+            }else{
+                JOptionPane.showMessageDialog(null, "Range nilai harus 0-4");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Kolom harus diisi terlebih dahulu");
