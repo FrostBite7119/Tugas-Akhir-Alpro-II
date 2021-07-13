@@ -2522,24 +2522,27 @@ public class ManageData extends javax.swing.JFrame {
     private void btnUpdateTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTransActionPerformed
         // TODO add your handling code here:
         if(!"".equals(tfKodeMatkulTranskrip.getText()) && !"".equals(tfNrpTranskrip.getText()) && !"".equals(tfNilaiTranskrip.getText())){
-           try {
-                ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
-                if(rs.next()){
-                    String idAmbilMatkul = rs.getString("id_ambil_matkul");
-                    stm.executeUpdate("UPDATE transkrip SET NILAI = '"+tfNilaiTranskrip.getText()+"' WHERE id_transkrip_nilai = '"+tfIdTranskrip.getText()+"'");
-                    updateIpk();
-                    JOptionPane.showMessageDialog(null, "Data berhasil diupdate");
-                    clearTRANS();
-                    refreshData();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Lengkapi Inputan");
+            if(Double.parseDouble(tfNilaiTranskrip.getText()) <= 4 && Double.parseDouble(tfNilaiTranskrip.getText()) >= 0){
+                try {
+                     ResultSet rs = stm.executeQuery("SELECT * FROM mengambil WHERE NRP = '"+tfNrpTranskrip.getText()+"' AND KODE_MATA_KULIAH = '"+tfKodeMatkulTranskrip.getText()+"'");
+                     if(rs.next()){
+                         String idAmbilMatkul = rs.getString("id_ambil_matkul");
+                         stm.executeUpdate("UPDATE transkrip SET NILAI = '"+tfNilaiTranskrip.getText()+"' WHERE id_transkrip_nilai = '"+tfIdTranskrip.getText()+"'");
+                         updateIpk();
+                         JOptionPane.showMessageDialog(null, "Data berhasil diupdate");
+                         clearTRANS();
+                         refreshData();
+                     }else{
+                         JOptionPane.showMessageDialog(null, "Lengkapi Inputan");
+                     }
+                 }
+                catch (SQLException err) {
+                     JOptionPane.showMessageDialog(null, err);
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "Nilai Range harus 0-4");
             }
-           catch (SQLException err) {
-                JOptionPane.showMessageDialog(null, err);
-            }
-        }
-        else{
+        }else{
             JOptionPane.showMessageDialog(null, "Semua data harus diisi terlebih dahulu!");
         }
     }//GEN-LAST:event_btnUpdateTransActionPerformed
